@@ -13,7 +13,6 @@ let twitterColor = Color(red: 29.0/255.0, green: 161/255.0, blue: 242.0/255.0)
 struct LoginView: View {
     
     @ObservedObject var loginViewModel: LoginViewModel
-    @State private var isLoggedIn = false
     
     init() {
         loginViewModel = LoginViewModel()
@@ -25,10 +24,11 @@ struct LoginView: View {
                 HelloText()
                 LoginImage()
 
-                NavigationLink(destination: HomeView(), isActive: $isLoggedIn) { EmptyView() }
+                NavigationLink(destination: HomeView(), isActive: $loginViewModel.isLoggedIn) { EmptyView() }
+
                 
                 Button(action: {
-                    isLoggedIn = true
+                    loginViewModel.login()
                 }) {
                     LoginButtonContent()
                 }
@@ -39,7 +39,7 @@ struct LoginView: View {
 
 struct HelloText: View {
     var body: some View {
-        Text("TwitterX")
+        Text(NSLocalizedString("twitterx", comment: ""))
             .font(.largeTitle)
             .fontWeight(.semibold)
             .padding(.bottom, 20)
@@ -62,7 +62,7 @@ struct LoginImage: View {
 
 struct LoginButtonContent: View {
     var body: some View {
-        Text("LOGIN")
+        Text(NSLocalizedString("login", comment: ""))
             .font(.headline)
             .foregroundColor(.white)
             .padding()

@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @State private var isLoggedIn = false
         
     var body: some View {
         NavigationView {
-            Text("This is twitter timeline")
-        }
+            Text(NSLocalizedString("twitterx", comment: ""))
+        }.navigationBarBackButtonHidden(true)
     }
 }

@@ -10,6 +10,8 @@ import Combine
 import Firebase
 
 class LoginViewModel: ObservableObject {
+    @Published var isLoggedIn = false
+    
     let provider = OAuthProvider(providerID: "twitter.com")
     
     func login() {
@@ -29,6 +31,7 @@ class LoginViewModel: ObservableObject {
                     let cred: OAuthCredential = credential as! OAuthCredential
                     print(cred.accessToken!)
                     print(cred.secret!)
+                    self.isLoggedIn = true
                 }
             }
         }
