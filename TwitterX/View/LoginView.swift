@@ -10,27 +10,23 @@ import SwiftUI
 let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0)
 let twitterColor = Color(red: 29.0/255.0, green: 161/255.0, blue: 242.0/255.0)
 
-let storedUsername = "piyush"
-let storedpassword = "kant"
-
 struct LoginView: View {
     
-    @State var username: String = ""
-    @State var password: String = ""
-    
-    @State var authenticationDidFail: Bool = false
-    @State var authenticationDidSucceed: Bool = false
+    @State private var isLoggedIn = false
     
     var body: some View {
-        
-        VStack {
-            HelloText()
-            UserImage()
-            
-            Button(action: {
-                print("pressed")
-            }) {
-                LoginButtonContent()
+        NavigationView {
+            VStack {
+                HelloText()
+                LoginImage()
+
+                NavigationLink(destination: TimeLineView(), isActive: $isLoggedIn) { EmptyView() }
+                
+                Button(action: {
+                    isLoggedIn = true
+                }) {
+                    LoginButtonContent()
+                }
             }
         }
     }
@@ -46,7 +42,7 @@ struct HelloText: View {
     }
 }
 
-struct UserImage: View {
+struct LoginImage: View {
     var body: some View {
         Image("LoginImage")
             .resizable()
