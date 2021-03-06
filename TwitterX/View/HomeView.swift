@@ -8,16 +8,10 @@
 import SwiftUI
 
 struct HomeView: View {
-    
-    @State var isLoggedIn = false
-    
+        
     var body: some View {
         NavigationView {
-            if isLoggedIn {
-                TimeLineView()
-            } else {
-                LoginView()
-            }
+            Text("This is twitter timeline")
         }
     }
 }

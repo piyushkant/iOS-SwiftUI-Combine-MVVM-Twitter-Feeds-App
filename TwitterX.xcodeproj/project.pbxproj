@@ -20,7 +20,6 @@
 		4B69C31525F3A35200BA0663 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C31425F3A35200BA0663 /* LoginViewModel.swift */; };
 		4B69C32325F3C10300BA0663 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C32225F3C10300BA0663 /* LoginView.swift */; };
 		4B69C33F25F3C84F00BA0663 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C33E25F3C84F00BA0663 /* HomeView.swift */; };
-		4B69C34425F3CA0400BA0663 /* TimeLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C34325F3CA0400BA0663 /* TimeLineView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +56,6 @@
 		4B69C31425F3A35200BA0663 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		4B69C32225F3C10300BA0663 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4B69C33E25F3C84F00BA0663 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		4B69C34325F3CA0400BA0663 /* TimeLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,7 +154,6 @@
 			children = (
 				4B69C32225F3C10300BA0663 /* LoginView.swift */,
 				4B69C33E25F3C84F00BA0663 /* HomeView.swift */,
-				4B69C34325F3CA0400BA0663 /* TimeLineView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -322,7 +319,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B69C2C925F39CC500BA0663 /* ContentView.swift in Sources */,
-				4B69C34425F3CA0400BA0663 /* TimeLineView.swift in Sources */,
 				4B69C2C725F39CC500BA0663 /* TwitterXApp.swift in Sources */,
 				4B69C32325F3C10300BA0663 /* LoginView.swift in Sources */,
 				4B69C33F25F3C84F00BA0663 /* HomeView.swift in Sources */,

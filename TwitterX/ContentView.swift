@@ -8,11 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var loginViewModel: LoginViewModel
-    
-    init() {
-        loginViewModel = LoginViewModel()
-    }
     
     var body: some View {
         LoginView()

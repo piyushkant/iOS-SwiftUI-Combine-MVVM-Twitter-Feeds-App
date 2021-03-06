@@ -12,7 +12,12 @@ let twitterColor = Color(red: 29.0/255.0, green: 161/255.0, blue: 242.0/255.0)
 
 struct LoginView: View {
     
+    @ObservedObject var loginViewModel: LoginViewModel
     @State private var isLoggedIn = false
+    
+    init() {
+        loginViewModel = LoginViewModel()
+    }
     
     var body: some View {
         NavigationView {
@@ -20,7 +25,7 @@ struct LoginView: View {
                 HelloText()
                 LoginImage()
 
-                NavigationLink(destination: TimeLineView(), isActive: $isLoggedIn) { EmptyView() }
+                NavigationLink(destination: HomeView(), isActive: $isLoggedIn) { EmptyView() }
                 
                 Button(action: {
                     isLoggedIn = true
