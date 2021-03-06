@@ -38,6 +38,9 @@
 		4B69C3D925F3EF6D00BA0663 /* Extension_Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3D825F3EF6C00BA0663 /* Extension_Dictionary.swift */; };
 		4B69C3DE25F3EF9600BA0663 /* Extension_Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3DD25F3EF9600BA0663 /* Extension_Date.swift */; };
 		4B69C3E325F3EFA500BA0663 /* Extension_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3E225F3EFA500BA0663 /* Extension_String.swift */; };
+		4B69C3E825F3F33400BA0663 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3E725F3F33400BA0663 /* Tweet.swift */; };
+		4B69C3ED25F3F6B800BA0663 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3EC25F3F6B800BA0663 /* Keychain.swift */; };
+		4B69C3F325F3F91300BA0663 /* KeychainConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3F225F3F91300BA0663 /* KeychainConst.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +95,9 @@
 		4B69C3D825F3EF6C00BA0663 /* Extension_Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_Dictionary.swift; sourceTree = "<group>"; };
 		4B69C3DD25F3EF9600BA0663 /* Extension_Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_Date.swift; sourceTree = "<group>"; };
 		4B69C3E225F3EFA500BA0663 /* Extension_String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_String.swift; sourceTree = "<group>"; };
+		4B69C3E725F3F33400BA0663 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
+		4B69C3EC25F3F6B800BA0663 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		4B69C3F225F3F91300BA0663 /* KeychainConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainConst.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +152,7 @@
 		4B69C2C525F39CC500BA0663 /* TwitterX */ = {
 			isa = PBXGroup;
 			children = (
+				4B69C3F125F3F90000BA0663 /* Keychain */,
 				4B69C3B925F3E6C300BA0663 /* Extensions */,
 				4B69C39725F3E28F00BA0663 /* Utils */,
 				4B69C38425F3E10300BA0663 /* Properties */,
@@ -209,6 +216,7 @@
 		4B69C31225F3A2F200BA0663 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4B69C3E725F3F33400BA0663 /* Tweet.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -264,6 +272,15 @@
 				4B69C3E225F3EFA500BA0663 /* Extension_String.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4B69C3F125F3F90000BA0663 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				4B69C3EC25F3F6B800BA0663 /* Keychain.swift */,
+				4B69C3F225F3F91300BA0663 /* KeychainConst.swift */,
+			);
+			path = Keychain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -412,7 +429,10 @@
 				4B69C39025F3E25C00BA0663 /* OAuth.swift in Sources */,
 				4B69C38025F3E0B600BA0663 /* Api.swift in Sources */,
 				4B69C3AC25F3E66100BA0663 /* HMAC.swift in Sources */,
+				4B69C3E825F3F33400BA0663 /* Tweet.swift in Sources */,
 				4B69C38B25F3E24400BA0663 /* HTTPMethodType.swift in Sources */,
+				4B69C3ED25F3F6B800BA0663 /* Keychain.swift in Sources */,
+				4B69C3F325F3F91300BA0663 /* KeychainConst.swift in Sources */,
 				4B69C3E325F3EFA500BA0663 /* Extension_String.swift in Sources */,
 				4B69C3DE25F3EF9600BA0663 /* Extension_Date.swift in Sources */,
 				4B69C2C925F39CC500BA0663 /* ContentView.swift in Sources */,

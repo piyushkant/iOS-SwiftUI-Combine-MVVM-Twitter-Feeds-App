@@ -13,7 +13,8 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            Text(NSLocalizedString("twitterx", comment: ""))
+            Text("timeline")
+            
         }.navigationBarBackButtonHidden(true)
     }
 }

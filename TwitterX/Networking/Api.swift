@@ -8,3 +8,10 @@
 import Combine
 import SwiftUI
 
+struct API {
+    
+//    func getAuthHeader() -> String {
+//       let oauth = OAuth()
+////        oauth.authorizationHeader(for: <#T##HTTPMethodType#>, url: <#T##URL#>, parameters: <#T##[String : Any]#>, isMediaUpload: <#T##Bool#>)
+//    }
+}
