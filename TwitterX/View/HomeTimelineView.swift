@@ -55,7 +55,11 @@ struct HomeTimelineCellView: View {
         
         VStack(alignment: .leading, spacing: 10) {
             Text(tweet.text)
-                        
+            
+            if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                URLPreview(previewURL: url)
+            }
+            
             if (self.isLast) {
                 Text("").onAppear {
                     
@@ -65,5 +69,29 @@ struct HomeTimelineCellView: View {
             }
             
         }.padding()
+    }
+}
+
+struct URLPreview : UIViewRepresentable {
+    var previewURL:URL
+        
+    func makeUIView(context: Context) -> LPLinkView {
+        let view = LPLinkView(url: previewURL)
+        
+        let provider = LPMetadataProvider()
+        
+        provider.startFetchingMetadata(for: previewURL) { (metadata, error) in
+            if let md = metadata {
+                DispatchQueue.main.async {
+                    view.metadata = md
+                    view.sizeToFit()
+                }
+            }
+        }
+        
+        return view
+    }
+    
+    func updateUIView(_ uiView: LPLinkView, context: UIViewRepresentableContext<URLPreview>) {
     }
 }

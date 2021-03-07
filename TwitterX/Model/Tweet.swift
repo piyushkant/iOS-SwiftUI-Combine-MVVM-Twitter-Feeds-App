@@ -5,18 +5,31 @@
 //  Created by Piyush Kant on 2021/03/05.
 //
 
-import SwiftUI
+import Foundation
 
-struct Tweet: Codable, Identifiable {
+struct Tweet: Decodable {
     let id: Int
-    //    let createdAt: String
     let text: String
+    let entities: TweetEntities
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
-        //        case createdAt = "created_at"
         case text = "text"
-        
+        case entities = "entities"
     }
 }
+
+
+//struct Tweet: Codable, Identifiable {
+//    let id: Int
+//    let text: String
+////    let entities: TweetEntities
+//
+//    enum CodingKeys: String, CodingKey {
+//        case id = "id"
+//        case text = "text"
+////        case entities = "entities"
+//    }
+//}
+
 
