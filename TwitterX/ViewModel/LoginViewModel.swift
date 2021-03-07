@@ -27,13 +27,14 @@ class LoginViewModel: ObservableObject {
                 guard let token = oauthCredential.accessToken, let tokenSecret = oauthCredential.secret else {
                     return
                 }
-
+                
                 do {
                     try Keychain.set(value: token.data(using: .utf8)!, key: KeychainConst.Token.string)
                     try Keychain.set(value: tokenSecret.data(using: .utf8)!, key: KeychainConst.TokenSecret.string)
                     
                     self.isLoggedIn = true
-                } catch {
+                } catch let error {
+                    print(error)
                 }
                 
             case let .failure(error):

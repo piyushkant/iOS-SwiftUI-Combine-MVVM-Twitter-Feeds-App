@@ -82,7 +82,8 @@ struct OAuth {
                 guard let data = tokenData else {return nil}
                 
                 return String(decoding: data, as: UTF8.self)
-            } catch {
+            } catch let error {
+                print(error)
                 return nil
             }
         }
@@ -96,7 +97,8 @@ struct OAuth {
                 guard let data = tokenSecretData else {return nil}
                 
                 return String(decoding: data, as: UTF8.self)
-            } catch {
+            } catch let error {
+                print(error)
                 return nil
             }
         }
