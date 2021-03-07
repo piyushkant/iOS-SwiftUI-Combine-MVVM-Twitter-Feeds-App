@@ -21,7 +21,7 @@ struct HomeTimelineView: View {
         NavigationView {
             List {
                 Section(header: Text(filter).padding(.leading, -10)) {
-                    let tweets: [Tweet] = self.homeTimelineViewModel.homeTimelineTweets
+                    let tweets: [Tweet] = self.homeTimelineViewModel.tweets
                     
                     ForEach(tweets) { tweet in
                         VStack(alignment: .leading, spacing: 10) {

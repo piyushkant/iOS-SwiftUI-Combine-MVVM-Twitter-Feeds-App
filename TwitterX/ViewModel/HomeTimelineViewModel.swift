@@ -13,7 +13,7 @@ class HomeTimelineViewModel: ObservableObject {
     private let api: Api
     private var subscriptions = Set<AnyCancellable>()
     
-    @Published var homeTimelineTweets = [Tweet]()
+    @Published var tweets = [Tweet]()
     @Published var error: ApiError? = nil
     
     init() {
@@ -28,10 +28,10 @@ class HomeTimelineViewModel: ObservableObject {
                 if case .failure(let error) = completion {
                     self.error = error
                 }
-            }, receiveValue: { homeTimelineTweets in
-                self.homeTimelineTweets = homeTimelineTweets
+            }, receiveValue: { tweets in
+                self.tweets = tweets
                 
-                for tweet in homeTimelineTweets {
+                for tweet in tweets {
                     print(tweet.text)
                 }
                 
