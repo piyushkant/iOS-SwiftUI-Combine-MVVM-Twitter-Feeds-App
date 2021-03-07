@@ -19,14 +19,14 @@
 		4B69C30825F39FBE00BA0663 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4B69C30725F39FBE00BA0663 /* FirebaseCrashlytics */; };
 		4B69C31525F3A35200BA0663 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C31425F3A35200BA0663 /* LoginViewModel.swift */; };
 		4B69C32325F3C10300BA0663 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C32225F3C10300BA0663 /* LoginView.swift */; };
-		4B69C33F25F3C84F00BA0663 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C33E25F3C84F00BA0663 /* HomeView.swift */; };
+		4B69C33F25F3C84F00BA0663 /* HomeTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C33E25F3C84F00BA0663 /* HomeTimelineView.swift */; };
 		4B69C36D25F3DBC400BA0663 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B69C36F25F3DBC400BA0663 /* Localizable.strings */; };
 		4B69C37B25F3DDB900BA0663 /* OAuth-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B69C37A25F3DDB900BA0663 /* OAuth-Info.plist */; };
 		4B69C38025F3E0B600BA0663 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C37F25F3E0B600BA0663 /* Api.swift */; };
 		4B69C38B25F3E24400BA0663 /* HTTPMethodType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C38A25F3E24400BA0663 /* HTTPMethodType.swift */; };
 		4B69C39025F3E25C00BA0663 /* OAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C38F25F3E25C00BA0663 /* OAuth.swift */; };
 		4B69C39925F3E29F00BA0663 /* PropertyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C39825F3E29F00BA0663 /* PropertyUtils.swift */; };
-		4B69C3A125F3E5D200BA0663 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3A025F3E5D200BA0663 /* Error.swift */; };
+		4B69C3A125F3E5D200BA0663 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3A025F3E5D200BA0663 /* ApiError.swift */; };
 		4B69C3A625F3E5FD00BA0663 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3A525F3E5FD00BA0663 /* Endpoint.swift */; };
 		4B69C3AC25F3E66100BA0663 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3AA25F3E66100BA0663 /* HMAC.swift */; };
 		4B69C3AD25F3E66100BA0663 /* SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3AB25F3E66100BA0663 /* SHA1.swift */; };
@@ -41,6 +41,7 @@
 		4B69C3E825F3F33400BA0663 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3E725F3F33400BA0663 /* Tweet.swift */; };
 		4B69C3ED25F3F6B800BA0663 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3EC25F3F6B800BA0663 /* Keychain.swift */; };
 		4B69C3F325F3F91300BA0663 /* KeychainConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3F225F3F91300BA0663 /* KeychainConst.swift */; };
+		4B69C3FE25F4A09E00BA0663 /* HomeTimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3FD25F4A09E00BA0663 /* HomeTimelineViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +77,7 @@
 		4B69C2FD25F39E7300BA0663 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4B69C31425F3A35200BA0663 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		4B69C32225F3C10300BA0663 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		4B69C33E25F3C84F00BA0663 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		4B69C33E25F3C84F00BA0663 /* HomeTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimelineView.swift; sourceTree = "<group>"; };
 		4B69C36E25F3DBC400BA0663 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4B69C37325F3DBCC00BA0663 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4B69C37A25F3DDB900BA0663 /* OAuth-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OAuth-Info.plist"; sourceTree = "<group>"; };
@@ -84,7 +85,7 @@
 		4B69C38A25F3E24400BA0663 /* HTTPMethodType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethodType.swift; sourceTree = "<group>"; };
 		4B69C38F25F3E25C00BA0663 /* OAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth.swift; sourceTree = "<group>"; };
 		4B69C39825F3E29F00BA0663 /* PropertyUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyUtils.swift; sourceTree = "<group>"; };
-		4B69C3A025F3E5D200BA0663 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		4B69C3A025F3E5D200BA0663 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		4B69C3A525F3E5FD00BA0663 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		4B69C3AA25F3E66100BA0663 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
 		4B69C3AB25F3E66100BA0663 /* SHA1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA1.swift; sourceTree = "<group>"; };
@@ -98,6 +99,7 @@
 		4B69C3E725F3F33400BA0663 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		4B69C3EC25F3F6B800BA0663 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		4B69C3F225F3F91300BA0663 /* KeychainConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainConst.swift; sourceTree = "<group>"; };
+		4B69C3FD25F4A09E00BA0663 /* HomeTimelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimelineViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,7 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				4B69C32225F3C10300BA0663 /* LoginView.swift */,
-				4B69C33E25F3C84F00BA0663 /* HomeView.swift */,
+				4B69C33E25F3C84F00BA0663 /* HomeTimelineView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -209,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				4B69C31425F3A35200BA0663 /* LoginViewModel.swift */,
+				4B69C3FD25F4A09E00BA0663 /* HomeTimelineViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -229,7 +232,7 @@
 				4B69C37F25F3E0B600BA0663 /* Api.swift */,
 				4B69C38A25F3E24400BA0663 /* HTTPMethodType.swift */,
 				4B69C38F25F3E25C00BA0663 /* OAuth.swift */,
-				4B69C3A025F3E5D200BA0663 /* Error.swift */,
+				4B69C3A025F3E5D200BA0663 /* ApiError.swift */,
 				4B69C3A525F3E5FD00BA0663 /* Endpoint.swift */,
 			);
 			path = Networking;
@@ -439,11 +442,12 @@
 				4B69C3C425F3E76B00BA0663 /* Extension_Int.swift in Sources */,
 				4B69C2C725F39CC500BA0663 /* TwitterXApp.swift in Sources */,
 				4B69C32325F3C10300BA0663 /* LoginView.swift in Sources */,
-				4B69C33F25F3C84F00BA0663 /* HomeView.swift in Sources */,
+				4B69C3FE25F4A09E00BA0663 /* HomeTimelineViewModel.swift in Sources */,
+				4B69C33F25F3C84F00BA0663 /* HomeTimelineView.swift in Sources */,
 				4B69C3CE25F3E87700BA0663 /* Utils.swift in Sources */,
 				4B69C31525F3A35200BA0663 /* LoginViewModel.swift in Sources */,
 				4B69C3AD25F3E66100BA0663 /* SHA1.swift in Sources */,
-				4B69C3A125F3E5D200BA0663 /* Error.swift in Sources */,
+				4B69C3A125F3E5D200BA0663 /* ApiError.swift in Sources */,
 				4B69C3D925F3EF6D00BA0663 /* Extension_Dictionary.swift in Sources */,
 				4B69C3A625F3E5FD00BA0663 /* Endpoint.swift in Sources */,
 				4B69C3C925F3E78800BA0663 /* Extension_Collection.swift in Sources */,
