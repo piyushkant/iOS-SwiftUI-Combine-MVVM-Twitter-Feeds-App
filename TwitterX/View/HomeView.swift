@@ -10,10 +10,15 @@ import SwiftUI
 struct HomeView: View {
     
     @State private var isLoggedIn = false
+    let oauth: OAuth
+    
+    init() {
+        self.oauth = OAuth()
+    }
     
     var body: some View {
         NavigationView {
-            Text("timeline")
+            Text(self.oauth.token ?? "No token in keychain")
             
         }.navigationBarBackButtonHidden(true)
     }

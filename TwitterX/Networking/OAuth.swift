@@ -58,17 +58,46 @@ struct OAuth {
         }
     }
     
-    static let token = ""
-    static let tokenSecret = ""
+    var token: String? {
+        get {
+            do {
+                let tokenData = try Keychain.get(key: KeychainConst.Token.string)
+                
+                guard let data = tokenData else {return nil}
+                
+                print("token get(): " + String(decoding: data, as: UTF8.self))
+                return String(decoding: data, as: UTF8.self)
+            } catch {
+                return nil
+            }
+        }
+    }
+    
+    var tokenSecret: String? {
+        get {
+            do {
+                let tokenSecretData = try Keychain.get(key: KeychainConst.TokenSecret.string)
+                
+                guard let data = tokenSecretData else {return nil}
+                
+                print("tokenSecret get(): " + String(decoding: data, as: UTF8.self))
+                return String(decoding: data, as: UTF8.self)
+            } catch {
+                return nil
+            }
+        }
+    }
     
     func authorizationHeader(for method: HTTPMethodType, url: URL, parameters: [String: Any], isMediaUpload: Bool) -> String {
+        guard let token = token, let tokenSecret = tokenSecret else {return ""}
+        
         var authorizationParameters = [String: Any]()
         authorizationParameters[OAuthConst.Version.string] = version
         authorizationParameters[OAuthConst.SignatureMethod.string] =  signatureMethod
         authorizationParameters[OAuthConst.ConsumerKey.string] = consumerKey
         authorizationParameters[OAuthConst.Timestamp.string] = String(Int(Date().timeIntervalSince1970))
         authorizationParameters[OAuthConst.Nonce.string] = UUID().uuidString
-        authorizationParameters[OAuthConst.Token.string] = OAuth.token
+        authorizationParameters[OAuthConst.Token.string] = token
         
         for (key, value) in parameters where key.hasPrefix("oauth_") {
             authorizationParameters.updateValue(value, forKey: key)
@@ -78,7 +107,7 @@ struct OAuth {
         
         let finalParameters = isMediaUpload ? authorizationParameters : combinedParameters
         
-        authorizationParameters[OAuthConst.Signature.string] = oauthSignature(for: method, url: url, parameters: finalParameters, consumerSecret: consumerSecret, tokenSecret: OAuth.tokenSecret)
+        authorizationParameters[OAuthConst.Signature.string] = oauthSignature(for: method, url: url, parameters: finalParameters, consumerSecret: consumerSecret, tokenSecret: tokenSecret)
         
         let authorizationParameterComponents = authorizationParameters.urlEncodedQueryString(using: .utf8).components(separatedBy: "&").sorted()
         

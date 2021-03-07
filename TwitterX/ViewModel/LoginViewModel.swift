@@ -35,24 +35,14 @@ class LoginViewModel: ObservableObject {
                         return
                     }
                     
-                    print(token)
-                    print(tokenSecret)
-                    
                     do {
-                        try Keychain.set(value: token.data(using: .utf8)!, account: KeychainConst.Token.string)
-                        try Keychain.set(value: tokenSecret.data(using: .utf8)!, account: KeychainConst.TokenSecret.string)
+                        try Keychain.set(value: token.data(using: .utf8)!, key: KeychainConst.Token.string)
+                        try Keychain.set(value: tokenSecret.data(using: .utf8)!, key: KeychainConst.TokenSecret.string)
                         
-                        let user = try Keychain.get(account: KeychainConst.Token.string)
-                        let pass = try Keychain.get(account: KeychainConst.TokenSecret.string)
-                        
-                        print(String(decoding: user!, as: UTF8.self))
-                        print(String(decoding: pass!, as: UTF8.self))
+                        self.isLoggedIn = true
                     } catch {
-                        
+                        self.isLoggedIn = false
                     }
-                    
-                    
-                    self.isLoggedIn = true
                 }
             }
         }

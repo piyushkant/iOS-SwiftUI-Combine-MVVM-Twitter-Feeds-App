@@ -9,15 +9,15 @@ import Foundation
 import Security
 
 // You might want to update this to be something descriptive for your app.
-private let service: String = "TwitterXService"
+private let service: String = "MyService"
 
 enum Keychain {
 
     /// Does a certain item exist?
-    static func exists(account: String) throws -> Bool {
+    static func exists(key: String) throws -> Bool {
         let status = SecItemCopyMatching([
             kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: account,
+            kSecAttrAccount: key,
             kSecAttrService: service,
             kSecReturnData: false,
             ] as NSDictionary, nil)
@@ -31,10 +31,10 @@ enum Keychain {
     }
     
     /// Adds an item to the keychain.
-    private static func add(value: Data, account: String) throws {
+    private static func add(value: Data, key: String) throws {
         let status = SecItemAdd([
             kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: account,
+            kSecAttrAccount: key,
             kSecAttrService: service,
             // Allow background access:
             kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlock,
@@ -44,10 +44,10 @@ enum Keychain {
     }
     
     /// Updates a keychain item.
-    private static func update(value: Data, account: String) throws {
+    private static func update(value: Data, key: String) throws {
         let status = SecItemUpdate([
             kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: account,
+            kSecAttrAccount: key,
             kSecAttrService: service,
             ] as NSDictionary, [
             kSecValueData: value,
@@ -56,20 +56,20 @@ enum Keychain {
     }
     
     /// Stores a keychain item.
-    static func set(value: Data, account: String) throws {
-        if try exists(account: account) {
-            try update(value: value, account: account)
+    static func set(value: Data, key: String) throws {
+        if try exists(key: key) {
+            try update(value: value, key: key)
         } else {
-            try add(value: value, account: account)
+            try add(value: value, key: key)
         }
     }
     
     // If not present, returns nil. Only throws on error.
-    static func get(account: String) throws -> Data? {
+    static func get(key: String) throws -> Data? {
         var result: AnyObject?
         let status = SecItemCopyMatching([
             kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: account,
+            kSecAttrAccount: key,
             kSecAttrService: service,
             kSecReturnData: true,
             ] as NSDictionary, &result)
@@ -83,10 +83,10 @@ enum Keychain {
     }
     
     /// Delete a single item.
-    static func delete(account: String) throws {
+    static func delete(key: String) throws {
         let status = SecItemDelete([
             kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: account,
+            kSecAttrAccount: key,
             kSecAttrService: service,
             ] as NSDictionary)
         guard status == errSecSuccess else { throw Errors.keychainError }
