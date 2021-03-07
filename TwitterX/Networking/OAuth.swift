@@ -6,6 +6,17 @@
 //
 
 import Foundation
+import Firebase
+
+enum OauthProvider  {
+    case Twitter
+    
+    var id : String {
+        switch self {
+        case .Twitter: return "twitter.com"
+        }
+    }
+}
 
 enum OAuthConst  {
     case Version
@@ -31,6 +42,11 @@ enum OAuthConst  {
         case .Signature: return "oauth_signature"
         }
     }
+}
+
+enum OAuthCredentialResult {
+    case success (OAuthCredential)
+    case failure ([String: String])
 }
 
 struct OAuth {
@@ -65,7 +81,6 @@ struct OAuth {
                 
                 guard let data = tokenData else {return nil}
                 
-                print("token get(): " + String(decoding: data, as: UTF8.self))
                 return String(decoding: data, as: UTF8.self)
             } catch {
                 return nil
@@ -80,7 +95,6 @@ struct OAuth {
                 
                 guard let data = tokenSecretData else {return nil}
                 
-                print("tokenSecret get(): " + String(decoding: data, as: UTF8.self))
                 return String(decoding: data, as: UTF8.self)
             } catch {
                 return nil
@@ -136,6 +150,25 @@ struct OAuth {
         let msg = signatureBaseString.data(using: .utf8)!
         let sha1 = HMAC.sha1(key: key, message: msg)!
         return sha1.base64EncodedString(options: [])
+    }
+    
+    let provider = OAuthProvider(providerID: OauthProvider.Twitter.id)
+    
+    func signIn(completionHandler: @escaping (OAuthCredentialResult) -> ()) {
+        provider.getCredentialWith(nil) { credential, error in
+            guard let credential = credential, error == nil else {
+                completionHandler(.failure(["code" : "0", "message" : "Error: \(error as Optional)"]))
+                return
+            }
+            
+            Auth.auth().signIn(with: credential) { result, error in
+                if let result = result, let credential = result.credential, let oauthCredential = credential as? OAuthCredential {
+                    completionHandler(.success(oauthCredential))
+                } else {
+                    completionHandler(.failure(["code" : "0", "message" : "Error: Failed to get OAuth Credential"]))
+                }
+            }
+        }
     }
 }
 

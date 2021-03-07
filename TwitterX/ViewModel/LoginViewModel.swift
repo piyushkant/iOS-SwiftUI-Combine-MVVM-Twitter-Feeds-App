@@ -12,39 +12,33 @@ import Firebase
 class LoginViewModel: ObservableObject {
     @Published var isLoggedIn = false
     
-    let provider = OAuthProvider(providerID: "twitter.com")
+    let oauth: OAuth
+    
+    init(oauth: OAuth) {
+        self.oauth = oauth
+    }
     
     func login() {
-        provider.getCredentialWith(nil) { credential, error in
-            guard let credential = credential, error == nil else {
-                print("Error: \(error as Optional)")
-                return
-            }
-            Auth.auth().signIn(with: credential) { authResult, error in
-                guard let result = authResult else {return}
-                
-                //                if let profile = result.additionalUserInfo?.profile {
-                //                    print(profile)
-                //                }
-                
-                if let credential = result.credential {
-                    let cred: OAuthCredential = credential as! OAuthCredential
-                    
-                    guard  let token = cred.accessToken, let tokenSecret = cred.secret else {
-                        self.isLoggedIn = false
-                        return
-                    }
-                    
-                    do {
-                        try Keychain.set(value: token.data(using: .utf8)!, key: KeychainConst.Token.string)
-                        try Keychain.set(value: tokenSecret.data(using: .utf8)!, key: KeychainConst.TokenSecret.string)
-                        
-                        self.isLoggedIn = true
-                    } catch {
-                        self.isLoggedIn = false
-                    }
+        self.isLoggedIn = false
+        
+        oauth.signIn(completionHandler: { (result) in
+            switch (result) {
+            case let .success(oauthCredential):
+                guard let token = oauthCredential.accessToken, let tokenSecret = oauthCredential.secret else {
+                    return
                 }
+
+                do {
+                    try Keychain.set(value: token.data(using: .utf8)!, key: KeychainConst.Token.string)
+                    try Keychain.set(value: tokenSecret.data(using: .utf8)!, key: KeychainConst.TokenSecret.string)
+                    
+                    self.isLoggedIn = true
+                } catch {
+                }
+                
+            case let .failure(error):
+                print(error)
             }
-        }
+        })
     }
 }
