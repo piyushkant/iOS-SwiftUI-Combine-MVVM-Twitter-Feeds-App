@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LinkPresentation
 
 struct HomeTimelineView: View {
     
@@ -50,16 +51,16 @@ struct HomeTimelineCellView: View {
     }
     
     var body: some View {
-        let tweets: [Tweet] = self.homeTimelineViewModel.tweets
+        //let tweets: [Tweet] = self.homeTimelineViewModel.tweets
         
         VStack(alignment: .leading, spacing: 10) {
             Text(tweet.text)
-                .frame(minHeight: 0, maxHeight: 100)
-                .font(.title)
-            
+                        
             if (self.isLast) {
                 Text("").onAppear {
-                    self.homeTimelineViewModel.fetchHomeTimeline(count: tweets.count + 10)
+                    
+                    //Mark: Disabled for now due to api usage limit
+                    //self.homeTimelineViewModel.fetchHomeTimeline(count: tweets.count + 10)
                 }
             }
             
