@@ -46,6 +46,7 @@
 		4B69C41825F4EF8F00BA0663 /* TweetEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C41725F4EF8F00BA0663 /* TweetEntities.swift */; };
 		4B69C42125F521B600BA0663 /* MetadataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C42025F521B600BA0663 /* MetadataCache.swift */; };
 		4B69C45825F536B000BA0663 /* SwiftLinkPreview in Frameworks */ = {isa = PBXBuildFile; productRef = 4B69C45725F536B000BA0663 /* SwiftLinkPreview */; };
+		4B69C46925F5A78C00BA0663 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C46825F5A78C00BA0663 /* Link.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		4B69C41225F4EE2F00BA0663 /* TweetUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetUrl.swift; sourceTree = "<group>"; };
 		4B69C41725F4EF8F00BA0663 /* TweetEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetEntities.swift; sourceTree = "<group>"; };
 		4B69C42025F521B600BA0663 /* MetadataCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataCache.swift; sourceTree = "<group>"; };
+		4B69C46825F5A78C00BA0663 /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +232,7 @@
 				4B69C3E725F3F33400BA0663 /* Tweet.swift */,
 				4B69C41225F4EE2F00BA0663 /* TweetUrl.swift */,
 				4B69C41725F4EF8F00BA0663 /* TweetEntities.swift */,
+				4B69C46825F5A78C00BA0663 /* Link.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				4B69C32325F3C10300BA0663 /* LoginView.swift in Sources */,
 				4B69C3FE25F4A09E00BA0663 /* HomeTimelineViewModel.swift in Sources */,
 				4B69C33F25F3C84F00BA0663 /* HomeTimelineView.swift in Sources */,
+				4B69C46925F5A78C00BA0663 /* Link.swift in Sources */,
 				4B69C3CE25F3E87700BA0663 /* Utils.swift in Sources */,
 				4B69C31525F3A35200BA0663 /* LoginViewModel.swift in Sources */,
 				4B69C3AD25F3E66100BA0663 /* SHA1.swift in Sources */,

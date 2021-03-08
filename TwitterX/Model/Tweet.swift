@@ -9,27 +9,16 @@ import Foundation
 
 struct Tweet: Decodable {
     let id: Int
+    let idStr: String
     let text: String
     let entities: TweetEntities
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
+        case idStr = "id_str"
         case text = "text"
         case entities = "entities"
     }
 }
-
-
-//struct Tweet: Codable, Identifiable {
-//    let id: Int
-//    let text: String
-////    let entities: TweetEntities
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id = "id"
-//        case text = "text"
-////        case entities = "entities"
-//    }
-//}
 
 

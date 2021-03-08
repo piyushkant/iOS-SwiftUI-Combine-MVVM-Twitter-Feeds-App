@@ -20,7 +20,9 @@ class HomeTimelineViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     
     @Published var tweets = [Tweet]()
+    @Published var links = [Link]()
     @Published var error: ApiError? = nil
+    
     
     init() {
         self.api = Api(oauth: OAuth())
@@ -38,12 +40,33 @@ class HomeTimelineViewModel: ObservableObject {
                 self.tweets = tweets
                 
                 for tweet in tweets {
-                    print(tweet.text)
+                    if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                        let provider = LPMetadataProvider()
+                        provider.startFetchingMetadata(for: url) { metaData, error in
+                            guard let data = metaData, error == nil else {
+                                return
+                            }
+                            DispatchQueue.main.async {
+                                self.links.append(Link(id: tweet.idStr, url: url, data: data))
+                            }
+                        }
+                    }
                 }
                 
                 self.error = nil
             })
             .store(in: &subscriptions)
+    }
+    
+    func fetchLink(tweet: Tweet) -> Link? {
+        let id = tweet.idStr
+        
+        for link in links {
+            if link.id == id {
+                return link
+            }
+        }
+        return nil
     }
     
     func fetchLinkPreview(url: String, completionHandler: @escaping (LinkPreviewResult) -> ())  {
