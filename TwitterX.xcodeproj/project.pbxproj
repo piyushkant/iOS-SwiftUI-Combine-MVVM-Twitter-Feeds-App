@@ -44,6 +44,8 @@
 		4B69C3FE25F4A09E00BA0663 /* HomeTimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3FD25F4A09E00BA0663 /* HomeTimelineViewModel.swift */; };
 		4B69C41325F4EE2F00BA0663 /* TweetUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C41225F4EE2F00BA0663 /* TweetUrl.swift */; };
 		4B69C41825F4EF8F00BA0663 /* TweetEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C41725F4EF8F00BA0663 /* TweetEntities.swift */; };
+		4B69C42125F521B600BA0663 /* MetadataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C42025F521B600BA0663 /* MetadataCache.swift */; };
+		4B69C45825F536B000BA0663 /* SwiftLinkPreview in Frameworks */ = {isa = PBXBuildFile; productRef = 4B69C45725F536B000BA0663 /* SwiftLinkPreview */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +106,7 @@
 		4B69C3FD25F4A09E00BA0663 /* HomeTimelineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimelineViewModel.swift; sourceTree = "<group>"; };
 		4B69C41225F4EE2F00BA0663 /* TweetUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetUrl.swift; sourceTree = "<group>"; };
 		4B69C41725F4EF8F00BA0663 /* TweetEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetEntities.swift; sourceTree = "<group>"; };
+		4B69C42025F521B600BA0663 /* MetadataCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,7 @@
 				4B69C30825F39FBE00BA0663 /* FirebaseCrashlytics in Frameworks */,
 				4B69C30425F39FBE00BA0663 /* FirebaseAnalytics in Frameworks */,
 				4B69C3D425F3EEC700BA0663 /* SwiftKeychainWrapper in Frameworks */,
+				4B69C45825F536B000BA0663 /* SwiftLinkPreview in Frameworks */,
 				4B69C30625F39FBE00BA0663 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,6 +270,7 @@
 			children = (
 				4B69C39825F3E29F00BA0663 /* PropertyUtils.swift */,
 				4B69C3CD25F3E87700BA0663 /* Utils.swift */,
+				4B69C42025F521B600BA0663 /* MetadataCache.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 				4B69C30525F39FBE00BA0663 /* FirebaseAuth */,
 				4B69C30725F39FBE00BA0663 /* FirebaseCrashlytics */,
 				4B69C3D325F3EEC700BA0663 /* SwiftKeychainWrapper */,
+				4B69C45725F536B000BA0663 /* SwiftLinkPreview */,
 			);
 			productName = TwitterX;
 			productReference = 4B69C2C325F39CC500BA0663 /* TwitterX.app */;
@@ -389,6 +395,7 @@
 			packageReferences = (
 				4B69C30225F39FBE00BA0663 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4B69C3D225F3EEC600BA0663 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				4B69C45625F536B000BA0663 /* XCRemoteSwiftPackageReference "SwiftLinkPreview" */,
 			);
 			productRefGroup = 4B69C2C425F39CC500BA0663 /* Products */;
 			projectDirPath = "";
@@ -460,6 +467,7 @@
 				4B69C3C925F3E78800BA0663 /* Extension_Collection.swift in Sources */,
 				4B69C39925F3E29F00BA0663 /* PropertyUtils.swift in Sources */,
 				4B69C3B225F3E68400BA0663 /* Extension_Data.swift in Sources */,
+				4B69C42125F521B600BA0663 /* MetadataCache.swift in Sources */,
 				4B69C41325F4EE2F00BA0663 /* TweetUrl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -810,6 +818,14 @@
 				minimumVersion = 4.0.1;
 			};
 		};
+		4B69C45625F536B000BA0663 /* XCRemoteSwiftPackageReference "SwiftLinkPreview" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LeonardoCardoso/SwiftLinkPreview";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -832,6 +848,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4B69C3D225F3EEC600BA0663 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
+		};
+		4B69C45725F536B000BA0663 /* SwiftLinkPreview */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B69C45625F536B000BA0663 /* XCRemoteSwiftPackageReference "SwiftLinkPreview" */;
+			productName = SwiftLinkPreview;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

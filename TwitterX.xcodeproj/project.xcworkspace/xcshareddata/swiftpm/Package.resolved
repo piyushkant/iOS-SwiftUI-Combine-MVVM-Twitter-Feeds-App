@@ -117,6 +117,15 @@
           "revision": "185a3165346a03767101c4f62e9a545a0fe0530f",
           "version": "4.0.1"
         }
+      },
+      {
+        "package": "SwiftLinkPreview",
+        "repositoryURL": "https://github.com/LeonardoCardoso/SwiftLinkPreview",
+        "state": {
+          "branch": null,
+          "revision": "19547f9b48fe8c61578432656438768cc94ec50f",
+          "version": "3.3.0"
+        }
       }
     ]
   },

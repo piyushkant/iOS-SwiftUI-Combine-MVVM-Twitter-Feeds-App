@@ -11,6 +11,6 @@ struct TweetUrl: Decodable {
     let url: String
     
     enum CodingKeys: String, CodingKey {
-        case url = "url"
+        case url = "expanded_url"
     }
 }
