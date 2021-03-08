@@ -9,9 +9,11 @@ import SwiftUI
 import LinkPresentation
 import SwiftLinkPreview
 
+struct HomeTimelineConfig {
+    static let TweetsLimit = 10
+}
+
 struct HomeTimelineView: View {
-    let showTweets = 10
-    
     @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
     
     init() {
@@ -28,15 +30,16 @@ struct HomeTimelineView: View {
                 } else {
                     HomeTimelineCellView(tweet: tweets[i], isLast: false, homeTimelineViewModel: self.homeTimelineViewModel)
                 }
-            }.onAppear {
-                homeTimelineViewModel.fetchHomeTimeline(count: self.showTweets)
             }
+            .onAppear {
+                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
+            }
+            .navigationBarBackButtonHidden(true)
+            .listStyle(PlainListStyle())
             .navigationBarTitle(Text(NSLocalizedString("homeTimeline", comment: "")))
             .navigationBarItems(trailing:
                                     Button("Settings") {}
             )
-            .navigationBarBackButtonHidden(true)
-            .listStyle(PlainListStyle())
         }
     }
 }
@@ -54,14 +57,15 @@ struct HomeTimelineCellView: View {
     }
     
     var body: some View {
-        //Mark: Disabled for now due to api usage limit
-        //let tweets: [Tweet] = self.homeTimelineViewModel.tweets
+//        Mark: Disabled for now due to api usage limit
+//        let tweets: [Tweet] = self.homeTimelineViewModel.tweets
         
         VStack(alignment: .leading, spacing: 10) {
             Text(tweet.text)
             
             if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
                 LinkPreview(link: link)
+                    
             } else {
                 if let tweetUrl = tweet.entities.urls.first?.url {
                     Text(tweetUrl)
@@ -71,12 +75,12 @@ struct HomeTimelineCellView: View {
             if (self.isLast) {
                 Text("").onAppear {
                     
-                    //Mark: Disabled for now due to api usage limit
-                    //self.homeTimelineViewModel.fetchHomeTimeline(count: tweets.count + 10)
+//                    Mark: Disabled for now due to api usage limit
+//                    self.homeTimelineViewModel.fetchHomeTimeline(count: tweets.count + HomeTimelineConfig.TweetsLimit)
                 }
             }
             
-        }.padding()
+        }
     }
 }
 
