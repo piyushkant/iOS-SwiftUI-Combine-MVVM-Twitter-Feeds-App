@@ -7,7 +7,6 @@
 
 import SwiftUI
 import LinkPresentation
-import SwiftLinkPreview
 
 struct HomeTimelineConfig {
     static let TweetsLimit = 10
@@ -68,13 +67,11 @@ struct HomeTimelineCellView: View {
             if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
                 LinkPreview(link: link)
                 
-            } else {
-                if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+            } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
                     EmptyLinkPreview(url: url)
-                }
             }
             
-            if (self.isLast) {
+            if self.isLast {
                 Text("").onAppear {
                     
                     //                    Mark: Disabled for now due to api usage limit
