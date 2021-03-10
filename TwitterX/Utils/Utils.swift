@@ -25,4 +25,20 @@ struct Utils {
         
         return bytes
     }
+    
+    public static func checkForUrls(text: String) -> [URL] {
+        let types: NSTextCheckingResult.CheckingType = .link
+        
+        do {
+            let detector = try NSDataDetector(types: types.rawValue)
+            
+            let matches = detector.matches(in: text, options: .reportCompletion, range: NSMakeRange(0, text.count))
+            
+            return matches.compactMap({$0.url})
+        } catch let error {
+            debugPrint(error.localizedDescription)
+        }
+        
+        return []
+    }
 }

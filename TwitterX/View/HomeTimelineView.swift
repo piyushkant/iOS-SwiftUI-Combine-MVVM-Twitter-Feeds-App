@@ -57,30 +57,60 @@ struct HomeTimelineCellView: View {
     }
     
     var body: some View {
-//        Mark: Disabled for now due to api usage limit
-//        let tweets: [Tweet] = self.homeTimelineViewModel.tweets
+        //        Mark: Disabled for now due to api usage limit
+        //        let tweets: [Tweet] = self.homeTimelineViewModel.tweets
         
         VStack(alignment: .leading, spacing: 10) {
             Text(tweet.text)
             
             if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
                 LinkPreview(link: link)
-                    
+                
             } else {
-                if let tweetUrl = tweet.entities.urls.first?.url {
-                    Text(tweetUrl)
+                if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                    EmptyLinkPreview(url: url)
+//                    LPLinkView(url: url)
+//                    UrlPreview(url: url)
                 }
             }
             
             if (self.isLast) {
                 Text("").onAppear {
                     
-//                    Mark: Disabled for now due to api usage limit
-//                    self.homeTimelineViewModel.fetchHomeTimeline(count: tweets.count + HomeTimelineConfig.TweetsLimit)
+                    //                    Mark: Disabled for now due to api usage limit
+                    //                    self.homeTimelineViewModel.fetchHomeTimeline(count: tweets.count + HomeTimelineConfig.TweetsLimit)
                 }
             }
             
         }
+    }
+}
+
+struct UrlPreview: UIViewRepresentable {
+    var url: URL
+    
+    func makeUIView(context: Context) -> UITextView {
+        let tv = UITextView()
+        tv.addHyperLinksToText(originalText: "Testing hyperlinks here and there", hyperLinks: ["here": "https://www.google.com", "there": "https://www.twitter.com"])
+        
+        return tv
+    }
+    
+    func updateUIView(_ uiView: UITextView, context: Context) {
+    }
+}
+
+struct EmptyLinkPreview: UIViewRepresentable {
+    var url: URL
+    
+    func makeUIView(context: Context) -> LPLinkView {
+        let linkView = LPLinkView(url: url)
+        linkView.sizeToFit()
+        
+        return linkView
+    }
+    
+    func updateUIView(_ uiView: LPLinkView, context: Context) {
     }
 }
 
