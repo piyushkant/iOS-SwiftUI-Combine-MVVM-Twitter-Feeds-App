@@ -61,7 +61,9 @@ struct HomeTimelineCellView: View {
         //        let tweets: [Tweet] = self.homeTimelineViewModel.tweets
         
         VStack(alignment: .leading, spacing: 10) {
-            Text(tweet.text)
+            let headline = tweet.text
+            
+            HyperlinkTextView(headline)
             
             if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
                 LinkPreview(link: link)
@@ -69,8 +71,6 @@ struct HomeTimelineCellView: View {
             } else {
                 if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
                     EmptyLinkPreview(url: url)
-//                    LPLinkView(url: url)
-//                    UrlPreview(url: url)
                 }
             }
             
@@ -83,20 +83,6 @@ struct HomeTimelineCellView: View {
             }
             
         }
-    }
-}
-
-struct UrlPreview: UIViewRepresentable {
-    var url: URL
-    
-    func makeUIView(context: Context) -> UITextView {
-        let tv = UITextView()
-        tv.addHyperLinksToText(originalText: "Testing hyperlinks here and there", hyperLinks: ["here": "https://www.google.com", "there": "https://www.twitter.com"])
-        
-        return tv
-    }
-    
-    func updateUIView(_ uiView: UITextView, context: Context) {
     }
 }
 

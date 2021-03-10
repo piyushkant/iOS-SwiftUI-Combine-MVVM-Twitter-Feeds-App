@@ -20,7 +20,7 @@ extension UITextView {
             attributedOriginalText.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: fullRange)
 //            attributedOriginalText.addAttribute(NSAttributedString.Key.font, value: YourFont, range: fullRange)
         }
-        
+
         self.linkTextAttributes = [
 //            NSAttributedString.Key.foregroundColor: YourColor,
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,

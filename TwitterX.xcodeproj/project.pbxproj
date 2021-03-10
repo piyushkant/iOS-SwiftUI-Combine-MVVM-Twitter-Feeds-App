@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B33459425F87E4E003685FA /* LinkedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B33459325F87E4E003685FA /* LinkedText.swift */; };
 		4B69C2C725F39CC500BA0663 /* TwitterXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C2C625F39CC500BA0663 /* TwitterXApp.swift */; };
 		4B69C2C925F39CC500BA0663 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C2C825F39CC500BA0663 /* ContentView.swift */; };
 		4B69C2CB25F39CC600BA0663 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B69C2CA25F39CC600BA0663 /* Assets.xcassets */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B33459325F87E4E003685FA /* LinkedText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedText.swift; sourceTree = "<group>"; };
 		4B69C2C325F39CC500BA0663 /* TwitterX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B69C2C625F39CC500BA0663 /* TwitterXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterXApp.swift; sourceTree = "<group>"; };
 		4B69C2C825F39CC500BA0663 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		4B69C31025F3A2DE00BA0663 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4B33459325F87E4E003685FA /* LinkedText.swift */,
 				4B69C32225F3C10300BA0663 /* LoginView.swift */,
 				4B69C33E25F3C84F00BA0663 /* HomeTimelineView.swift */,
 			);
@@ -467,6 +470,7 @@
 				4B69C3C925F3E78800BA0663 /* Extension_Collection.swift in Sources */,
 				4B69C39925F3E29F00BA0663 /* PropertyUtils.swift in Sources */,
 				4B69C3B225F3E68400BA0663 /* Extension_Data.swift in Sources */,
+				4B33459425F87E4E003685FA /* LinkedText.swift in Sources */,
 				4B69C42125F521B600BA0663 /* MetadataCache.swift in Sources */,
 				4B69C41325F4EE2F00BA0663 /* TweetUrl.swift in Sources */,
 			);
