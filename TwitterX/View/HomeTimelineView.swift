@@ -63,7 +63,8 @@ struct HomeTimelineCellView: View {
             let headline = tweet.text
             
             if let userData = homeTimelineViewModel.fetchUserData(tweet: self.tweet), let data = userData.profileImageData {
-                UserProfileImageView(data: data)
+//                UserProfileImageView(data: data)
+                UserView(user: self.tweet.user, data: data)
             }
             
             HyperlinkTextView(headline)
@@ -114,6 +115,33 @@ struct LinkPreview: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: LPLinkView, context: Context) {
+    }
+}
+
+struct UserView: View {
+    let user: User
+    let data: Data
+    
+    var body: some View {
+        HStack(spacing: 10) {
+            UserProfileImageView(data: data)
+            UserInfoView(user: user)
+        }
+    }
+}
+
+struct UserInfoView: View {
+    let user: User
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(user.name)
+                .bold()
+                .font(.system(size:18.0))
+            Text("@" + user.screenName)
+                .foregroundColor(.gray)
+                .font(.system(size:13.0))
+        }
     }
 }
 
