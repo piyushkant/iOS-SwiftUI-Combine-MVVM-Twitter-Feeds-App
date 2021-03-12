@@ -94,24 +94,4 @@ class HomeTimelineViewModel: ObservableObject {
         }
         return nil
     }
-    
-    func fetchLinkPreview(url: String, completionHandler: @escaping (LinkPreviewResult) -> ())  {
-        guard let url = URL(string: url) else {
-            completionHandler(.failure(["message" : "Error: url is not corect"]))
-            return
-        }
-        
-        let linkPreview = LPLinkView()
-        let provider = LPMetadataProvider()
-        
-        provider.startFetchingMetadata(for: url) { metaData, error in
-            guard let data = metaData, error == nil else {
-                completionHandler(.failure(["message" : "Error: \(String(describing: error))"]))
-                return
-            }
-            
-            linkPreview.metadata = data
-            completionHandler(.success(linkPreview))
-        }
-    }
 }
