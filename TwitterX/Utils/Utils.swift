@@ -26,6 +26,14 @@ struct Utils {
         return bytes
     }
     
+    public static func getDate(dateString: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE MMM dd HH:mm:ss Z yyyy"
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.locale = Locale.current
+        return dateFormatter.date(from: dateString)
+    }
+    
     public static func convertUrlTextToHyperLink(text: String) -> String {
         let urls = checkForUrls(text: text)
         var hyperLinks = [String: String]()
@@ -33,12 +41,6 @@ struct Utils {
         for url in urls {
             let urlString = url.absoluteString
             hyperLinks[urlString] = urlString
-        }
-        
-        for link in hyperLinks {
-            debugPrint("embeddedLinks",link)
-//            debugPrint(".....")
-//            debugPrint(link.va)
         }
         
         return addHyperLinksToText(originalText: text, hyperLinks: hyperLinks)

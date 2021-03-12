@@ -63,8 +63,7 @@ struct HomeTimelineCellView: View {
             let headline = tweet.text
             
             if let userData = homeTimelineViewModel.fetchUserData(tweet: self.tweet), let data = userData.profileImageData {
-//                UserProfileImageView(data: data)
-                UserView(user: self.tweet.user, data: data)
+                UserView(tweet: self.tweet, data: data)
             }
             
             HyperlinkTextView(headline)
@@ -119,41 +118,53 @@ struct LinkPreview: UIViewRepresentable {
 }
 
 struct UserView: View {
-    let user: User
+    let tweet: Tweet
     let data: Data
+    
+    @State var currentDate = Date()
+    private let timer = Timer.publish(every: 10, on: .main, in: .common)
+      .autoconnect()
+      .eraseToAnyPublisher()
     
     var body: some View {
         HStack(spacing: 10) {
-            UserProfileImageView(data: data)
-            UserInfoView(user: user)
+            Image(uiImage: UIImage(data: data) ?? UIImage())
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width:50, height:50)
+                .cornerRadius(50)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                Text(tweet.user.name)
+                    .bold()
+                    .font(.system(size:18.0))
+                PostTimeView(tweet: tweet, currentDate: currentDate)
+            }
+        }
+        .onReceive(timer) {
+          self.currentDate = $0
         }
     }
 }
 
-struct UserInfoView: View {
-    let user: User
+struct PostTimeView: View {
+    let tweet: Tweet
+    let currentDate: Date
+    
+    private static var relativeFormatter = RelativeDateTimeFormatter()
+    
+    private var relativeTimeString: String {
+        if let dateCreated =  Utils.getDate(dateString: tweet.createdAt) {
+            return PostTimeView.relativeFormatter.localizedString(fromTimeInterval: dateCreated.timeIntervalSince1970 - self.currentDate.timeIntervalSince1970)
+        }
+        return ""
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(user.name)
-                .bold()
-                .font(.system(size:18.0))
-            Text("@" + user.screenName)
-                .foregroundColor(.gray)
-                .font(.system(size:13.0))
-        }
+        Text("\(relativeTimeString) by @\(tweet.user.screenName)")
+            .font(.system(size: 14))
+            .foregroundColor(Color.gray)
     }
 }
 
-struct UserProfileImageView: View {
-    let data: Data
-    
-    var body: some View {
-        Image(uiImage: UIImage(data: data) ?? UIImage())
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width:50, height:50)
-            .cornerRadius(50)
-    }
-}
 
