@@ -24,7 +24,7 @@ struct LoginView: View {
                 HelloText()
                 LoginImage()
 
-                NavigationLink(destination: HomeView(), isActive: $loginViewModel.isLoggedIn) { EmptyView() }
+                NavigationLink(destination: HomeTimelineView(), isActive: $loginViewModel.isLoggedIn) { EmptyView() }
 
                 
                 Button(action: {

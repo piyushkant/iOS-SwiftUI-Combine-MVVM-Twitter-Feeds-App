@@ -159,7 +159,7 @@ struct OAuth {
     func signIn(completionHandler: @escaping (OAuthCredentialResult) -> ()) {
         provider.getCredentialWith(nil) { credential, error in
             guard let credential = credential, error == nil else {
-                completionHandler(.failure(["code" : "0", "message" : "Error: \(error as Optional)"]))
+                completionHandler(.failure(["message" : "Error: \(error as Optional)"]))
                 return
             }
             
@@ -167,7 +167,7 @@ struct OAuth {
                 if let result = result, let credential = result.credential, let oauthCredential = credential as? OAuthCredential {
                     completionHandler(.success(oauthCredential))
                 } else {
-                    completionHandler(.failure(["code" : "0", "message" : "Error: Failed to get OAuth Credential"]))
+                    completionHandler(.failure(["message" : "Error: Failed to get OAuth Credential"]))
                 }
             }
         }

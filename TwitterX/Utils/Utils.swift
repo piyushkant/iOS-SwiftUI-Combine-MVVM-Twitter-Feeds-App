@@ -5,7 +5,7 @@
 //  Created by Piyush Kant on 2021/03/07.
 //
 
-import Foundation
+import SwiftUI
 
 struct Utils {
     
@@ -24,5 +24,18 @@ struct Utils {
         valuePointer.deallocate()
         
         return bytes
+    }
+    
+    public static func convertStringToDate(dateString: String) -> Date? {
+        let tdf = DateFormatter()
+        tdf.dateFormat = "EEE MMM dd HH:mm:ss Z yyyy"
+        tdf.locale = Locale(identifier: "en_US_POSIX")
+        if let date = tdf.date(from: dateString) {
+            let df = DateFormatter()
+            df.dateStyle = .medium
+            df.timeStyle = .medium
+            return df.date(from: df.string(from: date))
+        }
+        return nil
     }
 }

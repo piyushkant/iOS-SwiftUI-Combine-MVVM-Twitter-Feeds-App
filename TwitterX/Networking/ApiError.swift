@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Error: LocalizedError, Identifiable {
+enum ApiError: LocalizedError, Identifiable {
     var id: String { localizedDescription }
     
     case addressUnreachable(URL)
