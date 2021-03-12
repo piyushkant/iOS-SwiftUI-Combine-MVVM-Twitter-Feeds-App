@@ -24,7 +24,7 @@ struct Api {
         ]
         
         let url = urlComponents.url!
-                
+        
         var request =  URLRequest(url: url)
         request.httpMethod = "GET"
         
@@ -39,6 +39,39 @@ struct Api {
                 return data
             }
             .decode(type: [Tweet].self, decoder: decoder)
+            .mapError { error in
+                switch error {
+                case is URLError:
+                    return ApiError.addressUnreachable(url)
+                default: return ApiError.invalidResponse
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func show(id: String) -> AnyPublisher<Tweet, ApiError> {
+        var urlComponents = URLComponents(string: EndPoint.Statuses.show.url.absoluteString)!
+        
+        urlComponents.queryItems = [
+            URLQueryItem(name: "id", value: "\(id)")
+        ]
+                
+        let url = urlComponents.url!
+        
+        var request =  URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let header = oauth.authorizationHeader(for: .GET, url: EndPoint.Statuses.show.url, parameters: ["id" : id], isMediaUpload: false)
+        request.addValue(header, forHTTPHeaderField: "Authorization")
+        
+        return URLSession.DataTaskPublisher(request: request, session: .shared)
+            .tryMap { data, response in
+                guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
+                    throw ApiError.invalidResponse
+                }
+                return data
+            }
+            .decode(type: Tweet.self, decoder: decoder)
             .mapError { error in
                 switch error {
                 case is URLError:

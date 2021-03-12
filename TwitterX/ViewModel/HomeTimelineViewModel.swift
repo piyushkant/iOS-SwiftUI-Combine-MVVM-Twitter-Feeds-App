@@ -40,21 +40,20 @@ class HomeTimelineViewModel: ObservableObject {
                 self.tweets = tweets
                 
                 for tweet in tweets {
-                    if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-                        
-                        let user = tweet.user
-                        let profileImageUrl = user.profileImageUrl
-                        
-                        if let imageUrl = URL(string: profileImageUrl) {
-                            let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                                guard let data = data else { return }
-                                DispatchQueue.main.async {
-                                    self.userData.append(UserData(id: tweet.user.idStr, profileImageData: data))
-                                }
+                    let user = tweet.user
+                    let profileImageUrl = user.profileImageUrl
+                    
+                    if let imageUrl = URL(string: profileImageUrl) {
+                        let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                            guard let data = data else { return }
+                            DispatchQueue.main.async {
+                                self.userData.append(UserData(id: tweet.user.idStr, profileImageData: data))
                             }
-                            task.resume()
                         }
-                        
+                        task.resume()
+                    }
+                    
+                    if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
                         let provider = LPMetadataProvider()
                         
                         provider.startFetchingMetadata(for: url) { metaData, error in
@@ -64,6 +63,49 @@ class HomeTimelineViewModel: ObservableObject {
                             DispatchQueue.main.async {
                                 self.links.append(Link(id: tweet.idStr, url: url, data: data))
                             }
+                        }
+                    }
+                }
+                
+                self.error = nil
+            })
+            .store(in: &subscriptions)
+    }
+    
+    //Mark: Remove me, only for testing purpose
+    func fetchSingleTimeLine(id: String) {
+        api
+            .show(id: id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.error = error
+                }
+            }, receiveValue: { tweet in
+                self.tweets.append(tweet)
+                
+                let user = tweet.user
+                let profileImageUrl = user.profileImageUrl
+                
+                if let imageUrl = URL(string: profileImageUrl) {
+                    let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                        guard let data = data else { return }
+                        DispatchQueue.main.async {
+                            self.userData.append(UserData(id: tweet.user.idStr, profileImageData: data))
+                        }
+                    }
+                    task.resume()
+                }
+                
+                if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                    let provider = LPMetadataProvider()
+                    
+                    provider.startFetchingMetadata(for: url) { metaData, error in
+                        guard let data = metaData, error == nil else {
+                            return
+                        }
+                        DispatchQueue.main.async {
+                            self.links.append(Link(id: tweet.idStr, url: url, data: data))
                         }
                     }
                 }

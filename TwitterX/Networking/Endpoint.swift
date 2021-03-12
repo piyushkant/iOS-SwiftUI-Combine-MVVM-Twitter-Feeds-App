@@ -12,12 +12,15 @@ enum EndPoint {
     
     enum Statuses {
         
+        case show
         case update(String)
         case destroy(Int)
         case homeTimeline
         
         var url: URL {
             switch self {
+            case .show:
+                return EndPoint.baseURL.appendingPathComponent("statuses/show.json")
             case .update(let status):
                 return EndPoint.baseURL.appendingPathComponent("statuses/update.json?status=\(status)")
             case .destroy(let id):

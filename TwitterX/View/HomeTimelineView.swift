@@ -10,6 +10,12 @@ import LinkPresentation
 
 struct HomeTimelineConfig {
     static let TweetsLimit = 10
+    static let sampleSingleImageTweetId = "1370325033663426560"
+//    static let sampleSingleImageTweetId = "1370329824422551554"
+//    static let sampleMultipleImageTweetId = "1370325033663426560"
+//    static let sampleImageWithUrlId = "1370316972181848066"
+//    static let sampleGifTweetId = "1366750878749761537"
+//    static let sampleVideoTweetId = "1370320412177993739"
 }
 
 struct HomeTimelineView: View {
@@ -32,6 +38,7 @@ struct HomeTimelineView: View {
             }
             .onAppear {
                 homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
+//                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleSingleImageTweetId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
@@ -70,7 +77,6 @@ struct HomeTimelineCellView: View {
             
             if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
                 LinkPreview(link: link)
-                
             } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
                 EmptyLinkPreview(url: url)
             }
