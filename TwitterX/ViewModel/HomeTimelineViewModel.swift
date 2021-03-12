@@ -21,8 +21,8 @@ class HomeTimelineViewModel: ObservableObject {
     
     @Published var tweets = [Tweet]()
     @Published var links = [Link]()
+    @Published var userData = [UserData]()
     @Published var error: ApiError? = nil
-    
     
     init() {
         self.api = Api(oauth: OAuth())
@@ -41,7 +41,22 @@ class HomeTimelineViewModel: ObservableObject {
                 
                 for tweet in tweets {
                     if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                        
+                        let user = tweet.user
+                        let profileImageUrl = user.profileImageUrl
+                        
+                        if let imageUrl = URL(string: profileImageUrl) {
+                            let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                                guard let data = data else { return }
+                                DispatchQueue.main.async {
+                                    self.userData.append(UserData(id: tweet.user.idStr, profileImageData: data))
+                                }
+                            }
+                            task.resume()
+                        }
+                        
                         let provider = LPMetadataProvider()
+                        
                         provider.startFetchingMetadata(for: url) { metaData, error in
                             guard let data = metaData, error == nil else {
                                 return
@@ -56,6 +71,17 @@ class HomeTimelineViewModel: ObservableObject {
                 self.error = nil
             })
             .store(in: &subscriptions)
+    }
+    
+    func fetchUserData(tweet: Tweet) -> UserData? {
+        let userId = tweet.user.idStr
+        
+        for data in userData {
+            if data.id == userId {
+                return data
+            }
+        }
+        return nil
     }
     
     func fetchLink(tweet: Tweet) -> Link? {

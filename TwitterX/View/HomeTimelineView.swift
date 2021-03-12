@@ -62,13 +62,17 @@ struct HomeTimelineCellView: View {
         VStack(alignment: .leading, spacing: 10) {
             let headline = tweet.text
             
+            if let userData = homeTimelineViewModel.fetchUserData(tweet: self.tweet), let data = userData.profileImageData {
+                UserProfileImageView(data: data)
+            }
+            
             HyperlinkTextView(headline)
             
             if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
                 LinkPreview(link: link)
                 
             } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-                    EmptyLinkPreview(url: url)
+                EmptyLinkPreview(url: url)
             }
             
             if self.isLast {
@@ -112,3 +116,16 @@ struct LinkPreview: UIViewRepresentable {
     func updateUIView(_ uiView: LPLinkView, context: Context) {
     }
 }
+
+struct UserProfileImageView: View {
+    let data: Data
+    
+    var body: some View {
+        Image(uiImage: UIImage(data: data) ?? UIImage())
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width:50, height:50)
+            .cornerRadius(50)
+    }
+}
+

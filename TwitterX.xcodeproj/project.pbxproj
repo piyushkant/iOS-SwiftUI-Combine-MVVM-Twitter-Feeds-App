@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B2AB26525FAEEAA005A13C7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2AB26425FAEEAA005A13C7 /* User.swift */; };
+		4B2AB26A25FAF174005A13C7 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2AB26925FAF174005A13C7 /* UserData.swift */; };
 		4B33459425F87E4E003685FA /* LinkedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B33459325F87E4E003685FA /* LinkedText.swift */; };
 		4B69C2C725F39CC500BA0663 /* TwitterXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C2C625F39CC500BA0663 /* TwitterXApp.swift */; };
 		4B69C2C925F39CC500BA0663 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C2C825F39CC500BA0663 /* ContentView.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		4B2AB26425FAEEAA005A13C7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4B2AB26925FAF174005A13C7 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		4B33459325F87E4E003685FA /* LinkedText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedText.swift; sourceTree = "<group>"; };
 		4B69C2C325F39CC500BA0663 /* TwitterX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B69C2C625F39CC500BA0663 /* TwitterXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterXApp.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				4B69C41725F4EF8F00BA0663 /* TweetEntities.swift */,
 				4B69C46825F5A78C00BA0663 /* Link.swift */,
 				4B2AB26425FAEEAA005A13C7 /* User.swift */,
+				4B2AB26925FAF174005A13C7 /* UserData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				4B69C3AC25F3E66100BA0663 /* HMAC.swift in Sources */,
 				4B69C3E825F3F33400BA0663 /* Tweet.swift in Sources */,
 				4B2AB26525FAEEAA005A13C7 /* User.swift in Sources */,
+				4B2AB26A25FAF174005A13C7 /* UserData.swift in Sources */,
 				4B69C38B25F3E24400BA0663 /* HTTPMethodType.swift in Sources */,
 				4B69C3ED25F3F6B800BA0663 /* Keychain.swift in Sources */,
 				4B69C3F325F3F91300BA0663 /* KeychainConst.swift in Sources */,
