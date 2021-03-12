@@ -154,7 +154,7 @@ struct PostTimeView: View {
     private static var relativeFormatter = RelativeDateTimeFormatter()
     
     private var relativeTimeString: String {
-        if let dateCreated =  Utils.getDate(dateString: tweet.createdAt) {
+        if let dateCreated =  Utils.convertStringToDate(dateString: tweet.createdAt) {
             return PostTimeView.relativeFormatter.localizedString(fromTimeInterval: dateCreated.timeIntervalSince1970 - self.currentDate.timeIntervalSince1970)
         }
         return ""

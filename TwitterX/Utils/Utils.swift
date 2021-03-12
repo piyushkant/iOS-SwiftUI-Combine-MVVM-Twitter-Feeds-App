@@ -26,11 +26,16 @@ struct Utils {
         return bytes
     }
     
-    public static func getDate(dateString: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE MMM dd HH:mm:ss Z yyyy"
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.locale = Locale.current
-        return dateFormatter.date(from: dateString)
+    public static func convertStringToDate(dateString: String) -> Date? {
+        let tdf = DateFormatter()
+        tdf.dateFormat = "EEE MMM dd HH:mm:ss Z yyyy"
+        tdf.locale = Locale(identifier: "en_US_POSIX")
+        if let date = tdf.date(from: dateString) {
+            let df = DateFormatter()
+            df.dateStyle = .medium
+            df.timeStyle = .medium
+            return df.date(from: df.string(from: date))
+        }
+        return nil
     }
 }
