@@ -11,11 +11,11 @@ import LinkPresentation
 struct HomeTimelineConfig {
     static let TweetsLimit = 10
     static let sampleSingleImageTweetId = "1370325033663426560"
-//    static let sampleSingleImageTweetId = "1370329824422551554"
-//    static let sampleMultipleImageTweetId = "1370325033663426560"
-//    static let sampleImageWithUrlId = "1370316972181848066"
-//    static let sampleGifTweetId = "1366750878749761537"
-//    static let sampleVideoTweetId = "1370320412177993739"
+    //    static let sampleSingleImageTweetId = "1370329824422551554"
+    static let sampleMultipleImageTweetId = "1370337291214888962"
+    //    static let sampleImageWithUrlId = "1370316972181848066"
+    //    static let sampleGifTweetId = "1366750878749761537"
+    //    static let sampleVideoTweetId = "1370320412177993739"
 }
 
 struct HomeTimelineView: View {
@@ -37,8 +37,8 @@ struct HomeTimelineView: View {
                 }
             }
             .onAppear {
-                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
-//                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleSingleImageTweetId)
+                //                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
+                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleMultipleImageTweetId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
@@ -75,11 +75,25 @@ struct HomeTimelineCellView: View {
             
             HyperlinkTextView(headline)
             
-            if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
-                LinkPreview(link: link)
-            } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-                EmptyLinkPreview(url: url)
-            }
+            let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
+            
+            LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
+                
+                ForEach(homeTimelineViewModel.allImages.indices, id:\.self) { index in
+                    GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
+                }
+                
+            })
+            .padding(.top)
+//            .overlay(
+//                ImageView(homeTimelineViewModel: homeTimelineViewModel)
+//            )
+            
+            //            if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
+            //                LinkPreview(link: link)
+            //            } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+            //                EmptyLinkPreview(url: url)
+            //            }
             
             if self.isLast {
                 Text("").onAppear {
@@ -90,6 +104,123 @@ struct HomeTimelineCellView: View {
             }
             
         }
+        .overlay(
+            ImageView(homeTimelineViewModel: homeTimelineViewModel)
+        )
+        
+    }
+}
+
+struct GridImageView: View {
+    @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
+    var index: Int
+    
+    var body: some View {
+        Button(action: {
+            
+//            homeTimelineViewModel.selectedImageID = homeTimelineViewModel.allImages[index]
+//            homeTimelineViewModel.showImageViewer.toggle()
+            
+//            withAnimation(.easeInOut) {
+//                homeTimelineViewModel.selectedImageID = homeTimelineViewModel.allImages[index]
+//                homeTimelineViewModel.showImageViewer.toggle()
+//            }
+        }, label: {
+            ZStack {
+                Image(homeTimelineViewModel.allImages[index])
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+//                    .frame(width: getWidth(index: index), height: 120)
+                    .frame(width: (getRect().width - 100)/2, height: 120)
+                    .cornerRadius(12)
+            }
+        })
+    }
+    
+    func getWidth(index: Int) -> CGFloat {
+        let width = getRect().width - 100
+        if homeTimelineViewModel.allImages.count % 2 == 0 {
+            return width/2
+        } else {
+            if index == homeTimelineViewModel.allImages.count - 1 {
+                return width
+            } else {
+                return width/2
+            }
+        }
+    }
+}
+
+extension View {
+    func getRect() -> CGRect {
+        return UIScreen.main.bounds
+    }
+}
+
+struct ImageView: View {
+    @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
+    @GestureState var draggingOffset: CGSize = .zero
+    
+    var body: some View {
+        ZStack {
+            if homeTimelineViewModel.showImageViewer {
+                Color(.black)
+                    .opacity(homeTimelineViewModel.bgOpacity)
+                    .ignoresSafeArea()
+                
+                ScrollView(.init()) {
+                    TabView(selection: $homeTimelineViewModel.selectedImageID) {
+                        ForEach(homeTimelineViewModel.allImages, id: \.self) {image in
+                            Image(image)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .tag(image)
+                                .scaleEffect(homeTimelineViewModel.selectedImageID == image ? (homeTimelineViewModel.imageScale > 1 ? homeTimelineViewModel.imageScale : 1) : 1)
+                                .offset(y: homeTimelineViewModel.imageViewerOffset.height)
+                                .gesture(
+                                    MagnificationGesture().onChanged({(value) in
+                                        homeTimelineViewModel.imageScale = value
+                                    }).onEnded({(_) in
+                                        withAnimation(.spring()){
+                                            homeTimelineViewModel.imageScale = 1
+                                        }
+                                    })
+                                    
+                                    .simultaneously(with: DragGesture(minimumDistance: homeTimelineViewModel.imageScale == 1 ? 1000 : 0))
+                                    
+                                    .simultaneously(with: TapGesture(count: 2).onEnded({
+                                        withAnimation {
+                                            homeTimelineViewModel.imageScale = homeTimelineViewModel.imageScale > 1 ? 1 : 4
+                                        }
+                                    }))
+                                )
+                        }
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                }
+                .ignoresSafeArea()
+//                .transition(.move(edge: .bottom))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay(
+            Button(action: {
+                homeTimelineViewModel.showImageViewer.toggle()
+//                withAnimation(.default) {
+//                    homeTimelineViewModel.showImageViewer.toggle()
+//                }
+            }, label: {
+                Image(systemName: "xmark")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.white.opacity(0.35))
+                    .clipShape(Circle())
+            })
+            .padding(10)
+            .opacity(homeTimelineViewModel.showImageViewer ? homeTimelineViewModel.bgOpacity : 0)
+            
+            , alignment: .topTrailing
+        )
     }
 }
 
@@ -129,8 +260,8 @@ struct UserView: View {
     
     @State var currentDate = Date()
     private let timer = Timer.publish(every: 10, on: .main, in: .common)
-      .autoconnect()
-      .eraseToAnyPublisher()
+        .autoconnect()
+        .eraseToAnyPublisher()
     
     var body: some View {
         HStack(spacing: 10) {
@@ -148,7 +279,7 @@ struct UserView: View {
             }
         }
         .onReceive(timer) {
-          self.currentDate = $0
+            self.currentDate = $0
         }
     }
 }
