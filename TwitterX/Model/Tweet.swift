@@ -12,12 +12,14 @@ struct Tweet: Decodable {
     let idStr: String
     let text: String
     let entities: TweetEntities
+    let user: User
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case idStr = "id_str"
         case text = "text"
         case entities = "entities"
+        case user = "user"
     }
 }
 
