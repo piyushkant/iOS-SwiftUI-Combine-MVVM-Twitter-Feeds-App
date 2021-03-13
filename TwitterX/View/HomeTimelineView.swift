@@ -36,9 +36,10 @@ struct HomeTimelineView: View {
                     HomeTimelineCellView(tweet: tweets[i], isLast: false, homeTimelineViewModel: self.homeTimelineViewModel)
                 }
             }
+            .buttonStyle(PlainButtonStyle())
             .onAppear {
-                //                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
-                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleMultipleImageTweetId)
+//                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
+                                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleMultipleImageTweetId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
@@ -77,6 +78,7 @@ struct HomeTimelineCellView: View {
             
             let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
             
+            
             LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
                 
                 ForEach(homeTimelineViewModel.allImages.indices, id:\.self) { index in
@@ -85,9 +87,7 @@ struct HomeTimelineCellView: View {
                 
             })
             .padding(.top)
-//            .overlay(
-//                ImageView(homeTimelineViewModel: homeTimelineViewModel)
-//            )
+            
             
             //            if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
             //                LinkPreview(link: link)
@@ -118,19 +118,14 @@ struct GridImageView: View {
     var body: some View {
         Button(action: {
             
-//            homeTimelineViewModel.selectedImageID = homeTimelineViewModel.allImages[index]
-//            homeTimelineViewModel.showImageViewer.toggle()
+            homeTimelineViewModel.selectedImageID = homeTimelineViewModel.allImages[index]
+            homeTimelineViewModel.showImageViewer.toggle()
             
-//            withAnimation(.easeInOut) {
-//                homeTimelineViewModel.selectedImageID = homeTimelineViewModel.allImages[index]
-//                homeTimelineViewModel.showImageViewer.toggle()
-//            }
         }, label: {
             ZStack {
                 Image(homeTimelineViewModel.allImages[index])
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-//                    .frame(width: getWidth(index: index), height: 120)
                     .frame(width: (getRect().width - 100)/2, height: 120)
                     .cornerRadius(12)
             }
@@ -199,16 +194,12 @@ struct ImageView: View {
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 }
                 .ignoresSafeArea()
-//                .transition(.move(edge: .bottom))
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(
             Button(action: {
                 homeTimelineViewModel.showImageViewer.toggle()
-//                withAnimation(.default) {
-//                    homeTimelineViewModel.showImageViewer.toggle()
-//                }
             }, label: {
                 Image(systemName: "xmark")
                     .foregroundColor(.white)
