@@ -12,7 +12,7 @@ struct UserTweetData {
     let attachedImages: [AttachedImage]?
 }
 
-struct AttachedImage {
+struct AttachedImage: Hashable {
     let id: String
     let image: UIImage?
 }

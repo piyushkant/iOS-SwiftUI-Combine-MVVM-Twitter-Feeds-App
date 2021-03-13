@@ -31,9 +31,9 @@ struct HomeTimelineView: View {
         NavigationView {
             List(0..<tweets.count, id: \.self) { i in
                 if i == tweets.count - 1 {
-                    HomeTimelineCellView(tweet: tweets[i], isLast: true, homeTimelineViewModel: self.homeTimelineViewModel)
+                    HomeTimelineCellView(index: i, tweet: tweets[i], isLast: true, homeTimelineViewModel: self.homeTimelineViewModel)
                 } else {
-                    HomeTimelineCellView(tweet: tweets[i], isLast: false, homeTimelineViewModel: self.homeTimelineViewModel)
+                    HomeTimelineCellView(index: i, tweet: tweets[i], isLast: false, homeTimelineViewModel: self.homeTimelineViewModel)
                 }
             }
             .buttonStyle(PlainButtonStyle())
@@ -52,16 +52,11 @@ struct HomeTimelineView: View {
 }
 
 struct HomeTimelineCellView: View {
+    let index: Int
     let tweet: Tweet
     var isLast: Bool
     @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
     @State var togglePreview = false
-    
-    init(tweet: Tweet, isLast: Bool, homeTimelineViewModel: HomeTimelineViewModel) {
-        self.tweet = tweet
-        self.isLast = isLast
-        self.homeTimelineViewModel = homeTimelineViewModel
-    }
     
     var body: some View {
         //        Mark: Disabled for now due to api usage limit
@@ -103,7 +98,7 @@ struct HomeTimelineCellView: View {
             
         }
         .overlay(
-            ImageView(homeTimelineViewModel: homeTimelineViewModel)
+            ImageView(index: index, homeTimelineViewModel: homeTimelineViewModel)
         )
         
     }
@@ -119,8 +114,6 @@ struct GridImageView: View {
     
     var body: some View {
         Button(action: {
-            
-//            homeTimelineViewModel.selectedImageID = homeTimelineViewModel.allImages[index]
             homeTimelineViewModel.selectedImageID = attachedImages[index].id
             homeTimelineViewModel.showImageViewer.toggle()
             
@@ -156,12 +149,14 @@ extension View {
 }
 
 struct ImageView: View {
+    let index: Int
     @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
     @GestureState var draggingOffset: CGSize = .zero
     
-//    private var attachedImages: [AttachedImage] {
-//        return homeTimelineViewModel.userTweetData[index].attachedImages!
-//    }
+    private var attachedImages: [AttachedImage] {
+        print("attachedImages", homeTimelineViewModel.userTweetData[index].attachedImages!.count)
+        return homeTimelineViewModel.userTweetData[index].attachedImages!
+    }
     
     var body: some View {
         ZStack {
@@ -172,12 +167,12 @@ struct ImageView: View {
                 
                 ScrollView(.init()) {
                     TabView(selection: $homeTimelineViewModel.selectedImageID) {
-                        ForEach(homeTimelineViewModel.allImages, id: \.self) {image in
-                            Image(image)
+                        ForEach(attachedImages, id: \.self) {image in
+                            Image(uiImage: image.image ?? UIImage())
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .tag(image)
-                                .scaleEffect(homeTimelineViewModel.selectedImageID == image ? (homeTimelineViewModel.imageScale > 1 ? homeTimelineViewModel.imageScale : 1) : 1)
+                                .scaleEffect(homeTimelineViewModel.selectedImageID == image.id ? (homeTimelineViewModel.imageScale > 1 ? homeTimelineViewModel.imageScale : 1) : 1)
                                 .offset(y: homeTimelineViewModel.imageViewerOffset.height)
                                 .gesture(
                                     MagnificationGesture().onChanged({(value) in

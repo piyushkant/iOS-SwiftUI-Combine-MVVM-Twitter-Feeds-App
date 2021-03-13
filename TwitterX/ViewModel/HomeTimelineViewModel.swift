@@ -23,16 +23,13 @@ class HomeTimelineViewModel: ObservableObject {
     @Published var links = [Link]()
     @Published var userData = [UserData]()
     @Published var userTweetData = [UserTweetData]()
-//    @Published var attachedImages = [String: UIImage]()
     @Published var error: ApiError? = nil
-    
-    //testing
-    @Published var allImages = ["img1", "img2", "img3", "img4"]
     @Published var showImageViewer = false
     @Published var selectedImageID = ""
     @Published var imageViewerOffset: CGSize = .zero
     @Published var bgOpacity: Double = 1
     @Published var imageScale: CGFloat = 1
+    @Published var userAttachedImages = [AttachedImage]()
     
     init() {
         self.api = Api(oauth: OAuth())
