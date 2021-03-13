@@ -22,6 +22,8 @@ class HomeTimelineViewModel: ObservableObject {
     @Published var tweets = [Tweet]()
     @Published var links = [Link]()
     @Published var userData = [UserData]()
+    @Published var userTweetData = [UserTweetData]()
+//    @Published var attachedImages = [String: UIImage]()
     @Published var error: ApiError? = nil
     
     //testing
@@ -36,7 +38,7 @@ class HomeTimelineViewModel: ObservableObject {
         self.api = Api(oauth: OAuth())
     }
     
-    func fetchHomeTimeline(count: Int) {        
+    func fetchHomeTimeline(count: Int) {
         api
             .homeTimeline(count: count)
             .receive(on: DispatchQueue.main)
@@ -92,6 +94,7 @@ class HomeTimelineViewModel: ObservableObject {
             }, receiveValue: { tweet in
                 self.tweets.append(tweet)
                 
+                //Mark: user info data
                 let user = tweet.user
                 let profileImageUrl = user.profileImageUrl
                 
@@ -105,6 +108,31 @@ class HomeTimelineViewModel: ObservableObject {
                     task.resume()
                 }
                 
+                
+                //Mark: user tweet data
+                let media = tweet.extendedEntities.media
+                var attachedImages = [AttachedImage]()
+                var count = 0
+                for m in media {
+                    if let imageUrl = URL(string: m.mediaUrl) {
+                        let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                            guard let data = data else { return }
+                    
+                            attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
+                            
+                            count += 1
+                            
+                            if media.count >= count {
+                                DispatchQueue.main.async {
+                                    self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages))
+                                }
+                            }
+                        }
+                        task.resume()
+                    }
+                }
+                
+                //Mark: user tweet links
                 if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
                     let provider = LPMetadataProvider()
                     
@@ -123,10 +151,38 @@ class HomeTimelineViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
+//    func fetchAttchedImages(tweet: Tweet) -> [String: UIImage]? {
+//        var id = 0
+//        
+//        if let userData = fetchUserTweetData(tweet: tweet),let imageData = userData.imageData {
+//            var attachedImages = [String : UIImage]()
+//            
+//            for data in imageData {
+//                attachedImages[String(describing: id)] = UIImage(data: data) ?? UIImage()
+//                id += 1
+//            }
+//            
+//            self.attachedImages = attachedImages
+//            return attachedImages
+//        }
+//        return nil
+//    }
+    
     func fetchUserData(tweet: Tweet) -> UserData? {
         let userId = tweet.user.idStr
         
         for data in userData {
+            if data.id == userId {
+                return data
+            }
+        }
+        return nil
+    }
+    
+    func fetchUserTweetData(tweet: Tweet) -> UserTweetData? {
+        let userId = tweet.user.idStr
+        
+        for data in userTweetData {
             if data.id == userId {
                 return data
             }

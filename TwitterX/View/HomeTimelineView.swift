@@ -38,8 +38,8 @@ struct HomeTimelineView: View {
             }
             .buttonStyle(PlainButtonStyle())
             .onAppear {
-//                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
-                                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleMultipleImageTweetId)
+                //                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
+                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleMultipleImageTweetId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
@@ -76,18 +76,16 @@ struct HomeTimelineCellView: View {
             
             HyperlinkTextView(headline)
             
-            let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
-            
-            
-            LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
+            if let _ = homeTimelineViewModel.fetchUserTweetData(tweet: self.tweet) {
+                let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
                 
-                ForEach(homeTimelineViewModel.allImages.indices, id:\.self) { index in
-                    GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
-                }
-                
-            })
-            .padding(.top)
-            
+                LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
+                    ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
+                        GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
+                    }
+                })
+                .padding(.top)
+            }
             
             //            if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
             //                LinkPreview(link: link)
@@ -115,15 +113,20 @@ struct GridImageView: View {
     @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
     var index: Int
     
+    private var attachedImages: [AttachedImage] {
+        return homeTimelineViewModel.userTweetData[index].attachedImages!
+    }
+    
     var body: some View {
         Button(action: {
             
-            homeTimelineViewModel.selectedImageID = homeTimelineViewModel.allImages[index]
+//            homeTimelineViewModel.selectedImageID = homeTimelineViewModel.allImages[index]
+            homeTimelineViewModel.selectedImageID = attachedImages[index].id
             homeTimelineViewModel.showImageViewer.toggle()
             
         }, label: {
             ZStack {
-                Image(homeTimelineViewModel.allImages[index])
+                Image(uiImage: attachedImages[index].image ?? UIImage())
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: (getRect().width - 100)/2, height: 120)
@@ -134,10 +137,10 @@ struct GridImageView: View {
     
     func getWidth(index: Int) -> CGFloat {
         let width = getRect().width - 100
-        if homeTimelineViewModel.allImages.count % 2 == 0 {
+        if attachedImages.count % 2 == 0 {
             return width/2
         } else {
-            if index == homeTimelineViewModel.allImages.count - 1 {
+            if index == attachedImages.count - 1 {
                 return width
             } else {
                 return width/2
@@ -155,6 +158,10 @@ extension View {
 struct ImageView: View {
     @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
     @GestureState var draggingOffset: CGSize = .zero
+    
+//    private var attachedImages: [AttachedImage] {
+//        return homeTimelineViewModel.userTweetData[index].attachedImages!
+//    }
     
     var body: some View {
         ZStack {
@@ -232,7 +239,7 @@ struct EmptyLinkPreview: UIViewRepresentable {
 struct LinkPreview: UIViewRepresentable {
     var link: Link
     
-    func makeUIView(context: Context) -> LPLinkView {        
+    func makeUIView(context: Context) -> LPLinkView {
         let linkView = LPLinkView(url: link.url)
         
         linkView.metadata = link.data

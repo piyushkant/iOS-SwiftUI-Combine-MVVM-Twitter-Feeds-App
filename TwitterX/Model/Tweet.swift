@@ -14,7 +14,7 @@ struct Tweet: Decodable {
     let text: String
     let entities: TweetEntities
     let user: User
-    
+    let extendedEntities: TweetExtendedEntities
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -23,7 +23,19 @@ struct Tweet: Decodable {
         case text = "text"
         case entities = "entities"
         case user = "user"
+        case extendedEntities = "extended_entities"
     }
+    
+//    init(from decoder: Decoder) throws {
+//            let values = try decoder.container(keyedBy: CodingKeys.self)
+//
+//            if values.contains(.extendedEntities) {
+//                let age = try values.nestedContainer(keyedBy: AgeKeys.self, forKey: .age)
+//                self.age = try age.decodeIfPresent(Int.self, forKey: .realAge)
+//            } else {
+//                self.age = nil
+//            }
+//        }
 }
 
 
