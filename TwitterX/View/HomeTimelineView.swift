@@ -122,29 +122,10 @@ struct GridImageView: View {
                 Image(uiImage: attachedImages[index].image ?? UIImage())
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: (getRect().width - 100)/2, height: 120)
+                    .frame(width: (UIScreen.main.bounds.width - 100)/2, height: 120)
                     .cornerRadius(12)
             }
         })
-    }
-    
-    func getWidth(index: Int) -> CGFloat {
-        let width = getRect().width - 100
-        if attachedImages.count % 2 == 0 {
-            return width/2
-        } else {
-            if index == attachedImages.count - 1 {
-                return width
-            } else {
-                return width/2
-            }
-        }
-    }
-}
-
-extension View {
-    func getRect() -> CGRect {
-        return UIScreen.main.bounds
     }
 }
 

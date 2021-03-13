@@ -29,7 +29,6 @@ class HomeTimelineViewModel: ObservableObject {
     @Published var imageViewerOffset: CGSize = .zero
     @Published var bgOpacity: Double = 1
     @Published var imageScale: CGFloat = 1
-    @Published var userAttachedImages = [AttachedImage]()
     
     init() {
         self.api = Api(oauth: OAuth())
@@ -147,23 +146,6 @@ class HomeTimelineViewModel: ObservableObject {
             })
             .store(in: &subscriptions)
     }
-    
-//    func fetchAttchedImages(tweet: Tweet) -> [String: UIImage]? {
-//        var id = 0
-//        
-//        if let userData = fetchUserTweetData(tweet: tweet),let imageData = userData.imageData {
-//            var attachedImages = [String : UIImage]()
-//            
-//            for data in imageData {
-//                attachedImages[String(describing: id)] = UIImage(data: data) ?? UIImage()
-//                id += 1
-//            }
-//            
-//            self.attachedImages = attachedImages
-//            return attachedImages
-//        }
-//        return nil
-//    }
     
     func fetchUserData(tweet: Tweet) -> UserData? {
         let userId = tweet.user.idStr
