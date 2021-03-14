@@ -75,3 +75,23 @@ public enum MediaType {
     case GIF
 }
 
+
+enum VideoBitrate {
+    case zero
+    case low
+    case medium
+    case high
+    
+    var value: Int {
+        switch self {
+        case .zero:
+            return 0
+        case .low:
+            return 288000
+        case .medium:
+            return 832000
+        case .high:
+            return 2176000
+        }
+    }
+}

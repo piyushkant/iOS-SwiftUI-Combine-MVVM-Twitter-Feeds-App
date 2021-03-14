@@ -73,38 +73,43 @@ struct HomeTimelineCellView: View {
             
             HyperlinkTextView(headline)
             
-            GifView(url: URL(string: "https://www.google.com")!)
-                .frame(height: 197)
-                .cornerRadius(10)
+            if let _ = homeTimelineViewModel.fetchUserTweetData(tweet: self.tweet) {
+                let mediaType = homeTimelineViewModel.mediaType
+                
+                if (mediaType == .GIF) {
+                    let gifUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
+
+                    if let gifUrl = gifUrl, let url = URL(string: gifUrl) {
+                        GifView(url: url)
+                            .frame(height: 197)
+                            .cornerRadius(10)
+
+                    }
+                } else if (mediaType == .VIDEO) {
+                    let videoUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
+                    
+                    if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
+                        VideoPlayer(player: AVPlayer(url: url))
+                            .frame(height: 197)
+                            .cornerRadius(10)
+                    }
+                } else if (mediaType == .IMAGES) {
+                    let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
+                    
+                    LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
+                        ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
+                            GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
+                        }
+                    })
+                    .padding(.top)
+                }
+            }
             
-            //            if let _ = homeTimelineViewModel.fetchUserTweetData(tweet: self.tweet) {
-            //                let mediaType = homeTimelineViewModel.mediaType
-            //
-            //                if (mediaType == .VIDEO) {
-            //                    let videoUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
-            //
-            //                    if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
-            //                        VideoPlayer(player: AVPlayer(url: url))
-            //                            .frame(height: 197)
-            //                            .cornerRadius(10)
-            //                    }
-            //                } else if (mediaType == .IMAGES) {
-            //                    let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
-            //
-            //                    LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
-            //                        ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
-            //                            GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
-            //                        }
-            //                    })
-            //                    .padding(.top)
-            //                }
-            //            }
-            
-            //            if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
-            //                LinkPreview(link: link)
-            //            } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-            //                EmptyLinkPreview(url: url)
-            //            }
+            if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
+                LinkPreview(link: link)
+            } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                EmptyLinkPreview(url: url)
+            }
             
             if self.isLast {
                 Text("").onAppear {

@@ -106,15 +106,26 @@ class HomeTimelineViewModel: ObservableObject {
                 }
                 
                 //Mark: user tweet data
+                self.mediaType = .LINKS
                 let media = tweet.extendedEntities.media
                 
                 if let videoInfo = media.first?.videoInfo {
-                    self.mediaType = .VIDEO
                     let videoVariants = videoInfo.variants
-                   
+                    
                     for variant in videoVariants {
-                        if let bitrate = variant.bitrate, bitrate == 0 {//2176000 {//288000 { //Mark: using the lowest bitrate video for testing purpose
+                        if let bitrate = variant.bitrate, bitrate == VideoBitrate.zero.value  {
+                            self.mediaType = .GIF
                             self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
+                            break
+                        }
+                    }
+                    
+                    if (self.mediaType != .GIF) {
+                        for variant in videoVariants {
+                            if let bitrate = variant.bitrate, bitrate == VideoBitrate.high.value {//Mark: using the lowest bitrate video for testing purpose
+                                self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
+                                break
+                            }
                         }
                     }
                 } else {
@@ -125,11 +136,11 @@ class HomeTimelineViewModel: ObservableObject {
                         if let imageUrl = URL(string: m.mediaUrl) {
                             let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                                 guard let data = data else { return }
-
+                                
                                 attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
-
+                                
                                 count += 1
-
+                                
                                 if media.count >= count {
                                     DispatchQueue.main.async {
                                         self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages, attachedVideoUrl: nil))
@@ -141,20 +152,20 @@ class HomeTimelineViewModel: ObservableObject {
                     }
                 }
                 
-//                //Mark: user tweet links
-//                if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-//                    let provider = LPMetadataProvider()
-//
-//                    provider.startFetchingMetadata(for: url) { metaData, error in
-//                        guard let data = metaData, error == nil else {
-//                            return
-//                        }
-//                        DispatchQueue.main.async {
-//                            self.links.append(Link(id: tweet.idStr, url: url, data: data))
-//                        }
-//                    }
-//                }
-//
+                //                //Mark: user tweet links
+                //                if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                //                    let provider = LPMetadataProvider()
+                //
+                //                    provider.startFetchingMetadata(for: url) { metaData, error in
+                //                        guard let data = metaData, error == nil else {
+                //                            return
+                //                        }
+                //                        DispatchQueue.main.async {
+                //                            self.links.append(Link(id: tweet.idStr, url: url, data: data))
+                //                        }
+                //                    }
+                //                }
+                //
                 self.error = nil
             })
             .store(in: &subscriptions)
