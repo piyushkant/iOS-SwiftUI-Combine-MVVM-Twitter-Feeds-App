@@ -13,11 +13,10 @@ import SwiftyGif
 struct HomeTimelineConfig {
     static let TweetsLimit = 10
     static let sampleSingleImageTweetId = "1370325033663426560"
-    //    static let sampleSingleImageTweetId = "1370329824422551554"
     static let sampleMultipleImageTweetId = "1370337291214888962"
     static let sampleImageWithUrlId = "1370316972181848066"
-    static let sampleGifTweetId = "1370922422233358336"//"1366750878749761537"
-    static let sampleVideoTweetId = "1370909292367388677"//"1370320412177993739"
+    static let sampleGifTweetId = "1370922422233358336"
+    static let sampleVideoTweetId = "1370320412177993739"
 }
 
 struct HomeTimelineView: View {
@@ -41,7 +40,7 @@ struct HomeTimelineView: View {
             .buttonStyle(PlainButtonStyle())
             .onAppear {
                 //                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
-                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleGifTweetId)
+                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleVideoTweetId )
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
@@ -72,22 +71,39 @@ struct HomeTimelineCellView: View {
             }
             
             HyperlinkTextView(headline)
-            
+                        
             if let _ = homeTimelineViewModel.fetchUserTweetData(tweet: self.tweet) {
                 let mediaType = homeTimelineViewModel.mediaType
-                
-                if (mediaType == .GIF) {
-                    let gifUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
 
-                    if let gifUrl = gifUrl, let url = URL(string: gifUrl) {
-                        GifView(url: url)
+                //Mark: for now gif will act as video. Fix this if found some good solution
+                if (mediaType == .GIF) {
+//                    let gifUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
+//
+//                    if let gifUrl = gifUrl, let url = URL(string: gifUrl) {
+//                        GifView(url: url)
+//                            .frame(height: 197)
+//                            .cornerRadius(10)
+//
+//                    }
+
+                    let videoUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
+                    
+                    if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
+                        let player = AVPlayer(url: url)
+                        VideoPlayer(player: player)
                             .frame(height: 197)
                             .cornerRadius(10)
-
+                            .onAppear {
+                                player.play()
+                            }
+                            .onDisappear {
+                                player.pause()
+                            }
+                        
                     }
                 } else if (mediaType == .VIDEO) {
                     let videoUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
-                    
+
                     if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
                         VideoPlayer(player: AVPlayer(url: url))
                             .frame(height: 197)
@@ -95,20 +111,20 @@ struct HomeTimelineCellView: View {
                     }
                 } else if (mediaType == .IMAGES) {
                     let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
-                    
+
                     LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
                         ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
                             GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
                         }
                     })
                     .padding(.top)
+                } else {
+                    if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
+                        LinkPreview(link: link)
+                    } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                        EmptyLinkPreview(url: url)
+                    }
                 }
-            }
-            
-            if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
-                LinkPreview(link: link)
-            } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-                EmptyLinkPreview(url: url)
             }
             
             if self.isLast {
@@ -223,24 +239,24 @@ struct ImageView: View {
 
 struct GifView: UIViewRepresentable {
     var url: URL
-    
+
     func makeUIView(context: Context) -> UIView {
         do {
             let view = UIView(frame: CGRect(x: 0, y: 0, width: 350, height: 200))
-            
+
             let gif = try UIImage(gifName: "giphy.gif")
             let imageview = UIImageView(gifImage: gif, loopCount: 3)
             imageview.frame = view.bounds
             view.addSubview(imageview)
-            
+
             return view
         } catch {
             print(error)
         }
-        
+
         return UIView()
     }
-    
+
     func updateUIView(_ uiView: UIView, context: Context) {
     }
 }
