@@ -113,7 +113,7 @@ class HomeTimelineViewModel: ObservableObject {
                     let videoVariants = videoInfo.variants
                    
                     for variant in videoVariants {
-                        if let bitrate = variant.bitrate, bitrate == 2176000 {//288000 { //Mark: using the lowest bitrate video for testing purpose
+                        if let bitrate = variant.bitrate, bitrate == 0 {//2176000 {//288000 { //Mark: using the lowest bitrate video for testing purpose
                             self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
                         }
                     }

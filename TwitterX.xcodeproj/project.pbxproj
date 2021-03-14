@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4B0CBDA425FC69F700615DDF /* TweetExtendedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0CBDA325FC69F700615DDF /* TweetExtendedEntities.swift */; };
 		4B0CBDAE25FC702500615DDF /* UserTweetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0CBDAD25FC702500615DDF /* UserTweetData.swift */; };
+		4B0CBDD625FDAF6B00615DDF /* SwiftyGif in Frameworks */ = {isa = PBXBuildFile; productRef = 4B0CBDD525FDAF6B00615DDF /* SwiftyGif */; };
+		4B0CBDE725FDD43400615DDF /* giphy.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4B0CBDE625FDD43400615DDF /* giphy.gif */; };
 		4B2AB26525FAEEAA005A13C7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2AB26425FAEEAA005A13C7 /* User.swift */; };
 		4B2AB26A25FAF174005A13C7 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2AB26925FAF174005A13C7 /* UserData.swift */; };
 		4B33459425F87E4E003685FA /* LinkedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B33459325F87E4E003685FA /* LinkedText.swift */; };
@@ -73,6 +75,7 @@
 /* Begin PBXFileReference section */
 		4B0CBDA325FC69F700615DDF /* TweetExtendedEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetExtendedEntities.swift; sourceTree = "<group>"; };
 		4B0CBDAD25FC702500615DDF /* UserTweetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTweetData.swift; sourceTree = "<group>"; };
+		4B0CBDE625FDD43400615DDF /* giphy.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = giphy.gif; sourceTree = "<group>"; };
 		4B2AB26425FAEEAA005A13C7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4B2AB26925FAF174005A13C7 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		4B33459325F87E4E003685FA /* LinkedText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedText.swift; sourceTree = "<group>"; };
@@ -127,6 +130,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B69C30825F39FBE00BA0663 /* FirebaseCrashlytics in Frameworks */,
+				4B0CBDD625FDAF6B00615DDF /* SwiftyGif in Frameworks */,
 				4B69C30425F39FBE00BA0663 /* FirebaseAnalytics in Frameworks */,
 				4B69C30625F39FBE00BA0663 /* FirebaseAuth in Frameworks */,
 			);
@@ -149,6 +153,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B0CBDDD25FDB23D00615DDF /* Gif */ = {
+			isa = PBXGroup;
+			children = (
+				4B0CBDE625FDD43400615DDF /* giphy.gif */,
+			);
+			path = Gif;
+			sourceTree = "<group>";
+		};
 		4B69C2BA25F39CC500BA0663 = {
 			isa = PBXGroup;
 			children = (
@@ -267,6 +279,7 @@
 		4B69C35B25F3D98400BA0663 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4B0CBDDD25FDB23D00615DDF /* Gif */,
 				4B69C36F25F3DBC400BA0663 /* Localizable.strings */,
 				4B69C2CA25F39CC600BA0663 /* Assets.xcassets */,
 			);
@@ -334,6 +347,7 @@
 				4B69C30325F39FBE00BA0663 /* FirebaseAnalytics */,
 				4B69C30525F39FBE00BA0663 /* FirebaseAuth */,
 				4B69C30725F39FBE00BA0663 /* FirebaseCrashlytics */,
+				4B0CBDD525FDAF6B00615DDF /* SwiftyGif */,
 			);
 			productName = TwitterX;
 			productReference = 4B69C2C325F39CC500BA0663 /* TwitterX.app */;
@@ -409,6 +423,7 @@
 			mainGroup = 4B69C2BA25F39CC500BA0663;
 			packageReferences = (
 				4B69C30225F39FBE00BA0663 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				4B0CBDD425FDAF6A00615DDF /* XCRemoteSwiftPackageReference "SwiftyGif" */,
 			);
 			productRefGroup = 4B69C2C425F39CC500BA0663 /* Products */;
 			projectDirPath = "";
@@ -430,6 +445,7 @@
 				4B69C36D25F3DBC400BA0663 /* Localizable.strings in Resources */,
 				4B69C37B25F3DDB900BA0663 /* OAuth-Info.plist in Resources */,
 				4B69C2CB25F39CC600BA0663 /* Assets.xcassets in Resources */,
+				4B0CBDE725FDD43400615DDF /* giphy.gif in Resources */,
 				4B69C2FE25F39E7300BA0663 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -822,6 +838,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4B0CBDD425FDAF6A00615DDF /* XCRemoteSwiftPackageReference "SwiftyGif" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kirualex/SwiftyGif";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.0;
+			};
+		};
 		4B69C30225F39FBE00BA0663 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -833,6 +857,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4B0CBDD525FDAF6B00615DDF /* SwiftyGif */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B0CBDD425FDAF6A00615DDF /* XCRemoteSwiftPackageReference "SwiftyGif" */;
+			productName = SwiftyGif;
+		};
 		4B69C30325F39FBE00BA0663 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4B69C30225F39FBE00BA0663 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
