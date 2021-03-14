@@ -68,3 +68,10 @@ struct VideoVariants: Decodable {
     }
 }
 
+public enum MediaType {
+    case LINKS
+    case IMAGES
+    case VIDEO
+    case GIF
+}
+

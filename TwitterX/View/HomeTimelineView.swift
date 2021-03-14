@@ -40,11 +40,11 @@ struct HomeTimelineView: View {
             .buttonStyle(PlainButtonStyle())
             .onAppear {
                 //                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
-                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleVideoTweetId)
+                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleImageWithUrlId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
-//            .navigationBarTitle(Text(NSLocalizedString("homeTimeline", comment: "")))
+            //            .navigationBarTitle(Text(NSLocalizedString("homeTimeline", comment: "")))
             .navigationBarItems(trailing:
                                     Button("Settings") {}
             )
@@ -73,24 +73,26 @@ struct HomeTimelineCellView: View {
             HyperlinkTextView(headline)
             
             if let _ = homeTimelineViewModel.fetchUserTweetData(tweet: self.tweet) {
-                let videoUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
+                let mediaType = homeTimelineViewModel.mediaType
                 
-                if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
-                    VideoPlayer(player: AVPlayer(url: url))
-                        .frame(height: 197)
-                        .cornerRadius(10)
-//                        .padding(.init(20))
+                if (mediaType == .VIDEO) {
+                    let videoUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
+                    
+                    if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
+                        VideoPlayer(player: AVPlayer(url: url))
+                            .frame(height: 197)
+                            .cornerRadius(10)
+                    }
+                } else if (mediaType == .IMAGES) {
+                    let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
+                    
+                    LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
+                        ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
+                            GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
+                        }
+                    })
+                    .padding(.top)
                 }
-                
-                
-                //                let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
-                //
-                //                LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
-                //                    ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
-                //                        GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
-                //                    }
-                //                })
-                //                .padding(.top)
             }
             
             //            if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {

@@ -29,6 +29,7 @@ class HomeTimelineViewModel: ObservableObject {
     @Published var imageViewerOffset: CGSize = .zero
     @Published var bgOpacity: Double = 1
     @Published var imageScale: CGFloat = 1
+    @Published var mediaType = MediaType.LINKS
     
     init() {
         self.api = Api(oauth: OAuth())
@@ -108,6 +109,7 @@ class HomeTimelineViewModel: ObservableObject {
                 let media = tweet.extendedEntities.media
                 
                 if let videoInfo = media.first?.videoInfo {
+                    self.mediaType = .VIDEO
                     let videoVariants = videoInfo.variants
                    
                     for variant in videoVariants {
@@ -116,6 +118,7 @@ class HomeTimelineViewModel: ObservableObject {
                         }
                     }
                 } else {
+                    self.mediaType = .IMAGES
                     var attachedImages = [AttachedImage]()
                     var count = 0
                     for m in media {
@@ -138,7 +141,7 @@ class HomeTimelineViewModel: ObservableObject {
                     }
                 }
                 
-                //Mark: user tweet links
+//                //Mark: user tweet links
 //                if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
 //                    let provider = LPMetadataProvider()
 //
@@ -151,7 +154,7 @@ class HomeTimelineViewModel: ObservableObject {
 //                        }
 //                    }
 //                }
-                
+//
                 self.error = nil
             })
             .store(in: &subscriptions)
