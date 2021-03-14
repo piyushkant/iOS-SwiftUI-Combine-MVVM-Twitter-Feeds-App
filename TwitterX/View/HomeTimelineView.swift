@@ -13,9 +13,9 @@ struct HomeTimelineConfig {
     static let sampleSingleImageTweetId = "1370325033663426560"
     //    static let sampleSingleImageTweetId = "1370329824422551554"
     static let sampleMultipleImageTweetId = "1370337291214888962"
-    //    static let sampleImageWithUrlId = "1370316972181848066"
-    //    static let sampleGifTweetId = "1366750878749761537"
-    //    static let sampleVideoTweetId = "1370320412177993739"
+    static let sampleImageWithUrlId = "1370316972181848066"
+    static let sampleGifTweetId = "1366750878749761537"
+    static let sampleVideoTweetId = "1370320412177993739"
 }
 
 struct HomeTimelineView: View {
@@ -39,7 +39,7 @@ struct HomeTimelineView: View {
             .buttonStyle(PlainButtonStyle())
             .onAppear {
                 //                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
-                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleMultipleImageTweetId)
+                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleVideoTweetId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
@@ -73,7 +73,7 @@ struct HomeTimelineCellView: View {
             
             if let _ = homeTimelineViewModel.fetchUserTweetData(tweet: self.tweet) {
                 let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
-                
+
                 LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
                     ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
                         GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
