@@ -104,27 +104,37 @@ class HomeTimelineViewModel: ObservableObject {
                     task.resume()
                 }
                 
-                
                 //Mark: user tweet data
                 let media = tweet.extendedEntities.media
-                var attachedImages = [AttachedImage]()
-                var count = 0
-                for m in media {
-                    if let imageUrl = URL(string: m.mediaUrl) {
-                        let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                            guard let data = data else { return }
+                
+                if let videoInfo = media.first?.videoInfo {
+                    let videoVariants = videoInfo.variants
+                   
+                    for variant in videoVariants {
+                        if let bitrate = variant.bitrate, bitrate == 2176000 {//288000 { //Mark: using the lowest bitrate video for testing purpose
+                            self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
+                        }
+                    }
+                } else {
+                    var attachedImages = [AttachedImage]()
+                    var count = 0
+                    for m in media {
+                        if let imageUrl = URL(string: m.mediaUrl) {
+                            let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                                guard let data = data else { return }
 
-                            attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
+                                attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
 
-                            count += 1
+                                count += 1
 
-                            if media.count >= count {
-                                DispatchQueue.main.async {
-                                    self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages))
+                                if media.count >= count {
+                                    DispatchQueue.main.async {
+                                        self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages, attachedVideoUrl: nil))
+                                    }
                                 }
                             }
+                            task.resume()
                         }
-                        task.resume()
                     }
                 }
                 

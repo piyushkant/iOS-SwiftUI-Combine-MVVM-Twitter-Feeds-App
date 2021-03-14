@@ -10,6 +10,7 @@ import SwiftUI
 struct UserTweetData {
     let id: String
     let attachedImages: [AttachedImage]?
+    let attachedVideoUrl: String?
 }
 
 struct AttachedImage: Hashable {

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import LinkPresentation
+import AVKit
 
 struct HomeTimelineConfig {
     static let TweetsLimit = 10
@@ -15,7 +16,7 @@ struct HomeTimelineConfig {
     static let sampleMultipleImageTweetId = "1370337291214888962"
     static let sampleImageWithUrlId = "1370316972181848066"
     static let sampleGifTweetId = "1366750878749761537"
-    static let sampleVideoTweetId = "1370320412177993739"
+    static let sampleVideoTweetId = "1370909292367388677"//"1370320412177993739"
 }
 
 struct HomeTimelineView: View {
@@ -43,7 +44,7 @@ struct HomeTimelineView: View {
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
-            .navigationBarTitle(Text(NSLocalizedString("homeTimeline", comment: "")))
+//            .navigationBarTitle(Text(NSLocalizedString("homeTimeline", comment: "")))
             .navigationBarItems(trailing:
                                     Button("Settings") {}
             )
@@ -72,14 +73,24 @@ struct HomeTimelineCellView: View {
             HyperlinkTextView(headline)
             
             if let _ = homeTimelineViewModel.fetchUserTweetData(tweet: self.tweet) {
-                let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
-
-                LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
-                    ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
-                        GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
-                    }
-                })
-                .padding(.top)
+                let videoUrl = homeTimelineViewModel.userTweetData.first?.attachedVideoUrl
+                
+                if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
+                    VideoPlayer(player: AVPlayer(url: url))
+                        .frame(height: 197)
+                        .cornerRadius(10)
+//                        .padding(.init(20))
+                }
+                
+                
+                //                let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
+                //
+                //                LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
+                //                    ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
+                //                        GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
+                //                    }
+                //                })
+                //                .padding(.top)
             }
             
             //            if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
