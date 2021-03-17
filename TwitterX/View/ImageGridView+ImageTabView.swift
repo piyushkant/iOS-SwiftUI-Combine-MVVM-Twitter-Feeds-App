@@ -14,7 +14,6 @@ struct ImageGridView: View {
     var body: some View {
         Button(action: {
             withAnimation(.easeInOut) {
-                homeViewModel.selectedImageID = image.id
                 homeViewModel.showImageViewer.toggle()
             }
             
@@ -29,75 +28,6 @@ struct ImageGridView: View {
         })
     }
 }
-
-//struct ImageTabView: View {
-//    @ObservedObject var homeViewModel: HomeViewModel
-//    let images: [AttachedImage]
-//    @GestureState var draggingOffset: CGSize = .zero
-//
-//    let allImages = ["img1", "img2", "img3", "img4"]
-//
-//    init(homeViewModel: HomeViewModel, images: [AttachedImage]) {
-//        self.homeViewModel = homeViewModel
-//        self.images = images
-//        print(homeViewModel.selectedImageID)
-//    }
-//
-//    var body: some View {
-//        ZStack {
-//            if homeViewModel.showImageViewer {
-//                Color(.gray)
-//                    .opacity(homeViewModel.bgOpacity)
-//                    .ignoresSafeArea()
-//
-//                TabView(selection: $homeViewModel.selectedImageID) {
-//                    ForEach(allImages, id: \.self) {image in
-//                        Image(image)
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .tag(image)
-//                            .scaleEffect(homeViewModel.selectedImageID == image ? (homeViewModel.imageScale > 1 ? homeViewModel.imageScale : 1) : 1)
-//                            .offset(y: homeViewModel.imageViewerOffset.height)
-//                            .gesture(
-//                                MagnificationGesture().onChanged({(value) in
-//                                    homeViewModel.imageScale = value
-//                                }).onEnded({(_) in
-//                                    withAnimation(.spring()){
-//                                        homeViewModel.imageScale = 1
-//                                    }
-//                                })
-//
-//                                .simultaneously(with: DragGesture(minimumDistance: homeViewModel.imageScale == 1 ? 1000 : 0))
-//
-//                                .simultaneously(with: TapGesture(count: 2).onEnded({
-//                                    withAnimation {
-//                                        homeViewModel.imageScale = homeViewModel.imageScale > 1 ? 1 : 4
-//                                    }
-//                                }))
-//                            )
-//                    }
-//                }
-//                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-//            }
-//        }
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//        .overlay(
-//            Button(action: {
-//                homeViewModel.showImageViewer.toggle()
-//            }, label: {
-//                Image(systemName: "xmark")
-//                    .foregroundColor(.white)
-//                    .padding()
-//                    .background(Color.white.opacity(0.35))
-//                    .clipShape(Rectangle())
-//            })
-//            .padding(10)
-//            .opacity(homeViewModel.showImageViewer ? homeViewModel.bgOpacity : 0)
-//
-//            , alignment: .topTrailing
-//        )
-//    }
-//}
 
 struct ImageTabView: View {
     @ObservedObject var homeViewModel: HomeViewModel
@@ -122,19 +52,18 @@ struct ImageTabView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .tag(image.image)
-                            .scaleEffect(homeViewModel.selectedImageID == image.id ? (homeViewModel.imageScale > 1 ? homeViewModel.imageScale : 1) : 1)
+                            .scaleEffect(homeViewModel.imageScale)
                             .offset(y: homeViewModel.imageViewerOffset.height)
                             .gesture(
                                 MagnificationGesture().onChanged({(value) in
                                     homeViewModel.imageScale = value
-                                }).onEnded({(_) in
+                                })
+                                .onEnded({(_) in
                                     withAnimation(.spring()){
                                         homeViewModel.imageScale = 1
                                     }
                                 })
-
                                 .simultaneously(with: DragGesture(minimumDistance: homeViewModel.imageScale == 1 ? 1000 : 0))
-
                                 .simultaneously(with: TapGesture(count: 2).onEnded({
                                     withAnimation {
                                         homeViewModel.imageScale = homeViewModel.imageScale > 1 ? 1 : 4

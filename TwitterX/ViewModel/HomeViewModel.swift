@@ -25,7 +25,6 @@ class HomeViewModel: ObservableObject {
     @Published var userTweetData = [UserTweetData]()
     @Published var error: ApiError? = nil
     @Published var showImageViewer = false
-    @Published var selectedImageID = ""
     @Published var imageViewerOffset: CGSize = .zero
     @Published var bgOpacity: Double = 1
     @Published var imageScale: CGFloat = 1
