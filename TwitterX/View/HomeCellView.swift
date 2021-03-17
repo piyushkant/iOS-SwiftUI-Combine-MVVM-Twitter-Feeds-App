@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVKit
+import SDWebImageSwiftUI
 
 struct HomeCellView: View {
     let tweet: Tweet
@@ -32,31 +33,30 @@ struct HomeCellView: View {
             if let userTweetData = homeViewModel.fetchUserTweetData(tweet: self.tweet) {
                 let mediaType = homeViewModel.mediaType
                 
-                //Mark: for now gif will act as video. Fix this if found some good solution
                 if (mediaType == .GIF) {
-                    /*let gifUrl = homeViewModel.userTweetData.first?.attachedVideoUrl
-                     
-                     if let gifUrl = gifUrl, let url = URL(string: gifUrl) {
-                     GifView(url: url)
-                     .frame(height: 197)
-                     .cornerRadius(10)
-
-                     }*/
-                    
                     let videoUrl = homeViewModel.userTweetData.first?.attachedVideoUrl
-
+                    
                     if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
                         let player = AVPlayer(url: url)
-
+                        
+                        //Mark: fix width/height/corner for gif
                         VideoPlayer(player: player)
-                            .frame(height: 197)
-                            .cornerRadius(10)
-                            .onAppear {                                
+                            .frame(width: UIScreen.main.bounds.width/2, height: 195)
+                            .cornerRadius(12)
+                            .onAppear {
                                 player.play()
                             }
                             .onDisappear {
                                 player.pause()
                             }
+                            .overlay(
+                                Text(NSLocalizedString("gif", comment: ""))
+                                    .font(.system(size: 13))
+                                    .fontWeight(.bold)
+                                    .foregroundColor(Color.white)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity,  alignment: .bottomTrailing)
+                                    .padding()
+                            )
                     }
                 } else if (mediaType == .VIDEO) {
                     let videoUrl = homeViewModel.userTweetData.first?.attachedVideoUrl
@@ -65,7 +65,7 @@ struct HomeCellView: View {
                         let player = AVPlayer(url: url)
                         
                         VideoPlayer(player: player)
-                            .frame(height: 197)
+                            .frame(height: 200)
                             .cornerRadius(10)
                             .onAppear {
                                 try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])

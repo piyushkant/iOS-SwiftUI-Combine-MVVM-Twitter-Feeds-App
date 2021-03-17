@@ -29,6 +29,15 @@
         }
       },
       {
+        "package": "GiphyUISDK",
+        "repositoryURL": "https://github.com/Giphy/giphy-ios-sdk",
+        "state": {
+          "branch": null,
+          "revision": "f61c1b33ccd888f3e2b432d779c8d27ca29f4af4",
+          "version": "2.1.5"
+        }
+      },
+      {
         "package": "GoogleAppMeasurement",
         "repositoryURL": "https://github.com/google/GoogleAppMeasurement.git",
         "state": {
@@ -83,6 +92,15 @@
         }
       },
       {
+        "package": "libwebp",
+        "repositoryURL": "https://github.com/SDWebImage/libwebp-Xcode",
+        "state": {
+          "branch": null,
+          "revision": "289862b9466243cdec407997d4cb8ba529359a99",
+          "version": "1.2.0"
+        }
+      },
+      {
         "package": "nanopb",
         "repositoryURL": "https://github.com/firebase/nanopb.git",
         "state": {
@@ -98,6 +116,24 @@
           "branch": null,
           "revision": "afa9a1ace74e116848d4f743599ab83e584ff8cb",
           "version": "1.2.12"
+        }
+      },
+      {
+        "package": "SDWebImage",
+        "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
+        "state": {
+          "branch": null,
+          "revision": "a6b6e44eadf0d39250c10a7cc0e3b91d0bdb0e94",
+          "version": "5.10.4"
+        }
+      },
+      {
+        "package": "SDWebImageSwiftUI",
+        "repositoryURL": "https://github.com/SDWebImage/SDWebImageSwiftUI",
+        "state": {
+          "branch": null,
+          "revision": "cd8625b7cf11a97698e180d28bb7d5d357196678",
+          "version": "2.0.2"
         }
       },
       {
