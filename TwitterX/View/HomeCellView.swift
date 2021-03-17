@@ -86,6 +86,7 @@ struct HomeCellView: View {
                         .padding(.top)
                         .overlay(
                             ImageTabView(homeViewModel: homeViewModel, images: attachedImages)
+                                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.4, alignment: .leading)
                         )
                     }
                 } else {

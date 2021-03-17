@@ -10,13 +10,13 @@ import SwiftUI
 struct ImageGridView: View {
     @ObservedObject var homeViewModel: HomeViewModel
     var image: AttachedImage
-    
+       
     var body: some View {
         Button(action: {
             withAnimation(.easeInOut) {
                 homeViewModel.showImageViewer.toggle()
             }
-            
+
         }, label: {
             ZStack {
                 Image(uiImage: image.image ?? UIImage())
