@@ -33,7 +33,7 @@ struct HomeView: View {
             .buttonStyle(PlainButtonStyle())
             .onAppear {
                 //                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
-                homeViewModel.fetchSingleTimeLine(id: HomeConfig.sampleMultipleImageTweetId)
+                homeViewModel.fetchSingleTimeLine(id: HomeConfig.sampleGifTweetId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())

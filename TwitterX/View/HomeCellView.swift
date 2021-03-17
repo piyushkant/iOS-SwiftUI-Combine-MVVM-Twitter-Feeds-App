@@ -51,7 +51,7 @@ struct HomeCellView: View {
                         VideoPlayer(player: player)
                             .frame(height: 197)
                             .cornerRadius(10)
-                            .onAppear {
+                            .onAppear {                                
                                 player.play()
                             }
                             .onDisappear {
@@ -68,6 +68,8 @@ struct HomeCellView: View {
                             .frame(height: 197)
                             .cornerRadius(10)
                             .onAppear {
+                                try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+                                   
                                 player.play()
                             }
                             .onDisappear {
