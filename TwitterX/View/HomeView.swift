@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeTimelineConfig {
+struct HomeConfig {
     static let TweetsLimit = 10
     static let sampleSingleImageTweetId = "1370325033663426560" //1370325033663426560 //1370329824422551554
     static let sampleMultipleImageTweetId = "1370337291214888962"
@@ -16,28 +16,28 @@ struct HomeTimelineConfig {
     static let sampleVideoTweetId = "1370320412177993739"
 }
 
-struct HomeTimelineView: View {
-    @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
+struct HomeView: View {
+    @ObservedObject var homeViewModel: HomeViewModel
     
     init() {
-        homeTimelineViewModel = HomeTimelineViewModel()
+        homeViewModel = HomeViewModel()
     }
     
     var body: some View {
-        let tweets: [Tweet] = self.homeTimelineViewModel.tweets
+        let tweets: [Tweet] = self.homeViewModel.tweets
         
         NavigationView {
             List(0..<tweets.count, id: \.self) { i in
                 if i == tweets.count - 1 {
-                    HomeCellView(tweet: tweets[i], isLast: true, homeTimelineViewModel: self.homeTimelineViewModel)
+                    HomeCellView(tweet: tweets[i], isLast: true, homeViewModel: self.homeViewModel)
                 } else {
-                    HomeCellView(tweet: tweets[i], isLast: false, homeTimelineViewModel: self.homeTimelineViewModel)
+                    HomeCellView(tweet: tweets[i], isLast: false, homeViewModel: self.homeViewModel)
                 }
             }
             .buttonStyle(PlainButtonStyle())
             .onAppear {
                 //                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
-                homeTimelineViewModel.fetchSingleTimeLine(id: HomeTimelineConfig.sampleMultipleImageTweetId)
+                homeViewModel.fetchSingleTimeLine(id: HomeConfig.sampleMultipleImageTweetId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())

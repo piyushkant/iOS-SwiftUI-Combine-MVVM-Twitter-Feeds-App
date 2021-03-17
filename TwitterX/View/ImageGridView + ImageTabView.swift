@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ImageGridView: View {
-    @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
+    @ObservedObject var homeViewModel: HomeViewModel
     var image: AttachedImage
     
     var body: some View {
         Button(action: {
-            homeTimelineViewModel.selectedImageID = image.id
-            homeTimelineViewModel.showImageViewer.toggle()
+            homeViewModel.selectedImageID = image.id
+            homeViewModel.showImageViewer.toggle()
             
         }, label: {
             ZStack {
@@ -29,40 +29,40 @@ struct ImageGridView: View {
 }
 
 struct ImageTabView: View {
-    @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
+    @ObservedObject var homeViewModel: HomeViewModel
     let images: [AttachedImage]
     @GestureState var draggingOffset: CGSize = .zero
     
     var body: some View {
         ZStack {
-            if homeTimelineViewModel.showImageViewer {
+            if homeViewModel.showImageViewer {
                 Color(.black)
-                    .opacity(homeTimelineViewModel.bgOpacity)
+                    .opacity(homeViewModel.bgOpacity)
                     .ignoresSafeArea()
                 
                 ScrollView(.init()) {
-                    TabView(selection: $homeTimelineViewModel.selectedImageID) {
+                    TabView(selection: $homeViewModel.selectedImageID) {
                         ForEach(images, id: \.self) {image in
                             Image(uiImage: image.image ?? UIImage())
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .tag(image)
-                                .scaleEffect(homeTimelineViewModel.selectedImageID == image.id ? (homeTimelineViewModel.imageScale > 1 ? homeTimelineViewModel.imageScale : 1) : 1)
-                                .offset(y: homeTimelineViewModel.imageViewerOffset.height)
+                                .scaleEffect(homeViewModel.selectedImageID == image.id ? (homeViewModel.imageScale > 1 ? homeViewModel.imageScale : 1) : 1)
+                                .offset(y: homeViewModel.imageViewerOffset.height)
                                 .gesture(
                                     MagnificationGesture().onChanged({(value) in
-                                        homeTimelineViewModel.imageScale = value
+                                        homeViewModel.imageScale = value
                                     }).onEnded({(_) in
                                         withAnimation(.spring()){
-                                            homeTimelineViewModel.imageScale = 1
+                                            homeViewModel.imageScale = 1
                                         }
                                     })
                                     
-                                    .simultaneously(with: DragGesture(minimumDistance: homeTimelineViewModel.imageScale == 1 ? 1000 : 0))
+                                    .simultaneously(with: DragGesture(minimumDistance: homeViewModel.imageScale == 1 ? 1000 : 0))
                                     
                                     .simultaneously(with: TapGesture(count: 2).onEnded({
                                         withAnimation {
-                                            homeTimelineViewModel.imageScale = homeTimelineViewModel.imageScale > 1 ? 1 : 4
+                                            homeViewModel.imageScale = homeViewModel.imageScale > 1 ? 1 : 4
                                         }
                                     }))
                                 )
@@ -76,7 +76,7 @@ struct ImageTabView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(
             Button(action: {
-                homeTimelineViewModel.showImageViewer.toggle()
+                homeViewModel.showImageViewer.toggle()
             }, label: {
                 Image(systemName: "xmark")
                     .foregroundColor(.white)
@@ -85,7 +85,7 @@ struct ImageTabView: View {
                     .clipShape(Circle())
             })
             .padding(10)
-            .opacity(homeTimelineViewModel.showImageViewer ? homeTimelineViewModel.bgOpacity : 0)
+            .opacity(homeViewModel.showImageViewer ? homeViewModel.bgOpacity : 0)
             
             , alignment: .topTrailing
         )

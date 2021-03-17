@@ -15,13 +15,13 @@ enum LinkPreviewResult {
     case failure ([String: String])
 }
 
-class HomeTimelineViewModel: ObservableObject {
+class HomeViewModel: ObservableObject {
     private let api: Api
     private var subscriptions = Set<AnyCancellable>()
     
     @Published var tweets = [Tweet]()
     @Published var links = [Link]()
-    @Published var userData = [UserData]()
+    @Published var userInfoData = [UserData]()
     @Published var userTweetData = [UserTweetData]()
     @Published var error: ApiError? = nil
     @Published var showImageViewer = false
@@ -54,7 +54,7 @@ class HomeTimelineViewModel: ObservableObject {
                         let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                             guard let data = data else { return }
                             DispatchQueue.main.async {
-                                self.userData.append(UserData(id: tweet.user.idStr, profileImageData: data))
+                                self.userInfoData.append(UserData(id: tweet.user.idStr, profileImageData: data))
                             }
                         }
                         task.resume()
@@ -99,7 +99,7 @@ class HomeTimelineViewModel: ObservableObject {
                     let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                         guard let data = data else { return }
                         DispatchQueue.main.async {
-                            self.userData.append(UserData(id: tweet.user.idStr, profileImageData: data))
+                            self.userInfoData.append(UserData(id: tweet.user.idStr, profileImageData: data))
                         }
                     }
                     task.resume()
@@ -175,7 +175,7 @@ class HomeTimelineViewModel: ObservableObject {
     func fetchUserData(tweet: Tweet) -> UserData? {
         let userId = tweet.user.idStr
         
-        for data in userData {
+        for data in userInfoData {
             if data.id == userId {
                 return data
             }
