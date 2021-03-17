@@ -28,11 +28,7 @@ struct HomeView: View {
         
         NavigationView {
             List(0..<tweets.count, id: \.self) { i in
-                if i == tweets.count - 1 {
-                    HomeCellView(tweet: tweets[i], isLast: true, homeViewModel: self.homeViewModel)
-                } else {
-                    HomeCellView(tweet: tweets[i], isLast: false, homeViewModel: self.homeViewModel)
-                }
+                HomeCellView(tweet: tweets[i], isLast: tweets.count - 1 == i, homeViewModel: self.homeViewModel)
             }
             .buttonStyle(PlainButtonStyle())
             .onAppear {
