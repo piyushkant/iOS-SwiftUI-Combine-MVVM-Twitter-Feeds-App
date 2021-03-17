@@ -120,14 +120,18 @@ struct HomeTimelineCellView: View {
                             }
                     }
                 } else if (mediaType == .IMAGES) {
-                    let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
+                    let attachedImages: [AttachedImage]? = self.homeTimelineViewModel.userTweetData[index].attachedImages!
                     
-                    LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
-                        ForEach(homeTimelineViewModel.userTweetData.indices, id:\.self) { index in
-                            GridImageView(homeTimelineViewModel: homeTimelineViewModel, index: index)
-                        }
-                    })
-                    .padding(.top)
+                    if let attachedImages = attachedImages {
+                        let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
+                        
+                        LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
+                            ForEach(attachedImages, id:\.self) { image in
+                                GridImageView(homeTimelineViewModel: homeTimelineViewModel, image: image)
+                            }
+                        })
+                        .padding(.top)
+                    }
                 } else {
                     if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
                         LinkPreview(link: link)
@@ -155,20 +159,16 @@ struct HomeTimelineCellView: View {
 
 struct GridImageView: View {
     @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
-    var index: Int
-    
-    private var attachedImages: [AttachedImage] {
-        return homeTimelineViewModel.userTweetData[index].attachedImages!
-    }
+    var image: AttachedImage
     
     var body: some View {
         Button(action: {
-            homeTimelineViewModel.selectedImageID = attachedImages[index].id
+            homeTimelineViewModel.selectedImageID = image.id
             homeTimelineViewModel.showImageViewer.toggle()
             
         }, label: {
             ZStack {
-                Image(uiImage: attachedImages[index].image ?? UIImage())
+                Image(uiImage: image.image ?? UIImage())
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: (UIScreen.main.bounds.width - 100)/2, height: 120)
@@ -184,7 +184,6 @@ struct ImageView: View {
     @GestureState var draggingOffset: CGSize = .zero
     
     private var attachedImages: [AttachedImage] {
-        print("attachedImages", homeTimelineViewModel.userTweetData[index].attachedImages!.count)
         return homeTimelineViewModel.userTweetData[index].attachedImages!
     }
     
