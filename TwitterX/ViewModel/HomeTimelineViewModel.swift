@@ -122,7 +122,7 @@ class HomeTimelineViewModel: ObservableObject {
                     
                     if (self.mediaType != .GIF) {
                         for variant in videoVariants {
-                            if let bitrate = variant.bitrate, bitrate == VideoBitrate.high.value {//Mark: using the lowest bitrate video for testing purpose
+                            if let bitrate = variant.bitrate, bitrate == VideoBitrate.high.value { //Mark: Using high bitrate video
                                 self.mediaType = .VIDEO
                                 self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
                                 break
