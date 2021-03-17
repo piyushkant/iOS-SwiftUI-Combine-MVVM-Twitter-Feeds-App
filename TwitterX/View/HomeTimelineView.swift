@@ -32,9 +32,9 @@ struct HomeTimelineView: View {
         NavigationView {
             List(0..<tweets.count, id: \.self) { i in
                 if i == tweets.count - 1 {
-                    HomeTimelineCellView(index: i, tweet: tweets[i], isLast: true, homeTimelineViewModel: self.homeTimelineViewModel)
+                    HomeTimelineCellView(tweet: tweets[i], isLast: true, homeTimelineViewModel: self.homeTimelineViewModel)
                 } else {
-                    HomeTimelineCellView(index: i, tweet: tweets[i], isLast: false, homeTimelineViewModel: self.homeTimelineViewModel)
+                    HomeTimelineCellView(tweet: tweets[i], isLast: false, homeTimelineViewModel: self.homeTimelineViewModel)
                 }
             }
             .buttonStyle(PlainButtonStyle())
@@ -53,7 +53,6 @@ struct HomeTimelineView: View {
 }
 
 struct HomeTimelineCellView: View {
-    let index: Int
     let tweet: Tweet
     var isLast: Bool
     @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
@@ -74,7 +73,7 @@ struct HomeTimelineCellView: View {
                 .fixedSize(horizontal: false, vertical: true)
             
 
-            if let _ = homeTimelineViewModel.fetchUserTweetData(tweet: self.tweet) {
+            if let userTweetData = homeTimelineViewModel.fetchUserTweetData(tweet: self.tweet) {
                 let mediaType = homeTimelineViewModel.mediaType
                 
                 //Mark: for now gif will act as video. Fix this if found some good solution
@@ -120,9 +119,7 @@ struct HomeTimelineCellView: View {
                             }
                     }
                 } else if (mediaType == .IMAGES) {
-                    let attachedImages: [AttachedImage]? = self.homeTimelineViewModel.userTweetData[index].attachedImages!
-                    
-                    if let attachedImages = attachedImages {
+                    if let attachedImages = userTweetData.attachedImages {
                         let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
                         
                         LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
