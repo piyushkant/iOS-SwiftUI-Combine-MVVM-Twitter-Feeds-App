@@ -131,6 +131,9 @@ struct HomeTimelineCellView: View {
                             }
                         })
                         .padding(.top)
+                        .overlay(
+                            ImageView(homeTimelineViewModel: homeTimelineViewModel, images: attachedImages)
+                        )
                     }
                 } else {
                     if let link = homeTimelineViewModel.fetchLink(tweet: tweet) {
@@ -150,10 +153,6 @@ struct HomeTimelineCellView: View {
             }
             
         }
-        .overlay(
-            ImageView(index: index, homeTimelineViewModel: homeTimelineViewModel)
-        )
-        
     }
 }
 
@@ -179,13 +178,9 @@ struct GridImageView: View {
 }
 
 struct ImageView: View {
-    let index: Int
     @ObservedObject var homeTimelineViewModel: HomeTimelineViewModel
+    let images: [AttachedImage]
     @GestureState var draggingOffset: CGSize = .zero
-    
-    private var attachedImages: [AttachedImage] {
-        return homeTimelineViewModel.userTweetData[index].attachedImages!
-    }
     
     var body: some View {
         ZStack {
@@ -196,7 +191,7 @@ struct ImageView: View {
                 
                 ScrollView(.init()) {
                     TabView(selection: $homeTimelineViewModel.selectedImageID) {
-                        ForEach(attachedImages, id: \.self) {image in
+                        ForEach(images, id: \.self) {image in
                             Image(uiImage: image.image ?? UIImage())
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)

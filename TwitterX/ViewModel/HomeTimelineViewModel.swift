@@ -138,18 +138,11 @@ class HomeTimelineViewModel: ObservableObject {
                             let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                                 guard let data = data else { return }
                                            
-                                print(imageUrl, data)
                                 attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
                                 
                                 count += 1
                                 
                                 if count >= media.count {
-                                    
-                                    for images in attachedImages {
-                                        print(images.id, images.image ?? nil)
-                                    }
-                                    
-                                    print("fetchImage", count)
                                     DispatchQueue.main.async {
                                         self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages, attachedVideoUrl: nil))
                                     }
