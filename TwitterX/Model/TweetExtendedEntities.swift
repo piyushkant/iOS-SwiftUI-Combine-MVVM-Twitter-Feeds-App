@@ -18,10 +18,12 @@ struct TweetExtendedEntities: Decodable {
 struct TweetMedia: Decodable {
     let mediaUrl: String
     let videoInfo: TweetVideoInfo?
+    let additionalMediaInfo: AdditionalMediaInfo?
     
     enum CodingKeys: String, CodingKey {
         case mediaUrl = "media_url_https"
         case videoInfo = "video_info"
+        case additionalMediaInfo = "additional_media_info"
     }
     
     init(from decoder: Decoder) throws {
@@ -32,6 +34,12 @@ struct TweetMedia: Decodable {
             self.videoInfo = try values.decode(TweetVideoInfo.self, forKey: .videoInfo)
         } else {
             self.videoInfo = nil
+        }
+        
+        if values.contains(.additionalMediaInfo) {
+            self.additionalMediaInfo = try values.decode(AdditionalMediaInfo.self, forKey: .additionalMediaInfo)
+        } else {
+            self.additionalMediaInfo = nil
         }
     }
 }
@@ -68,29 +76,39 @@ struct VideoVariants: Decodable {
     }
 }
 
+struct AdditionalMediaInfo: Decodable {
+    let title: String
+    let description: String
+    
+    enum CodingKeys: String, CodingKey {
+        case title = "title"
+        case description = "description"
+    }
+}
+
 public enum MediaType {
-    case LINKS
-    case IMAGES
-    case VIDEO
-    case GIF
+    case Links
+    case Images
+    case Video
+    case Gif
 }
 
 
 enum VideoBitrate {
-    case zero
-    case low
-    case medium
-    case high
+    case Zero
+    case Low
+    case Medium
+    case High
     
     var value: Int {
         switch self {
-        case .zero:
+        case .Zero:
             return 0
-        case .low:
+        case .Low:
             return 288000
-        case .medium:
+        case .Medium:
             return 832000
-        case .high:
+        case .High:
             return 2176000
         }
     }

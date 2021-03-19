@@ -28,7 +28,7 @@ class HomeViewModel: ObservableObject {
     @Published var imageViewerOffset: CGSize = .zero
     @Published var bgOpacity: Double = 1
     @Published var imageScale: CGFloat = 1
-    @Published var mediaType = MediaType.LINKS
+    @Published var mediaType = MediaType.Links
     
     init() {
         self.api = Api(oauth: OAuth())
@@ -105,31 +105,31 @@ class HomeViewModel: ObservableObject {
                 }
                 
                 //Mark: user tweet data
-                self.mediaType = .LINKS
+                self.mediaType = .Links
                 let media = tweet.extendedEntities.media
                 
                 if let videoInfo = media.first?.videoInfo {
                     let videoVariants = videoInfo.variants
                     
                     for variant in videoVariants {
-                        if let bitrate = variant.bitrate, bitrate == VideoBitrate.zero.value  {
-                            self.mediaType = .GIF
+                        if let bitrate = variant.bitrate, bitrate == VideoBitrate.Zero.value  {
+                            self.mediaType = .Gif
                             self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
                             break
                         }
                     }
                     
-                    if (self.mediaType != .GIF) {
+                    if (self.mediaType != .Gif) {
                         for variant in videoVariants {
-                            if let bitrate = variant.bitrate, bitrate == VideoBitrate.high.value { //Mark: Using high bitrate video
-                                self.mediaType = .VIDEO
+                            if let bitrate = variant.bitrate, bitrate == VideoBitrate.High.value { //Mark: Using high bitrate video
+                                self.mediaType = .Video
                                 self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
                                 break
                             }
                         }
                     }
                 } else {
-                    self.mediaType = .IMAGES
+                    self.mediaType = .Images
                     var attachedImages = [AttachedImage]()
                     var count = 0
                     for m in media {

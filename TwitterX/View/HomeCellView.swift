@@ -33,7 +33,7 @@ struct HomeCellView: View {
             if let userTweetData = homeViewModel.fetchUserTweetData(tweet: self.tweet) {
                 let mediaType = homeViewModel.mediaType
                 
-                if (mediaType == .GIF) {
+                if (mediaType == .Gif) {
                     let videoUrl = homeViewModel.userTweetData.first?.attachedVideoUrl
                     
                     if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
@@ -41,8 +41,10 @@ struct HomeCellView: View {
                         
                         //Mark: fix width/height/corner for gif
                         VideoPlayer(player: player)
-                            .frame(width: UIScreen.main.bounds.width/2, height: 195)
-                            .cornerRadius(12)
+//                            .frame(width: UIScreen.main.bounds.width, height: 200)
+                            .aspectRatio(contentMode: .fill)
+//                            .frame(height: 200)
+                            .cornerRadius(10)
                             .onAppear {
                                 player.play()
                             }
@@ -54,18 +56,20 @@ struct HomeCellView: View {
                                     .font(.system(size: 13))
                                     .fontWeight(.bold)
                                     .foregroundColor(Color.white)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity,  alignment: .bottomTrailing)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity,  alignment: .topLeading)
                                     .padding()
                             )
+                            .border(Color.gray)
+                            .cornerRadius(10)
                     }
-                } else if (mediaType == .VIDEO) {
+                } else if (mediaType == .Video) {
                     let videoUrl = homeViewModel.userTweetData.first?.attachedVideoUrl
 
                     if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
                         let player = AVPlayer(url: url)
                         
                         VideoPlayer(player: player)
-                            .frame(height: 200)
+                            .frame(height: 197)
                             .cornerRadius(10)
                             .onAppear {
                                 try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
@@ -75,8 +79,18 @@ struct HomeCellView: View {
                             .onDisappear {
                                 player.pause()
                             }
+                        
+                        if let additionalMediaInfo = self.tweet.extendedEntities.media.first?.additionalMediaInfo {
+                            if let title = additionalMediaInfo.title, title != "" {
+                                Text(title)
+                            }
+                            
+                            if let description = additionalMediaInfo.description, description != "" {
+                                Text(description)
+                            }
+                        }
                     }
-                } else if (mediaType == .IMAGES) {
+                } else if (mediaType == .Images) {
                     if let attachedImages = userTweetData.attachedImages {
                         let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
                         
