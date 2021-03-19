@@ -83,10 +83,13 @@ struct HomeCellView: View {
                         if let additionalMediaInfo = self.tweet.extendedEntities.media.first?.additionalMediaInfo {
                             if let title = additionalMediaInfo.title, title != "" {
                                 Text(title)
+                                    .font(.system(size: 15))
+                                    .fontWeight(.bold)
                             }
                             
                             if let description = additionalMediaInfo.description, description != "" {
                                 Text(description)
+                                    .font(.system(size: 15))
                             }
                         }
                     }
