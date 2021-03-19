@@ -39,11 +39,8 @@ struct HomeCellView: View {
                     if let videoUrl = videoUrl, let url = URL(string: videoUrl) {
                         let player = AVPlayer(url: url)
                         
-                        //Mark: fix width/height/corner for gif
                         VideoPlayer(player: player)
-//                            .frame(width: UIScreen.main.bounds.width, height: 200)
-                            .aspectRatio(contentMode: .fill)
-//                            .frame(height: 200)
+                            .frame(height: 197)
                             .cornerRadius(10)
                             .onAppear {
                                 player.play()
@@ -59,7 +56,6 @@ struct HomeCellView: View {
                                     .frame(maxWidth: .infinity, maxHeight: .infinity,  alignment: .topLeading)
                                     .padding()
                             )
-                            .border(Color.gray)
                             .cornerRadius(10)
                     }
                 } else if (mediaType == .Video) {
