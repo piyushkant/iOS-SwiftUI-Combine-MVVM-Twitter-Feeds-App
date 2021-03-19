@@ -106,48 +106,50 @@ class HomeViewModel: ObservableObject {
                 
                 //Mark: user tweet data
                 self.mediaType = .Links
-                let media = tweet.extendedEntities.media
                 
-                if let videoInfo = media.first?.videoInfo {
-                    let videoVariants = videoInfo.variants
-                    
-                    for variant in videoVariants {
-                        if let bitrate = variant.bitrate, bitrate == VideoBitrate.Zero.value  {
-                            self.mediaType = .Gif
-                            self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
-                            break
-                        }
-                    }
-                    
-                    if (self.mediaType != .Gif) {
+                if let extendedEntities = tweet.extendedEntities {
+                    let media = extendedEntities.media
+                    if let videoInfo = media.first?.videoInfo {
+                        let videoVariants = videoInfo.variants
+                        
                         for variant in videoVariants {
-                            if let bitrate = variant.bitrate, bitrate == VideoBitrate.High.value { //Mark: Using high bitrate video
-                                self.mediaType = .Video
+                            if let bitrate = variant.bitrate, bitrate == VideoBitrate.Zero.value  {
+                                self.mediaType = .Gif
                                 self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
                                 break
                             }
                         }
-                    }
-                } else {
-                    self.mediaType = .Images
-                    var attachedImages = [AttachedImage]()
-                    var count = 0
-                    for m in media {
-                        if let imageUrl = URL(string: m.mediaUrl) {
-                            let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                                guard let data = data else { return }
-                                           
-                                attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
-                                
-                                count += 1
-                                
-                                if count >= media.count {
-                                    DispatchQueue.main.async {
-                                        self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages, attachedVideoUrl: nil))
-                                    }
+                        
+                        if (self.mediaType != .Gif) {
+                            for variant in videoVariants {
+                                if let bitrate = variant.bitrate, bitrate == VideoBitrate.High.value { //Mark: Using high bitrate video
+                                    self.mediaType = .Video
+                                    self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
+                                    break
                                 }
                             }
-                            task.resume()
+                        }
+                    } else {
+                        self.mediaType = .Images
+                        var attachedImages = [AttachedImage]()
+                        var count = 0
+                        for m in media {
+                            if let imageUrl = URL(string: m.mediaUrl) {
+                                let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                                    guard let data = data else { return }
+                                    
+                                    attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
+                                    
+                                    count += 1
+                                    
+                                    if count >= media.count {
+                                        DispatchQueue.main.async {
+                                            self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages, attachedVideoUrl: nil))
+                                        }
+                                    }
+                                }
+                                task.resume()
+                            }
                         }
                     }
                 }

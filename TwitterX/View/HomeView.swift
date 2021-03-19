@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeConfig {
     static let TweetsLimit = 10
-    static let sampleSingleImageTweetId = "1370325033663426560" //1370325033663426560 //1370329824422551554
+    static let sampleSingleImageTweetId = "1370329824422551554" //1370325033663426560 //1370329824422551554
     static let sampleMultipleImageTweetId = "1370337291214888962"
     static let sampleImageWithUrlId = "1370316972181848066"
     static let sampleGifTweetId = "1372212724554473472" //1370922422233358336 //1372212724554473472 //1372214089389252611
@@ -33,7 +33,7 @@ struct HomeView: View {
             .buttonStyle(PlainButtonStyle())
             .onAppear {
                 //                homeTimelineViewModel.fetchHomeTimeline(count: HomeTimelineConfig.TweetsLimit)
-                homeViewModel.fetchSingleTimeLine(id: HomeConfig.sampleGifTweetId)
+                homeViewModel.fetchSingleTimeLine(id: HomeConfig.sampleSingleImageTweetId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
