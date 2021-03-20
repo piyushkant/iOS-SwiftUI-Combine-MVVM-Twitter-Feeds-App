@@ -14,7 +14,7 @@ enum EndPoint {
         
         case show
         case update(String)
-        case destroy(Int)
+        case destroy
         case homeTimeline
         
         var url: URL {
@@ -23,8 +23,8 @@ enum EndPoint {
                 return EndPoint.baseURL.appendingPathComponent("statuses/show.json")
             case .update(let status):
                 return EndPoint.baseURL.appendingPathComponent("statuses/update.json?status=\(status)")
-            case .destroy(let id):
-                return EndPoint.baseURL.appendingPathComponent("statuses/destroy/\(id).json")
+            case .destroy:
+                return EndPoint.baseURL.appendingPathComponent("statuses/destroy.json")
             case .homeTimeline:
                 return EndPoint.baseURL.appendingPathComponent("statuses/home_timeline.json")
             }

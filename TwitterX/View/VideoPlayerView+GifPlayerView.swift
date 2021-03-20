@@ -20,7 +20,7 @@ struct VideoPlayerView: View {
     
     var body: some View {
         
-        VideoPlayer(url: URL(string: "https://video.twimg.com/amplify_video/1270339144640798722/vid/1280x720/WByOKWNpZtt_9bQy.mp4?tag=13")!, play: $play, time: $time)
+        VideoPlayer(url: url, play: $play, time: $time)
             .autoReplay(autoReplay)
             .mute(mute)
             .aspectRatio(1.78, contentMode: .fit)

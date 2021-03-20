@@ -136,6 +136,44 @@ class HomeViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
+    func destroy(id: String) {
+        print("destroy", id)
+        
+        api
+            .destroy(id: id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.error = error
+                }
+            }, receiveValue: { tweet in
+                DispatchQueue.main.async {
+                    let index = self.findTweetIndexById(id: id)
+                    print("destroy", index, tweet)
+                   
+                    if index >= 0 {
+                        self.tweets.remove(at: index)
+                    }
+                }
+                
+                self.error = nil
+            })
+            .store(in: &subscriptions)
+    }
+    
+    func findTweetIndexById(id: String) -> Int {
+        var index = 0
+        for tweet in self.tweets {
+            if tweet.idStr == id {
+                return index
+            }
+            
+            index += 1
+        }
+        
+        return -1
+    }
+    
     func fetchUserData(tweet: Tweet) -> UserData? {
         let userId = tweet.idStr
         
@@ -152,7 +190,6 @@ class HomeViewModel: ObservableObject {
         
         for data in userTweetData {
             if data.id == tweetId {
-                print("fetchUserTweetData: ", data)
                 return data
             }
         }

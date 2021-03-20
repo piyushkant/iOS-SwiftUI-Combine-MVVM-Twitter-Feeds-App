@@ -25,16 +25,15 @@ struct HomeView: View {
     }
     
     var body: some View {
-        let tweets: [Tweet] = self.homeViewModel.tweets
-        
         NavigationView {
-            List(0..<tweets.count, id: \.self) { i in
-                HomeCellView(tweet: tweets[i], isLast: tweets.count - 1 == i, homeViewModel: self.homeViewModel)
+            List {
+                ForEach(self.homeViewModel.tweets.indices, id: \.self) { index in
+                    HomeCellView(tweet: self.homeViewModel.tweets[index], isLast: self.homeViewModel.tweets.count - 1 == index, homeViewModel: self.homeViewModel)
+                }
             }
             .buttonStyle(PlainButtonStyle())
             .onAppear {
                 homeViewModel.fetchHomeTimeline(count: HomeConfig.TweetsLimit)
-//                homeViewModel.fetchSingleTimeLine(id: HomeConfig.sampleLinkTweetId)
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())

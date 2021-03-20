@@ -20,13 +20,11 @@ struct HomeCellView: View {
         //        let tweets: [Tweet] = self.homeViewModel.tweets
         
         VStack(alignment: .leading, spacing: 10) {
-            let headline = tweet.text
-            
             if let userInfoData = homeViewModel.fetchUserData(tweet: self.tweet), let data = userInfoData.profileImageData {
-                UserInfoView(tweet: self.tweet, data: data)
+                UserInfoView(homeViewModel: homeViewModel, tweet: self.tweet, data: data)
             }
-                        
-            HyperlinkTextView(headline)
+
+            HyperlinkTextView(tweet.text)
                 .fixedSize(horizontal: false, vertical: true)
             
             if let userTweetData = homeViewModel.fetchUserTweetData(tweet: self.tweet) {
@@ -49,7 +47,6 @@ struct HomeCellView: View {
                                 ImageGridView(homeViewModel: homeViewModel, image: image)
                             }
                         })
-//                        .padding(.top)
                         .overlay(
                             ImageTabView(homeViewModel: homeViewModel, images: attachedImages)
                                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.4, alignment: .leading)
