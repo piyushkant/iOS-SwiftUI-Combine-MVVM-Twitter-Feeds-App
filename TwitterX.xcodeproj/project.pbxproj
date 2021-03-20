@@ -61,6 +61,7 @@
 		4B69C46925F5A78C00BA0663 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C46825F5A78C00BA0663 /* Link.swift */; };
 		4B69C46E25F5CEA100BA0663 /* Extension_UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C46D25F5CEA100BA0663 /* Extension_UITextView.swift */; };
 		4BB260BE26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB260BD26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift */; };
+		4BB260CA260612F200F10204 /* VideoPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB260C9260612F200F10204 /* VideoPlayer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BB260CA260612F200F10204 /* VideoPlayer in Frameworks */,
 				4B41574026024D9400FDE2CB /* SDWebImageSwiftUI in Frameworks */,
 				4B41573A26024A5F00FDE2CB /* GiphyUISDK in Frameworks */,
 				4B69C30825F39FBE00BA0663 /* FirebaseCrashlytics in Frameworks */,
@@ -372,6 +374,7 @@
 				4B0CBDD525FDAF6B00615DDF /* SwiftyGif */,
 				4B41573926024A5F00FDE2CB /* GiphyUISDK */,
 				4B41573F26024D9400FDE2CB /* SDWebImageSwiftUI */,
+				4BB260C9260612F200F10204 /* VideoPlayer */,
 			);
 			productName = TwitterX;
 			productReference = 4B69C2C325F39CC500BA0663 /* TwitterX.app */;
@@ -450,6 +453,7 @@
 				4B0CBDD425FDAF6A00615DDF /* XCRemoteSwiftPackageReference "SwiftyGif" */,
 				4B41573826024A5F00FDE2CB /* XCRemoteSwiftPackageReference "giphy-ios-sdk" */,
 				4B41573E26024D9400FDE2CB /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				4BB260C8260612F200F10204 /* XCRemoteSwiftPackageReference "VideoPlayer" */,
 			);
 			productRefGroup = 4B69C2C425F39CC500BA0663 /* Products */;
 			projectDirPath = "";
@@ -902,6 +906,14 @@
 				minimumVersion = 7.7.0;
 			};
 		};
+		4BB260C8260612F200F10204 /* XCRemoteSwiftPackageReference "VideoPlayer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/wxxsw/VideoPlayer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -934,6 +946,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4B69C30225F39FBE00BA0663 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		4BB260C9260612F200F10204 /* VideoPlayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4BB260C8260612F200F10204 /* XCRemoteSwiftPackageReference "VideoPlayer" */;
+			productName = VideoPlayer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

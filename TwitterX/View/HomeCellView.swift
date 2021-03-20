@@ -25,7 +25,7 @@ struct HomeCellView: View {
             if let userInfoData = homeViewModel.fetchUserData(tweet: self.tweet), let data = userInfoData.profileImageData {
                 UserInfoView(tweet: self.tweet, data: data)
             }
-            
+                        
             HyperlinkTextView(headline)
                 .fixedSize(horizontal: false, vertical: true)
             
@@ -49,7 +49,7 @@ struct HomeCellView: View {
                                 ImageGridView(homeViewModel: homeViewModel, image: image)
                             }
                         })
-                        .padding(.top)
+//                        .padding(.top)
                         .overlay(
                             ImageTabView(homeViewModel: homeViewModel, images: attachedImages)
                                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.4, alignment: .leading)

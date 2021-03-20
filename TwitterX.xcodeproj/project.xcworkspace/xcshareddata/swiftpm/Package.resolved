@@ -74,6 +74,15 @@
         }
       },
       {
+        "package": "GSPlayer",
+        "repositoryURL": "https://github.com/wxxsw/GSPlayer.git",
+        "state": {
+          "branch": null,
+          "revision": "5904551cf33e0c38831fdc56c6a2c9770eadc30d",
+          "version": "0.2.25"
+        }
+      },
+      {
         "package": "GTMSessionFetcher",
         "repositoryURL": "https://github.com/google/gtm-session-fetcher.git",
         "state": {
@@ -152,6 +161,15 @@
           "branch": null,
           "revision": "0cd770feed5807d9fd4fa8df5ad74b56b814b0c8",
           "version": "5.4.0"
+        }
+      },
+      {
+        "package": "VideoPlayer",
+        "repositoryURL": "https://github.com/wxxsw/VideoPlayer",
+        "state": {
+          "branch": null,
+          "revision": "3c5b9531ee20e34d3a86142ca2c076a5b99afdb2",
+          "version": "1.2.3"
         }
       }
     ]

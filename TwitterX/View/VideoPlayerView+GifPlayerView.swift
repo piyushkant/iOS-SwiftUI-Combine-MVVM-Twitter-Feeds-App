@@ -7,24 +7,27 @@
 
 import SwiftUI
 import AVKit
+import VideoPlayer
 
 struct VideoPlayerView: View {
     let url: URL
     let tweet: Tweet
     
+    @State private var autoReplay: Bool = true
+    @State private var mute: Bool = false
+    @State private var play: Bool = true
+    @State private var time: CMTime = .zero
+    
     var body: some View {
-        let player = AVPlayer(url: url)
         
-        VideoPlayer(player: player)
-            .frame(height: 197)
-            .cornerRadius(10)
+        VideoPlayer(url: URL(string: "https://video.twimg.com/amplify_video/1270339144640798722/vid/1280x720/WByOKWNpZtt_9bQy.mp4?tag=13")!, play: $play, time: $time)
+            .autoReplay(autoReplay)
+            .mute(mute)
+            .aspectRatio(1.78, contentMode: .fit)
+            .cornerRadius(16)
+            .shadow(color: Color.black.opacity(0.7), radius: 6, x: 0, y: 2)
             .onAppear {
                 try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
-                   
-                player.play()
-            }
-            .onDisappear {
-                player.pause()
             }
         
         if let extendedEntities = self.tweet.extendedEntities, let firstMedia = extendedEntities.media.first, let additionalMediaInfo = firstMedia.additionalMediaInfo {
@@ -46,33 +49,20 @@ struct GifPlayerView: View {
     let url: URL
     let tweet: Tweet
     
-    init(url: URL, tweet: Tweet) {
-        self.url = url
-        self.tweet = tweet
-        
-        print("GifPlayerView", url)
-    }
+    @State private var autoReplay: Bool = true
+    @State private var mute: Bool = false
+    @State private var play: Bool = true
+    @State private var time: CMTime = .zero
     
     var body: some View {
-        let player = AVPlayer(url: url)
         
-        VideoPlayer(player: player)
-            .frame(height: 197)
-            .cornerRadius(10)
+        VideoPlayer(url: url, play: $play, time: $time)
+            .autoReplay(autoReplay)
+            .mute(mute)
+            .aspectRatio(1.78, contentMode: .fit)
+            .cornerRadius(16)
+            .shadow(color: Color.black.opacity(0.7), radius: 6, x: 0, y: 2)
             .onAppear {
-                player.play()
             }
-            .onDisappear {
-                player.pause()
-            }
-            .overlay(
-                Text(NSLocalizedString("gif", comment: ""))
-                    .font(.system(size: 13))
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.white)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity,  alignment: .topLeading)
-                    .padding()
-            )
-            .cornerRadius(10)
     }
 }
