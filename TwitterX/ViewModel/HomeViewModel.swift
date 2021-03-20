@@ -72,6 +72,8 @@ class HomeViewModel: ObservableObject {
                             for variant in videoVariants {
                                 if let bitrate = variant.bitrate, bitrate == VideoBitrate.Zero.value  {
                                     self.mediaType = .Gif
+                    
+                                    print("mediaType = .Gif")
                                     self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
                                     break
                                 }
@@ -81,6 +83,7 @@ class HomeViewModel: ObservableObject {
                                 for variant in videoVariants {
                                     if let bitrate = variant.bitrate, bitrate == VideoBitrate.High.value { //Mark: Using high bitrate video
                                         self.mediaType = .Video
+                                        print("mediaType = .Video")
                                         self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
                                         break
                                     }
@@ -101,7 +104,9 @@ class HomeViewModel: ObservableObject {
                                         
                                         if count >= media.count {
                                             DispatchQueue.main.async {
+                                                print("mediaType = .Images")
                                                 self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages, attachedVideoUrl: nil))
+                                                return
                                             }
                                         }
                                     }
@@ -125,6 +130,10 @@ class HomeViewModel: ObservableObject {
                         }
                     }
                 }
+                
+//                for usrData in self.userTweetData {
+//                    print("userTweetData", usrData.id)
+//                }
                 
                 self.error = nil
             })
