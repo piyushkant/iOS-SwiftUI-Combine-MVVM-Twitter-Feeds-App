@@ -46,6 +46,8 @@ class HomeViewModel: ObservableObject {
                 self.tweets = tweets
                 
                 for tweet in tweets {
+                    
+                    //Mark: user info data
                     let user = tweet.user
                     let profileImageUrl = user.profileImageUrl
                     
@@ -59,110 +61,66 @@ class HomeViewModel: ObservableObject {
                         task.resume()
                     }
                     
-                    if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-                        let provider = LPMetadataProvider()
-                        
-                        provider.startFetchingMetadata(for: url) { metaData, error in
-                            guard let data = metaData, error == nil else {
-                                return
-                            }
-                            DispatchQueue.main.async {
-                                self.links.append(Link(id: tweet.idStr, url: url, data: data))
-                            }
-                        }
-                    }
-                }
-                
-                self.error = nil
-            })
-            .store(in: &subscriptions)
-    }
-    
-    //Mark: Remove me, only for testing purpose
-    func fetchSingleTimeLine(id: String) {
-        api
-            .show(id: id)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                if case .failure(let error) = completion {
-                    self.error = error
-                }
-            }, receiveValue: { tweet in
-                self.tweets.append(tweet)
-                
-                //Mark: user info data
-                let user = tweet.user
-                let profileImageUrl = user.profileImageUrl
-                
-                if let imageUrl = URL(string: profileImageUrl) {
-                    let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                        guard let data = data else { return }
-                        DispatchQueue.main.async {
-                            self.userInfoData.append(UserData(id: tweet.user.idStr, profileImageData: data))
-                        }
-                    }
-                    task.resume()
-                }
-                
-                //Mark: user tweet data
-                self.mediaType = .Links
-                
-                if let extendedEntities = tweet.extendedEntities {
-                    let media = extendedEntities.media
-                    if let videoInfo = media.first?.videoInfo {
-                        let videoVariants = videoInfo.variants
-                        
-                        for variant in videoVariants {
-                            if let bitrate = variant.bitrate, bitrate == VideoBitrate.Zero.value  {
-                                self.mediaType = .Gif
-                                self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
-                                break
-                            }
-                        }
-                        
-                        if (self.mediaType != .Gif) {
+                    //Mark: user tweet data
+                    self.mediaType = .Links
+                    
+                    if let extendedEntities = tweet.extendedEntities {
+                        let media = extendedEntities.media
+                        if let videoInfo = media.first?.videoInfo {
+                            let videoVariants = videoInfo.variants
+                            
                             for variant in videoVariants {
-                                if let bitrate = variant.bitrate, bitrate == VideoBitrate.High.value { //Mark: Using high bitrate video
-                                    self.mediaType = .Video
+                                if let bitrate = variant.bitrate, bitrate == VideoBitrate.Zero.value  {
+                                    self.mediaType = .Gif
                                     self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
                                     break
                                 }
                             }
-                        }
-                    } else {
-                        self.mediaType = .Images
-                        var attachedImages = [AttachedImage]()
-                        var count = 0
-                        for m in media {
-                            if let imageUrl = URL(string: m.mediaUrl) {
-                                let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                                    guard let data = data else { return }
-                                    
-                                    attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
-                                    
-                                    count += 1
-                                    
-                                    if count >= media.count {
-                                        DispatchQueue.main.async {
-                                            self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages, attachedVideoUrl: nil))
-                                        }
+                            
+                            if (self.mediaType != .Gif) {
+                                for variant in videoVariants {
+                                    if let bitrate = variant.bitrate, bitrate == VideoBitrate.High.value { //Mark: Using high bitrate video
+                                        self.mediaType = .Video
+                                        self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
+                                        break
                                     }
                                 }
-                                task.resume()
+                            }
+                        } else {
+                            self.mediaType = .Images
+                            var attachedImages = [AttachedImage]()
+                            var count = 0
+                            for m in media {
+                                if let imageUrl = URL(string: m.mediaUrl) {
+                                    let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                                        guard let data = data else { return }
+                                        
+                                        attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
+                                        
+                                        count += 1
+                                        
+                                        if count >= media.count {
+                                            DispatchQueue.main.async {
+                                                self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages, attachedVideoUrl: nil))
+                                            }
+                                        }
+                                    }
+                                    task.resume()
+                                }
                             }
                         }
-                    }
-                } else {
-                    //Mark: user tweet links
-                    if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-                        let provider = LPMetadataProvider()
-                        
-                        provider.startFetchingMetadata(for: url) { metaData, error in
-                            guard let data = metaData, error == nil else {
-                                return
-                            }
-                            DispatchQueue.main.async {
-                                self.links.append(Link(id: tweet.idStr, url: url, data: data))
+                    } else {
+                        //Mark: user tweet links
+                        if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                            let provider = LPMetadataProvider()
+                            
+                            provider.startFetchingMetadata(for: url) { metaData, error in
+                                guard let data = metaData, error == nil else {
+                                    return
+                                }
+                                DispatchQueue.main.async {
+                                    self.links.append(Link(id: tweet.idStr, url: url, data: data))
+                                }
                             }
                         }
                     }
@@ -205,4 +163,99 @@ class HomeViewModel: ObservableObject {
         }
         return nil
     }
+    
+//    //Mark: Remove me, only for testing purpose
+//    func fetchSingleTimeLine(id: String) {
+//        api
+//            .show(id: id)
+//            .receive(on: DispatchQueue.main)
+//            .sink(receiveCompletion: { completion in
+//                if case .failure(let error) = completion {
+//                    self.error = error
+//                }
+//            }, receiveValue: { tweet in
+//                self.tweets.append(tweet)
+//
+//                //Mark: user info data
+//                let user = tweet.user
+//                let profileImageUrl = user.profileImageUrl
+//
+//                if let imageUrl = URL(string: profileImageUrl) {
+//                    let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+//                        guard let data = data else { return }
+//                        DispatchQueue.main.async {
+//                            self.userInfoData.append(UserData(id: tweet.user.idStr, profileImageData: data))
+//                        }
+//                    }
+//                    task.resume()
+//                }
+//
+//                //Mark: user tweet data
+//                self.mediaType = .Links
+//
+//                if let extendedEntities = tweet.extendedEntities {
+//                    let media = extendedEntities.media
+//                    if let videoInfo = media.first?.videoInfo {
+//                        let videoVariants = videoInfo.variants
+//
+//                        for variant in videoVariants {
+//                            if let bitrate = variant.bitrate, bitrate == VideoBitrate.Zero.value  {
+//                                self.mediaType = .Gif
+//                                self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
+//                                break
+//                            }
+//                        }
+//
+//                        if (self.mediaType != .Gif) {
+//                            for variant in videoVariants {
+//                                if let bitrate = variant.bitrate, bitrate == VideoBitrate.High.value { //Mark: Using high bitrate video
+//                                    self.mediaType = .Video
+//                                    self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: nil, attachedVideoUrl: variant.url))
+//                                    break
+//                                }
+//                            }
+//                        }
+//                    } else {
+//                        self.mediaType = .Images
+//                        var attachedImages = [AttachedImage]()
+//                        var count = 0
+//                        for m in media {
+//                            if let imageUrl = URL(string: m.mediaUrl) {
+//                                let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+//                                    guard let data = data else { return }
+//
+//                                    attachedImages.append(AttachedImage(id: String(describing: count), image: UIImage(data: data) ?? UIImage()))
+//
+//                                    count += 1
+//
+//                                    if count >= media.count {
+//                                        DispatchQueue.main.async {
+//                                            self.userTweetData.append(UserTweetData(id: tweet.user.idStr, attachedImages: attachedImages, attachedVideoUrl: nil))
+//                                        }
+//                                    }
+//                                }
+//                                task.resume()
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    //Mark: user tweet links
+//                    if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+//                        let provider = LPMetadataProvider()
+//
+//                        provider.startFetchingMetadata(for: url) { metaData, error in
+//                            guard let data = metaData, error == nil else {
+//                                return
+//                            }
+//                            DispatchQueue.main.async {
+//                                self.links.append(Link(id: tweet.idStr, url: url, data: data))
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                self.error = nil
+//            })
+//            .store(in: &subscriptions)
+//    }
 }
