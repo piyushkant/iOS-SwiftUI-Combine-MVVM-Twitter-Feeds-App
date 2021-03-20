@@ -11,6 +11,7 @@ struct UserTweetData {
     let id: String
     let attachedImages: [AttachedImage]?
     let attachedVideoUrl: String?
+    let mediaType: MediaType
 }
 
 struct AttachedImage: Hashable {

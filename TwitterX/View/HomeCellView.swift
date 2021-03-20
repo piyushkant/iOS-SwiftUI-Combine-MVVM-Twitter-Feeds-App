@@ -29,22 +29,21 @@ struct HomeCellView: View {
             HyperlinkTextView(headline)
                 .fixedSize(horizontal: false, vertical: true)
             
-
             if let userTweetData = homeViewModel.fetchUserTweetData(tweet: self.tweet) {
-                let mediaType = homeViewModel.mediaType
-                
+                let mediaType = userTweetData.mediaType
+
                 if (mediaType == .Gif) {
-                    if let firstData = homeViewModel.userTweetData.first, let videoUrl = firstData.attachedVideoUrl, let url = URL(string: videoUrl) {
+                    if let firstData = userTweetData, let videoUrl = firstData.attachedVideoUrl, let url = URL(string: videoUrl) {
                         GifPlayerView(url: url, tweet: self.tweet)
                     }
                 } else if (mediaType == .Video) {
-                    if let firstData = homeViewModel.userTweetData.first, let videoUrl = firstData.attachedVideoUrl, let url = URL(string: videoUrl) {
+                    if let firstData = userTweetData, let videoUrl = firstData.attachedVideoUrl, let url = URL(string: videoUrl) {
                         VideoPlayerView(url: url, tweet: self.tweet)
                     }
                 } else if (mediaType == .Images) {
                     if let attachedImages = userTweetData.attachedImages {
                         let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
-                        
+
                         LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
                             ForEach(attachedImages, id:\.self) { image in
                                 ImageGridView(homeViewModel: homeViewModel, image: image)
@@ -56,7 +55,7 @@ struct HomeCellView: View {
                                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.4, alignment: .leading)
                         )
                     }
-                } 
+                }
             } else {
                 if let link = homeViewModel.fetchLink(tweet: tweet) {
                     LinkPreview(link: link)

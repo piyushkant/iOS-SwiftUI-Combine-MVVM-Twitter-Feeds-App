@@ -46,6 +46,13 @@ struct GifPlayerView: View {
     let url: URL
     let tweet: Tweet
     
+    init(url: URL, tweet: Tweet) {
+        self.url = url
+        self.tweet = tweet
+        
+        print("GifPlayerView", url)
+    }
+    
     var body: some View {
         let player = AVPlayer(url: url)
         
