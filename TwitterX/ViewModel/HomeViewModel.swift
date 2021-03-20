@@ -152,22 +152,22 @@ class HomeViewModel: ObservableObject {
                             }
                         }
                     }
+                } else {
+                    //Mark: user tweet links
+                    if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                        let provider = LPMetadataProvider()
+                        
+                        provider.startFetchingMetadata(for: url) { metaData, error in
+                            guard let data = metaData, error == nil else {
+                                return
+                            }
+                            DispatchQueue.main.async {
+                                self.links.append(Link(id: tweet.idStr, url: url, data: data))
+                            }
+                        }
+                    }
                 }
                 
-                //                //Mark: user tweet links
-                //                if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-                //                    let provider = LPMetadataProvider()
-                //
-                //                    provider.startFetchingMetadata(for: url) { metaData, error in
-                //                        guard let data = metaData, error == nil else {
-                //                            return
-                //                        }
-                //                        DispatchQueue.main.async {
-                //                            self.links.append(Link(id: tweet.idStr, url: url, data: data))
-                //                        }
-                //                    }
-                //                }
-                //
                 self.error = nil
             })
             .store(in: &subscriptions)

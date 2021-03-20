@@ -56,12 +56,12 @@ struct HomeCellView: View {
                                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.4, alignment: .leading)
                         )
                     }
-                } else {
-                    if let link = homeViewModel.fetchLink(tweet: tweet) {
-                        LinkPreview(link: link)
-                    } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
-                        EmptyLinkPreview(url: url)
-                    }
+                } 
+            } else {
+                if let link = homeViewModel.fetchLink(tweet: tweet) {
+                    LinkPreview(link: link)
+                } else if let tweetUrl = tweet.entities.urls.first?.url, let url = URL(string: tweetUrl) {
+                    EmptyLinkPreview(url: url)
                 }
             }
             
