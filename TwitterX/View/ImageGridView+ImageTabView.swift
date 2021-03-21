@@ -10,9 +10,13 @@ import SwiftUI
 struct ImageGridView: View {
     @ObservedObject var homeViewModel: HomeViewModel
     var image: AttachedImage
+    var images: [AttachedImage]
+    @State private var showImageTabView = false
        
     var body: some View {
         Button(action: {
+            self.showImageTabView.toggle()
+            
             withAnimation(.easeInOut) {
                 homeViewModel.showImageViewer.toggle()
             }
@@ -26,6 +30,9 @@ struct ImageGridView: View {
                     .cornerRadius(12)
             }
         })
+        .sheet(isPresented: $showImageTabView) {
+            ImageTabView(homeViewModel: homeViewModel, images: images)
+        }
     }
 }
 
@@ -75,21 +82,5 @@ struct ImageTabView: View {
                 .tabViewStyle(PageTabViewStyle())
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .overlay(
-            Button(action: {
-                homeViewModel.showImageViewer.toggle()
-            }, label: {
-                Image(systemName: "xmark")
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.white.opacity(0.35))
-                    .clipShape(Rectangle())
-            })
-            .padding(10)
-            .opacity(homeViewModel.showImageViewer ? homeViewModel.bgOpacity : 0)
-
-            , alignment: .topTrailing
-        )
     }
 }

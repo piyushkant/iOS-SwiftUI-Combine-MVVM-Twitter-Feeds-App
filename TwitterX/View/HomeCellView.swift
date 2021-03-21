@@ -44,13 +44,9 @@ struct HomeCellView: View {
 
                         LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
                             ForEach(attachedImages, id:\.self) { image in
-                                ImageGridView(homeViewModel: homeViewModel, image: image)
+                                ImageGridView(homeViewModel: homeViewModel, image: image, images: attachedImages)
                             }
                         })
-                        .overlay(
-                            ImageTabView(homeViewModel: homeViewModel, images: attachedImages)
-                                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.4, alignment: .leading)
-                        )
                     }
                 }
             } else {
