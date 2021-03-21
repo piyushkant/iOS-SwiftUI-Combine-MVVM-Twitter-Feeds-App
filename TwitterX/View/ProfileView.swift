@@ -12,6 +12,21 @@ struct ProfileView: View {
     let tweet: Tweet
     private let kHeaderHeight: CGFloat = 0
     
+    var screenName: String? {
+        get {
+            do {
+                let screenNamedata = try Keychain.get(key: KeychainConst.ScreenName.string)
+                
+                guard let data = screenNamedata else {return nil}
+                
+                return String(decoding: data, as: UTF8.self)
+            } catch let error {
+                print(error)
+                return nil
+            }
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             GeometryReader { (geometry: GeometryProxy) in
@@ -75,16 +90,18 @@ struct ProfileView: View {
                     .foregroundColor(Color.gray)
             }
             
-            Button(action: {
-                
-            }) {
-                Text(tweet.user.following ? NSLocalizedString("unfollow", comment: "") : NSLocalizedString("follow", comment: ""))
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(width: 150, height: 40)
-                    .background(tweet.user.following ? Color.red : twitterColor)
-                    .cornerRadius(35.0)
-                    .padding()
+            if let screenName = self.screenName, screenName != tweet.user.screenName {
+                Button(action: {
+                    
+                }) {
+                    Text(tweet.user.following ? NSLocalizedString("unfollow", comment: "") : NSLocalizedString("follow", comment: ""))
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(width: 150, height: 40)
+                        .background(tweet.user.following ? Color.red : twitterColor)
+                        .cornerRadius(35.0)
+                        .padding()
+                }
             }
         }
     }

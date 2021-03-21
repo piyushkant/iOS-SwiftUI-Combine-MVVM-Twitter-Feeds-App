@@ -63,6 +63,7 @@
 		4BB260BE26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB260BD26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift */; };
 		4BB260CA260612F200F10204 /* VideoPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB260C9260612F200F10204 /* VideoPlayer */; };
 		4BB260E22607506900F10204 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB260E12607506900F10204 /* ProfileView.swift */; };
+		4BB260EA26078BC300F10204 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB260E926078BC300F10204 /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +140,7 @@
 		4B69C46D25F5CEA100BA0663 /* Extension_UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UITextView.swift; sourceTree = "<group>"; };
 		4BB260BD26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+GifPlayerView.swift"; sourceTree = "<group>"; };
 		4BB260E12607506900F10204 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		4BB260E926078BC300F10204 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 				4B2AB26925FAF174005A13C7 /* UserData.swift */,
 				4B0CBDA325FC69F700615DDF /* TweetExtendedEntities.swift */,
 				4B0CBDAD25FC702500615DDF /* UserTweetData.swift */,
+				4BB260E926078BC300F10204 /* Settings.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				4B69C3DE25F3EF9600BA0663 /* Extension_Date.swift in Sources */,
 				4B69C2C925F39CC500BA0663 /* ContentView.swift in Sources */,
 				4B69C3C425F3E76B00BA0663 /* Extension_Int.swift in Sources */,
+				4BB260EA26078BC300F10204 /* Settings.swift in Sources */,
 				4B69C2C725F39CC500BA0663 /* TwitterXApp.swift in Sources */,
 				4B0CBDAE25FC702500615DDF /* UserTweetData.swift in Sources */,
 				4B69C32325F3C10300BA0663 /* LoginView.swift in Sources */,

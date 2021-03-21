@@ -114,4 +114,31 @@ struct Api {
             }
             .eraseToAnyPublisher()
     }
+    
+    func settings() -> AnyPublisher<Settings, ApiError> {
+        let url = URL(string: EndPoint.Statuses.settings.url.absoluteString)!
+                        
+        var request =  URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let header = oauth.authorizationHeader(for: .GET, url: EndPoint.Statuses.settings.url, parameters: [:], isMediaUpload: false)
+        request.addValue(header, forHTTPHeaderField: "Authorization")
+        
+        return URLSession.DataTaskPublisher(request: request, session: .shared)
+            .tryMap { data, response in
+                guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
+                    throw ApiError.invalidResponse
+                }
+                return data
+            }
+            .decode(type: Settings.self, decoder: decoder)
+            .mapError { error in
+                switch error {
+                case is URLError:
+                    return ApiError.addressUnreachable(url)
+                default: return ApiError.invalidResponse
+                }
+            }
+            .eraseToAnyPublisher()
+    }
 }
