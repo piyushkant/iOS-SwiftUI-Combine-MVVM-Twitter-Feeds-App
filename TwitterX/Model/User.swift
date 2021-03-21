@@ -18,6 +18,8 @@ struct User: Decodable {
     let followersCount: Int
     let friendsCount: Int
     let following: Bool
+    let url: String?
+    let entities: UserEntities
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -30,5 +32,7 @@ struct User: Decodable {
         case followersCount = "followers_count"
         case friendsCount = "friends_count"
         case following = "following"
+        case url = "url"
+        case entities = "entities"
     }
 }

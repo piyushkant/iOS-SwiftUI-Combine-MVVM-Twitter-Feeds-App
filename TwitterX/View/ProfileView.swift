@@ -68,15 +68,14 @@ struct ProfileView: View {
                 }
             }
             
-            Text(tweet.user.description)
-                .bold()
-                .font(.system(size:16.0))
+            HyperlinkTextView(tweet.user.description)
                 .padding(.leading)
             
-            HyperlinkTextView("http://www.piyushkant.com")
-                .font(.system(size:13.0))
-                .padding(.leading)
-                .padding(.vertical, 0.1)
+            if let userUrl = tweet.user.entities.url, let profileUrl = userUrl.urls.first, let url = profileUrl.displayUrl {
+                HyperlinkTextView(url)
+                    .padding(.leading)
+                    .padding(.vertical, 0.1)
+            }
             
             HStack(spacing: 20) {
                 Text("\(tweet.user.followersCount) \(NSLocalizedString("followers", comment: ""))")
