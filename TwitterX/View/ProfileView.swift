@@ -64,15 +64,27 @@ struct ProfileView: View {
                 .padding(.vertical, 0.1)
             
             HStack(spacing: 20) {
-                Text("0 Followers")
+                Text("\(tweet.user.followersCount) \(NSLocalizedString("followers", comment: ""))")
                     .bold()
                     .font(.system(size:16.0))
                     .padding(.leading)
                     .foregroundColor(Color.gray)
-                Text("0 Following")
+                Text("\(tweet.user.friendsCount) \(NSLocalizedString("following", comment: ""))")
                     .bold()
                     .font(.system(size:16.0))
                     .foregroundColor(Color.gray)
+            }
+            
+            Button(action: {
+                
+            }) {
+                Text(tweet.user.following ? NSLocalizedString("unfollow", comment: "") : NSLocalizedString("follow", comment: ""))
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(width: 150, height: 40)
+                    .background(tweet.user.following ? Color.red : twitterColor)
+                    .cornerRadius(35.0)
+                    .padding()
             }
         }
     }
