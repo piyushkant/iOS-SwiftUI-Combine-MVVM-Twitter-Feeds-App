@@ -24,10 +24,6 @@ class HomeViewModel: ObservableObject {
     @Published var userInfoData = [UserData]()
     @Published var userTweetData = [UserTweetData]()
     @Published var error: ApiError? = nil
-    @Published var showImageViewer = false
-    @Published var imageViewerOffset: CGSize = .zero
-    @Published var bgOpacity: Double = 1
-    @Published var imageScale: CGFloat = 1
     
     init() {
         self.api = Api(oauth: OAuth())
