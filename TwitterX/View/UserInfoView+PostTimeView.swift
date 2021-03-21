@@ -44,6 +44,7 @@ struct UserInfoView: View {
 //            }
         .onReceive(timer) {
             self.currentDate = $0
+//            homeViewModel.fetchHomeTimeline(count: HomeConfig.TweetsLimit)
         }
     }
 }
