@@ -198,4 +198,36 @@ class HomeViewModel: ObservableObject {
         }
         return nil
     }
+    
+    
+    //Mark: Remove me, only for testing purpose
+    func fetchSingleTimeLine(id: String) {
+        api
+            .show(id: id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.error = error
+                }
+            }, receiveValue: { tweet in
+                self.tweets.append(tweet)
+
+                //Mark: user info data
+                let user = tweet.user
+                let profileImageUrl = user.profileImageUrl
+                
+                if let imageUrl = URL(string: profileImageUrl) {
+                    let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                        guard let data = data else { return }
+                        DispatchQueue.main.async {
+                            self.userInfoData.append(UserData(id: tweet.idStr, profileImageData: data))
+                        }
+                    }
+                    task.resume()
+                }
+
+                self.error = nil
+            })
+            .store(in: &subscriptions)
+    }
 }

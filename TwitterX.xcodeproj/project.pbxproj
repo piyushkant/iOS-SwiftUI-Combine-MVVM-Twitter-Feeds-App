@@ -62,6 +62,7 @@
 		4B69C46E25F5CEA100BA0663 /* Extension_UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C46D25F5CEA100BA0663 /* Extension_UITextView.swift */; };
 		4BB260BE26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB260BD26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift */; };
 		4BB260CA260612F200F10204 /* VideoPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 4BB260C9260612F200F10204 /* VideoPlayer */; };
+		4BB260E22607506900F10204 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB260E12607506900F10204 /* ProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,7 @@
 		4B69C46825F5A78C00BA0663 /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		4B69C46D25F5CEA100BA0663 /* Extension_UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UITextView.swift; sourceTree = "<group>"; };
 		4BB260BD26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPlayerView+GifPlayerView.swift"; sourceTree = "<group>"; };
+		4BB260E12607506900F10204 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +259,7 @@
 				4B69C33E25F3C84F00BA0663 /* HomeView.swift */,
 				4B3B80322601BD37009E0F98 /* HyperlinkTextView.swift */,
 				4BB260BD26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift */,
+				4BB260E12607506900F10204 /* ProfileView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				4B69C3ED25F3F6B800BA0663 /* Keychain.swift in Sources */,
 				4B69C3F325F3F91300BA0663 /* KeychainConst.swift in Sources */,
 				4B69C46E25F5CEA100BA0663 /* Extension_UITextView.swift in Sources */,
+				4BB260E22607506900F10204 /* ProfileView.swift in Sources */,
 				4B69C3E325F3EFA500BA0663 /* Extension_String.swift in Sources */,
 				4B69C3DE25F3EF9600BA0663 /* Extension_Date.swift in Sources */,
 				4B69C2C925F39CC500BA0663 /* ContentView.swift in Sources */,

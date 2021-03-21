@@ -11,6 +11,7 @@ struct UserInfoView: View {
     @ObservedObject var homeViewModel: HomeViewModel
     let tweet: Tweet
     let data: Data
+    @State private var showProfileView = false
     
     @State var currentDate = Date()
     private let timer = Timer.publish(every: 10, on: .main, in: .common)
@@ -18,59 +19,54 @@ struct UserInfoView: View {
         .eraseToAnyPublisher()
     
     var body: some View {
-        HStack(spacing: 10) {
-            Image(uiImage: UIImage(data: data) ?? UIImage())
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width:50, height:50)
-                .cornerRadius(50)
-            
-            VStack(alignment: .leading, spacing: 0) {
-                Text(tweet.user.name)
-                    .bold()
-                    .font(.system(size:18.0))
-                PostTimeView(tweet: tweet, currentDate: currentDate)
+        Button(action: {
+            self.showProfileView.toggle()
+        }, label: {
+            HStack(spacing: 10) {
+                Image(uiImage: UIImage(data: data) ?? UIImage())
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width:50, height:50)
+                    .cornerRadius(50)
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(tweet.user.name)
+                        .bold()
+                        .font(.system(size:18.0))
+                    PostTimeView(tweet: tweet, currentDate: currentDate)
+                }
+                .onReceive(timer) {
+                    self.currentDate = $0
+                }
             }
-            
-//            HStack {
-//                Spacer()
-//                VStack {
-//                    HStack {
-//                        Spacer()
-//                        OptionActionSheetView(homeViewModel: homeViewModel, tweet: tweet)
-//                    }
-//                    Spacer()
-//                }
-//            }
-        .onReceive(timer) {
-            self.currentDate = $0
-//            homeViewModel.fetchHomeTimeline(count: HomeConfig.TweetsLimit)
+        })
+        .sheet(isPresented: $showProfileView) {
+            ProfileView(homeViewModel: self.homeViewModel, tweet: self.tweet)
         }
     }
-}
-
-struct OptionActionSheetView: View {
-    @ObservedObject var homeViewModel: HomeViewModel
-    let tweet: Tweet
-    @State private var showingActionSheet = false
     
-    var body: some View {
-        Button(action: {
-            self.showingActionSheet = true
-        }, label: {
-            Image("option")
-        })
-        .actionSheet(isPresented: $showingActionSheet) { () -> ActionSheet in
-            ActionSheet(title: Text("Options"), message: Text("Choose right option"), buttons:
-                            [
-                                .default(Text("Delete Tweet")) {
-                                    homeViewModel.destroy(id: tweet.idStr)
-                                },
-                                .cancel()
-                            ]
-            )
-        }
-    }}
+    struct OptionActionSheetView: View {
+        @ObservedObject var homeViewModel: HomeViewModel
+        let tweet: Tweet
+        @State private var showingActionSheet = false
+        
+        var body: some View {
+            Button(action: {
+                self.showingActionSheet = true
+            }, label: {
+                Image("option")
+            })
+            .actionSheet(isPresented: $showingActionSheet) { () -> ActionSheet in
+                ActionSheet(title: Text("Options"), message: Text("Choose right option"), buttons:
+                                [
+                                    .default(Text("Delete Tweet")) {
+                                        homeViewModel.destroy(id: tweet.idStr)
+                                    },
+                                    .cancel()
+                                ]
+                )
+            }
+        }}
 }
 
 struct PostTimeView: View {
