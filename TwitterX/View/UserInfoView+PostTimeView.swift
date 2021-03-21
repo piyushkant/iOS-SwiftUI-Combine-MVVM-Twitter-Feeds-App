@@ -32,24 +32,44 @@ struct UserInfoView: View {
                 PostTimeView(tweet: tweet, currentDate: currentDate)
             }
             
-            HStack {
-                Spacer()
-                VStack {
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            homeViewModel.destroy(id: tweet.idStr)
-                        }, label: {
-                            Image("option")
-                        })}
-                }
-                Spacer()
-            }
-        }
+//            HStack {
+//                Spacer()
+//                VStack {
+//                    HStack {
+//                        Spacer()
+//                        OptionActionSheetView(homeViewModel: homeViewModel, tweet: tweet)
+//                    }
+//                    Spacer()
+//                }
+//            }
         .onReceive(timer) {
             self.currentDate = $0
         }
     }
+}
+
+struct OptionActionSheetView: View {
+    @ObservedObject var homeViewModel: HomeViewModel
+    let tweet: Tweet
+    @State private var showingActionSheet = false
+    
+    var body: some View {
+        Button(action: {
+            self.showingActionSheet = true
+        }, label: {
+            Image("option")
+        })
+        .actionSheet(isPresented: $showingActionSheet) { () -> ActionSheet in
+            ActionSheet(title: Text("Options"), message: Text("Choose right option"), buttons:
+                            [
+                                .default(Text("Delete Tweet")) {
+                                    homeViewModel.destroy(id: tweet.idStr)
+                                },
+                                .cancel()
+                            ]
+            )
+        }
+    }}
 }
 
 struct PostTimeView: View {
