@@ -31,15 +31,20 @@ struct UserInfoView: View {
                     .font(.system(size:18.0))
                 PostTimeView(tweet: tweet, currentDate: currentDate)
             }
-           
-            Button(action: {
-                print("button", "Clicked option button!")
-                homeViewModel.destroy(id: tweet.idStr)
-                
-            }, label: {
-                Image("option2")
-                    .padding(.bottom)
-            })
+            
+            HStack {
+                Spacer()
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            homeViewModel.destroy(id: tweet.idStr)
+                        }, label: {
+                            Image("option")
+                        })}
+                }
+                Spacer()
+            }
         }
         .onReceive(timer) {
             self.currentDate = $0

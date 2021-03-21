@@ -136,9 +136,7 @@ class HomeViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    func destroy(id: String) {
-        print("destroy", id)
-        
+    func destroy(id: String) {        
         api
             .destroy(id: id)
             .receive(on: DispatchQueue.main)
@@ -149,8 +147,6 @@ class HomeViewModel: ObservableObject {
             }, receiveValue: { tweet in
                 DispatchQueue.main.async {
                     let index = self.findTweetIndexById(id: id)
-                    print("destroy", index, tweet)
-                   
                     if index >= 0 {
                         self.tweets.remove(at: index)
                     }

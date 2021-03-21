@@ -16,8 +16,8 @@ struct HomeCellView: View {
     @State var togglePreview = false
     
     var body: some View {
-        //        Mark: Disabled for now due to api usage limit
-        //        let tweets: [Tweet] = self.homeViewModel.tweets
+//                Mark: Disabled for now due to api usage limit
+//                let tweets: [Tweet] = self.homeViewModel.tweets
         
         VStack(alignment: .leading, spacing: 10) {
             if let userInfoData = homeViewModel.fetchUserData(tweet: self.tweet), let data = userInfoData.profileImageData {
@@ -64,8 +64,8 @@ struct HomeCellView: View {
             if self.isLast {
                 Text("").onAppear {
                     
-                    //                    Mark: Disabled for now due to api usage limit
-                    //                    self.homeViewModel.fetchHomeTimeline(count: tweets.count + HomeTimelineConfig.TweetsLimit)
+//                                        Mark: Disabled for now due to api usage limit
+//                                        self.homeViewModel.fetchHomeTimeline(count: tweets.count + HomeConfig.TweetsLimit)
                 }
             }
             
