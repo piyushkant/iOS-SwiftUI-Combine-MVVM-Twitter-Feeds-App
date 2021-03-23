@@ -52,7 +52,7 @@ struct ProfileView: View {
             }
             
             HStack(spacing: 10) {
-                if let userInfoData = homeViewModel.fetchUserData(tweet: self.tweet), let data = userInfoData.profileImageData {
+                if let userInfoData = homeViewModel.fetchUserProfileImageData(tweet: self.tweet), let data = userInfoData.data {
                     Image(uiImage: UIImage(data: data) ?? UIImage())
                         .resizable()
                         .aspectRatio(contentMode: .fit)

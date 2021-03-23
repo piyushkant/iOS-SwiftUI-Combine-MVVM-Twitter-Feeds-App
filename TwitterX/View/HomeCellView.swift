@@ -20,7 +20,7 @@ struct HomeCellView: View {
 //                let tweets: [Tweet] = self.homeViewModel.tweets
         
         VStack(alignment: .leading, spacing: 10) {
-            if let userInfoData = homeViewModel.fetchUserData(tweet: self.tweet), let data = userInfoData.profileImageData {
+            if let userInfoData = homeViewModel.fetchUserProfileImageData(tweet: self.tweet), let data = userInfoData.data {
                 UserInfoView(homeViewModel: homeViewModel, tweet: self.tweet, data: data)
             }
 

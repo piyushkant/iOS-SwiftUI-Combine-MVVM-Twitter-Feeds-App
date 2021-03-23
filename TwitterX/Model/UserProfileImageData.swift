@@ -9,5 +9,5 @@ import Foundation
 
 struct UserProfileImageData {
     let id: String
-    let profileImageData: Data?
+    let data: Data?
 }

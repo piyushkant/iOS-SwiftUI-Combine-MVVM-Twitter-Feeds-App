@@ -51,7 +51,7 @@ class HomeViewModel: ObservableObject {
                         let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                             guard let data = data else { return }
                             DispatchQueue.main.async {
-                                self.profileImageData.append(UserProfileImageData(id: tweet.idStr, profileImageData: data))
+                                self.profileImageData.append(UserProfileImageData(id: tweet.idStr, data: data))
                             }
                         }
                         task.resume()
@@ -167,12 +167,11 @@ class HomeViewModel: ObservableObject {
         return -1
     }
     
-    func fetchUserData(tweet: Tweet) -> UserProfileImageData? {
+    func fetchUserProfileImageData(tweet: Tweet) -> UserProfileImageData? {
         let userId = tweet.idStr
         
         for data in profileImageData {
             if data.id == userId {
-                print("fetchUserData", data)
                 return data
             }
         }
@@ -184,7 +183,6 @@ class HomeViewModel: ObservableObject {
         
         for data in profileBannerData {
             if data.id == userId {
-                print("fetchUserProfileBannerData", data)
                 return data
             }
         }
@@ -233,7 +231,7 @@ class HomeViewModel: ObservableObject {
                     let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                         guard let data = data else { return }
                         DispatchQueue.main.async {
-                            self.profileImageData.append(UserProfileImageData(id: tweet.idStr, profileImageData: data))
+                            self.profileImageData.append(UserProfileImageData(id: tweet.idStr, data: data))
                         }
                     }
                     task.resume()
