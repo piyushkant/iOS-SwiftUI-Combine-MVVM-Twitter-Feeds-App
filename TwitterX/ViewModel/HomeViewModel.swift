@@ -21,7 +21,8 @@ class HomeViewModel: ObservableObject {
     
     @Published var tweets = [Tweet]()
     @Published var links = [Link]()
-    @Published var userInfoData = [UserData]()
+    @Published var profileImageData = [UserProfileImageData]()
+    @Published var profileBannerData = [UserProfileBannerData]()
     @Published var userTweetData = [UserTweetData]()
     @Published var error: ApiError? = nil
     
@@ -50,7 +51,7 @@ class HomeViewModel: ObservableObject {
                         let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                             guard let data = data else { return }
                             DispatchQueue.main.async {
-                                self.userInfoData.append(UserData(id: tweet.idStr, profileImageData: data))
+                                self.profileImageData.append(UserProfileImageData(id: tweet.idStr, profileImageData: data))
                             }
                         }
                         task.resume()
@@ -166,10 +167,10 @@ class HomeViewModel: ObservableObject {
         return -1
     }
     
-    func fetchUserData(tweet: Tweet) -> UserData? {
+    func fetchUserData(tweet: Tweet) -> UserProfileImageData? {
         let userId = tweet.idStr
         
-        for data in userInfoData {
+        for data in profileImageData {
             if data.id == userId {
                 return data
             }
@@ -214,13 +215,24 @@ class HomeViewModel: ObservableObject {
 
                 //Mark: user info data
                 let user = tweet.user
-                let profileImageUrl = user.profileImageUrl
                 
+                let profileImageUrl = user.profileImageUrl
                 if let imageUrl = URL(string: profileImageUrl) {
                     let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                         guard let data = data else { return }
                         DispatchQueue.main.async {
-                            self.userInfoData.append(UserData(id: tweet.idStr, profileImageData: data))
+                            self.profileImageData.append(UserProfileImageData(id: tweet.idStr, profileImageData: data))
+                        }
+                    }
+                    task.resume()
+                }
+                
+                let profileBannerUrl = user.profileBannerUrl
+                if let bannerUrl = URL(string: profileBannerUrl) {
+                    let task = URLSession.shared.dataTask(with: bannerUrl) { data, response, error in
+                        guard let data = data else { return }
+                        DispatchQueue.main.async {
+                            self.profileBannerData.append((UserProfileBannerData(id: tweet.idStr, data: data)))
                         }
                     }
                     task.resume()

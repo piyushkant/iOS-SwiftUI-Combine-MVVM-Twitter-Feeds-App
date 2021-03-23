@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserData {
+struct UserProfileImageData {
     let id: String
     let profileImageData: Data?
 }
