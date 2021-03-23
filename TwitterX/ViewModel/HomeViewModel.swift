@@ -172,6 +172,19 @@ class HomeViewModel: ObservableObject {
         
         for data in profileImageData {
             if data.id == userId {
+                print("fetchUserData", data)
+                return data
+            }
+        }
+        return nil
+    }
+    
+    func fetchUserProfileBannerData(tweet: Tweet) -> UserProfileBannerData? {
+        let userId = tweet.idStr
+        
+        for data in profileBannerData {
+            if data.id == userId {
+                print("fetchUserProfileBannerData", data)
                 return data
             }
         }
@@ -199,7 +212,6 @@ class HomeViewModel: ObservableObject {
         }
         return nil
     }
-    
     
     //Mark: Remove me, only for testing purpose
     func fetchSingleTimeLine(id: String) {

@@ -29,23 +29,27 @@ struct ProfileView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            GeometryReader { (geometry: GeometryProxy) in
-                if geometry.frame(in: .global).minY <= 0 {
-                    Image("img4").resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: geometry.size.width,
-                               height: geometry.size.height)
-                }
-                else {
-                    Image("img4").resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .offset(y: -geometry.frame(in: .global).minY)
-                        .frame(width: geometry.size.width,
-                               height: geometry.size.height
-                                + geometry.frame(in: .global).minY)
-                }
+            
+            if let profileBannerData = homeViewModel.fetchUserProfileBannerData(tweet: tweet), let data = profileBannerData.data {
+//                GeometryReader { (geometry: GeometryProxy) in
+//                    if geometry.frame(in: .global).minY <= 0 {
+//                        Image(uiImage: UIImage(data: data) ?? UIImage())
+//                            .aspectRatio(contentMode: .fill)
+//                            .frame(width: geometry.size.width,
+//                                   height: geometry.size.height)
+//                    }
+//                    else {
+//                        Image(uiImage: UIImage(data: data) ?? UIImage())
+//                            .aspectRatio(contentMode: .fill)
+//                            .offset(y: -geometry.frame(in: .global).minY)
+//                            .frame(width: geometry.size.width,
+//                                   height: geometry.size.height
+//                                    + geometry.frame(in: .global).minY)
+//                    }
+//                }
+//                .frame(maxHeight: kHeaderHeight)
+                Image(uiImage: UIImage(data: data) ?? UIImage())
             }
-            .frame(maxHeight: kHeaderHeight)
             
             HStack(spacing: 10) {
                 if let userInfoData = homeViewModel.fetchUserData(tweet: self.tweet), let data = userInfoData.profileImageData {
