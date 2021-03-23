@@ -10,7 +10,6 @@ import SwiftUI
 struct ProfileView: View {
     @ObservedObject var homeViewModel: HomeViewModel
     let tweet: Tweet
-    private let kHeaderHeight: CGFloat = 0
     
     var screenName: String? {
         get {
@@ -28,27 +27,18 @@ struct ProfileView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        ZStack {
+            lightGreyColor
+                .ignoresSafeArea()
             
+        VStack(alignment: .leading) {
             if let profileBannerData = homeViewModel.fetchUserProfileBannerData(tweet: tweet), let data = profileBannerData.data {
-//                GeometryReader { (geometry: GeometryProxy) in
-//                    if geometry.frame(in: .global).minY <= 0 {
-//                        Image(uiImage: UIImage(data: data) ?? UIImage())
-//                            .aspectRatio(contentMode: .fill)
-//                            .frame(width: geometry.size.width,
-//                                   height: geometry.size.height)
-//                    }
-//                    else {
-//                        Image(uiImage: UIImage(data: data) ?? UIImage())
-//                            .aspectRatio(contentMode: .fill)
-//                            .offset(y: -geometry.frame(in: .global).minY)
-//                            .frame(width: geometry.size.width,
-//                                   height: geometry.size.height
-//                                    + geometry.frame(in: .global).minY)
-//                    }
-//                }
-//                .frame(maxHeight: kHeaderHeight)
                 Image(uiImage: UIImage(data: data) ?? UIImage())
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/3)
+                    .padding(.bottom)
+                    .background(lightGreyColor)
             }
             
             HStack(spacing: 10) {
@@ -107,5 +97,6 @@ struct ProfileView: View {
                 }
             }
         }
+    }
     }
 }
