@@ -37,8 +37,6 @@ struct ProfileView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/3)
-                    .padding(.bottom)
-                    .background(lightGreyColor)
             }
             
             HStack(spacing: 10) {
