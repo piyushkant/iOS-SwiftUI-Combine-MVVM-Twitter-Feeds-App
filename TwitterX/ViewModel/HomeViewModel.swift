@@ -154,6 +154,20 @@ class HomeViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
+    func unfollowUser(id: String) {
+        api
+            .unfollowUser(id: id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.error = error
+                }
+            }, receiveValue: { user in                
+                self.error = nil
+            })
+            .store(in: &subscriptions)
+    }
+    
     func findTweetIndexById(id: String) -> Int {
         var index = 0
         for tweet in self.tweets {
