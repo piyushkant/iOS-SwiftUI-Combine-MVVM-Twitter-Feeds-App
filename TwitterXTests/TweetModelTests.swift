@@ -24,7 +24,7 @@ class TweetModelTests: XCTestCase {
         
         XCTAssertEqual(response.id, 138112158365845094)
         XCTAssertEqual(response.idStr, "1381121583658450946")
-        XCTAssertEqual(response.createdAt, "Sun Apr 11 05:47:00 +0000 2021")
+        XCTAssertEqual(response.createdAt, "Apr 11 05:47:00 +0000 2021") //"Sun Apr 11 05:47:00 +0000 2021"
         XCTAssertEqual(response.text, "These kinetic sculptures have brought these LEGO bricks to life https://t.co/kkltgHN8dr")
     
         XCTAssertEqual(response.entities.urls.count, 0)
