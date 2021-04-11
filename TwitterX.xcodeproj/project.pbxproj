@@ -24,6 +24,7 @@
 		4B46DC972622CA840015F0C5 /* UserModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B46DC962622CA840015F0C5 /* UserModelTests.swift */; };
 		4B46DC9F2622CD600015F0C5 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B46DC9E2622CD600015F0C5 /* user.json */; };
 		4B46DCB92622ECA50015F0C5 /* TweetModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B46DCB82622ECA50015F0C5 /* TweetModelTests.swift */; };
+		4B46DCBF2622F0640015F0C5 /* tweet.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B46DCBE2622F0640015F0C5 /* tweet.json */; };
 		4B687CE62609B3E20093F3CC /* UserProfileBannerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B687CE52609B3E20093F3CC /* UserProfileBannerData.swift */; };
 		4B69C2C725F39CC500BA0663 /* TwitterXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C2C625F39CC500BA0663 /* TwitterXApp.swift */; };
 		4B69C2C925F39CC500BA0663 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C2C825F39CC500BA0663 /* ContentView.swift */; };
@@ -57,7 +58,6 @@
 		4B69C3ED25F3F6B800BA0663 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3EC25F3F6B800BA0663 /* Keychain.swift */; };
 		4B69C3F325F3F91300BA0663 /* KeychainConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3F225F3F91300BA0663 /* KeychainConst.swift */; };
 		4B69C3FE25F4A09E00BA0663 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C3FD25F4A09E00BA0663 /* HomeViewModel.swift */; };
-		4B69C41325F4EE2F00BA0663 /* TweetUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C41225F4EE2F00BA0663 /* TweetUrl.swift */; };
 		4B69C41825F4EF8F00BA0663 /* TweetEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C41725F4EF8F00BA0663 /* TweetEntities.swift */; };
 		4B69C42125F521B600BA0663 /* MetadataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C42025F521B600BA0663 /* MetadataCache.swift */; };
 		4B69C46925F5A78C00BA0663 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B69C46825F5A78C00BA0663 /* Link.swift */; };
@@ -95,6 +95,7 @@
 		4B46DC962622CA840015F0C5 /* UserModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModelTests.swift; sourceTree = "<group>"; };
 		4B46DC9E2622CD600015F0C5 /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
 		4B46DCB82622ECA50015F0C5 /* TweetModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetModelTests.swift; sourceTree = "<group>"; };
+		4B46DCBE2622F0640015F0C5 /* tweet.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tweet.json; sourceTree = "<group>"; };
 		4B687CE52609B3E20093F3CC /* UserProfileBannerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileBannerData.swift; sourceTree = "<group>"; };
 		4B69C2C325F39CC500BA0663 /* TwitterX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B69C2C625F39CC500BA0663 /* TwitterXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterXApp.swift; sourceTree = "<group>"; };
@@ -128,7 +129,6 @@
 		4B69C3EC25F3F6B800BA0663 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		4B69C3F225F3F91300BA0663 /* KeychainConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainConst.swift; sourceTree = "<group>"; };
 		4B69C3FD25F4A09E00BA0663 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		4B69C41225F4EE2F00BA0663 /* TweetUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetUrl.swift; sourceTree = "<group>"; };
 		4B69C41725F4EF8F00BA0663 /* TweetEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetEntities.swift; sourceTree = "<group>"; };
 		4B69C42025F521B600BA0663 /* MetadataCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataCache.swift; sourceTree = "<group>"; };
 		4B69C46825F5A78C00BA0663 /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
@@ -178,6 +178,7 @@
 				4B46DC8C2622CA090015F0C5 /* Info.plist */,
 				4B46DC962622CA840015F0C5 /* UserModelTests.swift */,
 				4B46DCB82622ECA50015F0C5 /* TweetModelTests.swift */,
+				4B46DCBE2622F0640015F0C5 /* tweet.json */,
 			);
 			path = TwitterXTests;
 			sourceTree = "<group>";
@@ -248,6 +249,10 @@
 		4B69C31125F3A2EA00BA0663 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4B2AB26925FAF174005A13C7 /* UserProfileImageData.swift */,
+				4B69C46825F5A78C00BA0663 /* Link.swift */,
+				4B0CBDAD25FC702500615DDF /* UserTweetData.swift */,
+				4B687CE52609B3E20093F3CC /* UserProfileBannerData.swift */,
 				4B69C31425F3A35200BA0663 /* LoginViewModel.swift */,
 				4B69C3FD25F4A09E00BA0663 /* HomeViewModel.swift */,
 			);
@@ -258,15 +263,10 @@
 			isa = PBXGroup;
 			children = (
 				4B69C3E725F3F33400BA0663 /* Tweet.swift */,
-				4B69C41225F4EE2F00BA0663 /* TweetUrl.swift */,
 				4B69C41725F4EF8F00BA0663 /* TweetEntities.swift */,
-				4B69C46825F5A78C00BA0663 /* Link.swift */,
 				4B2AB26425FAEEAA005A13C7 /* User.swift */,
-				4B2AB26925FAF174005A13C7 /* UserProfileImageData.swift */,
 				4B0CBDA325FC69F700615DDF /* TweetExtendedEntities.swift */,
-				4B0CBDAD25FC702500615DDF /* UserTweetData.swift */,
 				4BB260E926078BC300F10204 /* Settings.swift */,
-				4B687CE52609B3E20093F3CC /* UserProfileBannerData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -436,6 +436,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B46DC9F2622CD600015F0C5 /* user.json in Resources */,
+				4B46DCBF2622F0640015F0C5 /* tweet.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,7 +510,6 @@
 				4B69C39925F3E29F00BA0663 /* PropertyUtils.swift in Sources */,
 				4B69C3B225F3E68400BA0663 /* Extension_Data.swift in Sources */,
 				4B69C42125F521B600BA0663 /* MetadataCache.swift in Sources */,
-				4B69C41325F4EE2F00BA0663 /* TweetUrl.swift in Sources */,
 				4BB260BE26056BF100F10204 /* VideoPlayerView+GifPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

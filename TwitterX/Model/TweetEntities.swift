@@ -14,3 +14,11 @@ struct TweetEntities: Decodable {
         case urls = "urls"
     }
 }
+
+struct TweetUrl: Decodable {
+    let url: String
+    
+    enum CodingKeys: String, CodingKey {
+        case url = "expanded_url"
+    }
+}
