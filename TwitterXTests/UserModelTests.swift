@@ -9,14 +9,18 @@ import XCTest
 @testable import TwitterX
 
 class UserModelTests: XCTestCase {
+    var responseData: Data!
     
-    func testUser() throws {
+    override func setUpWithError() throws {
         guard
             let path = Bundle(for: type(of: self)).path(forResource: "user", ofType: "json")
         else { fatalError("Can't find user.json file") }
         
-        let data = try Data(contentsOf: URL(fileURLWithPath: path))
-        let response = try JSONDecoder().decode(User.self, from: data)
+        self.responseData = try Data(contentsOf: URL(fileURLWithPath: path))
+    }
+    
+    func testUser_response_data() throws {
+        let response = try JSONDecoder().decode(User.self, from: self.responseData)
         
         XCTAssertEqual(response.id, 972651)
         XCTAssertEqual(response.idStr, "972651")
@@ -30,8 +34,10 @@ class UserModelTests: XCTestCase {
         XCTAssertEqual(response.following, true)
         XCTAssertEqual(response.url, "http://t.co/1Gm8aVACKn")
         XCTAssertEqual(response.entities.url?.urls.count, 1)
-        XCTAssertEqual(response.entities.url?.urls.first?.url, "http://t.co/1Gm8aVACKn")
-        XCTAssertEqual(response.entities.url?.urls.first?.expandedUrl, "http://mashable.com")
-        XCTAssertEqual(response.entities.url?.urls.first?.displayUrl, "mashable.com")
+        
+        let url = response.entities.url?.urls.first
+        XCTAssertEqual(url?.url, "http://t.co/1Gm8aVACKn")
+        XCTAssertEqual(url?.expandedUrl, "http://mashable.com")
+        XCTAssertEqual(url?.displayUrl, "mashable.com")
     }
 }
