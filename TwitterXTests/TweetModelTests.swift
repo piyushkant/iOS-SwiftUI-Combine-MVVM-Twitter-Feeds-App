@@ -1,14 +1,13 @@
 //
-//  TwitterXTests.swift
+//  TweetModelTests.swift
 //  TwitterXTests
 //
-//  Created by Piyush Kant on 2021/03/06.
+//  Created by Piyush Kant on 2021/04/11.
 //
 
 import XCTest
-@testable import TwitterX
 
-class TwitterXTests: XCTestCase {
+class TweetModelTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
