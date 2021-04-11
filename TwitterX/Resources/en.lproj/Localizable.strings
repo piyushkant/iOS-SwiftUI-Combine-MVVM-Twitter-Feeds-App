@@ -10,3 +10,7 @@
 "login" = "Login";
 "homeTimeline" = "Home Timeline";
 "gif" = "GIF";
+"followers" = "Followers";
+"following" = "Following";
+"follow" = "Follow";
+"unfollow" = "Unfollow";

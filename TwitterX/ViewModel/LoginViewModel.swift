@@ -10,10 +10,12 @@ import Combine
 import Firebase
 
 class LoginViewModel: ObservableObject {
-    @Published var isLoggedIn = false
-    
+    private var subscriptions = Set<AnyCancellable>()
     let oauth: OAuth
     
+    @Published var isLoggedIn = false
+    @Published var error: ApiError? = nil
+
     init(oauth: OAuth) {
         self.oauth = oauth
     }
@@ -33,6 +35,8 @@ class LoginViewModel: ObservableObject {
                     try Keychain.set(value: tokenSecret.data(using: .utf8)!, key: KeychainConst.TokenSecret.string)
                     
                     self.isLoggedIn = true
+                    
+                    self.fetchSettings()
                 } catch let error {
                     print(error)
                 }
@@ -41,5 +45,26 @@ class LoginViewModel: ObservableObject {
                 print(error)
             }
         })
+    }
+    
+    func fetchSettings() {
+        let api = Api(oauth: self.oauth)
+        api
+            .settings()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.error = error
+                }
+            }, receiveValue: { settings in
+                do {
+                    try Keychain.set(value: settings.screenName.data(using: .utf8)!, key: KeychainConst.ScreenName.string)
+                } catch let error {
+                    print(error)
+                }
+                
+                self.error = nil
+            })
+            .store(in: &subscriptions)
     }
 }

@@ -28,6 +28,7 @@ struct Tweet: Decodable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        
         self.id = try values.decode(Int.self, forKey: .id)
         self.idStr = try values.decode(String.self, forKey: .idStr)
         self.createdAt = try values.decode(String.self, forKey: .createdAt)

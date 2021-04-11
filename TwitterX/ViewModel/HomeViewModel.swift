@@ -21,7 +21,8 @@ class HomeViewModel: ObservableObject {
     
     @Published var tweets = [Tweet]()
     @Published var links = [Link]()
-    @Published var userInfoData = [UserData]()
+    @Published var profileImageData = [UserProfileImageData]()
+    @Published var profileBannerData = [UserProfileBannerData]()
     @Published var userTweetData = [UserTweetData]()
     @Published var error: ApiError? = nil
     
@@ -50,7 +51,7 @@ class HomeViewModel: ObservableObject {
                         let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
                             guard let data = data else { return }
                             DispatchQueue.main.async {
-                                self.userInfoData.append(UserData(id: tweet.idStr, profileImageData: data))
+                                self.profileImageData.append(UserProfileImageData(id: tweet.idStr, data: data))
                             }
                         }
                         task.resume()
@@ -153,6 +154,20 @@ class HomeViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
+    func unfollowUser(id: String) {
+        api
+            .unfollowUser(id: id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.error = error
+                }
+            }, receiveValue: { user in                
+                self.error = nil
+            })
+            .store(in: &subscriptions)
+    }
+    
     func findTweetIndexById(id: String) -> Int {
         var index = 0
         for tweet in self.tweets {
@@ -166,10 +181,21 @@ class HomeViewModel: ObservableObject {
         return -1
     }
     
-    func fetchUserData(tweet: Tweet) -> UserData? {
+    func fetchUserProfileImageData(tweet: Tweet) -> UserProfileImageData? {
         let userId = tweet.idStr
         
-        for data in userInfoData {
+        for data in profileImageData {
+            if data.id == userId {
+                return data
+            }
+        }
+        return nil
+    }
+    
+    func fetchUserProfileBannerData(tweet: Tweet) -> UserProfileBannerData? {
+        let userId = tweet.idStr
+        
+        for data in profileBannerData {
             if data.id == userId {
                 return data
             }
@@ -197,5 +223,47 @@ class HomeViewModel: ObservableObject {
             }
         }
         return nil
+    }
+    
+    //Mark: Remove me, only for testing purpose
+    func fetchSingleTimeLine(id: String) {
+        api
+            .show(id: id)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    self.error = error
+                }
+            }, receiveValue: { tweet in
+                self.tweets.append(tweet)
+
+                //Mark: user info data
+                let user = tweet.user
+                
+                let profileImageUrl = user.profileImageUrl
+                if let imageUrl = URL(string: profileImageUrl) {
+                    let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                        guard let data = data else { return }
+                        DispatchQueue.main.async {
+                            self.profileImageData.append(UserProfileImageData(id: tweet.idStr, data: data))
+                        }
+                    }
+                    task.resume()
+                }
+                
+                let profileBannerUrl = user.profileBannerUrl
+                if let bannerUrl = URL(string: profileBannerUrl) {
+                    let task = URLSession.shared.dataTask(with: bannerUrl) { data, response, error in
+                        guard let data = data else { return }
+                        DispatchQueue.main.async {
+                            self.profileBannerData.append((UserProfileBannerData(id: tweet.idStr, data: data)))
+                        }
+                    }
+                    task.resume()
+                }
+
+                self.error = nil
+            })
+            .store(in: &subscriptions)
     }
 }
