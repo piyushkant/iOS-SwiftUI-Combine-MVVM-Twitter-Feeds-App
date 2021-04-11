@@ -22,7 +22,7 @@ class TweetModelTests: XCTestCase {
     func testTweet_response_data() throws {
         let response = try JSONDecoder().decode(Tweet.self, from: self.responseData)
         
-        XCTAssertEqual(response.id, 138112158365845094)
+        XCTAssertEqual(response.id, 1381121583658450946)
         XCTAssertEqual(response.idStr, "1381121583658450946")
         XCTAssertEqual(response.createdAt, "Sun Apr 11 05:47:00 +0000 2021")
         XCTAssertEqual(response.text, "These kinetic sculptures have brought these LEGO bricks to life https://t.co/kkltgHN8dr")
