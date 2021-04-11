@@ -61,4 +61,8 @@ class TweetModelTests: XCTestCase {
         XCTAssertEqual(url?.expandedUrl, "http://mashable.com")
         XCTAssertEqual(url?.displayUrl, "mashable.com")
     }
+    
+    override func tearDownWithError() throws {
+        self.responseData = nil
+    }
 }
