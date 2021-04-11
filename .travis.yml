@@ -3,4 +3,4 @@ language: swift
 os: osx
 xcode_project: TwitterX.xcodeproj
 xcode_scheme: TwitterX
-xcode_destination: platform=iOS Simulator,OS:14.2,name=iPhone 12 Pro
+xcode_destination: platform=iOS Simulator,OS=12.2,name=iPhone 8
