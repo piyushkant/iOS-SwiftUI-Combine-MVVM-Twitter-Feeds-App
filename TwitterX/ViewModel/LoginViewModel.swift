@@ -11,12 +11,12 @@ import Firebase
 
 class LoginViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
-    let oauth: OAuth
+    let oauth: OAuthService
     
     @Published var isLoggedIn = false
     @Published var error: ApiError? = nil
 
-    init(oauth: OAuth) {
+    init(oauth: OAuthService) {
         self.oauth = oauth
     }
     
@@ -48,7 +48,7 @@ class LoginViewModel: ObservableObject {
     }
     
     func fetchSettings() {
-        let api = Api(oauth: self.oauth)
+        let api = APIService(oauth: self.oauth)
         api
             .settings()
             .receive(on: DispatchQueue.main)

@@ -8,12 +8,11 @@
 import Foundation
 import Security
 
-// You might want to update this to be something descriptive for your app.
-private let service: String = "MyService"
+private let service: String = "ChatXService"
 
 enum Keychain {
 
-    /// Does a certain item exist?
+    // MARK: - Does a certain item exist?
     static func exists(key: String) throws -> Bool {
         let status = SecItemCopyMatching([
             kSecClass: kSecClassGenericPassword,
@@ -30,20 +29,20 @@ enum Keychain {
         }
     }
     
-    /// Adds an item to the keychain.
+    // MARK: - Adds an item to the keychain.
     private static func add(value: Data, key: String) throws {
         let status = SecItemAdd([
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: key,
             kSecAttrService: service,
-            // Allow background access:
+            // MARK: - Allow background access:
             kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlock,
             kSecValueData: value,
             ] as NSDictionary, nil)
         guard status == errSecSuccess else { throw Errors.keychainError }
     }
     
-    /// Updates a keychain item.
+    // MARK: - Updates a keychain item.
     private static func update(value: Data, key: String) throws {
         let status = SecItemUpdate([
             kSecClass: kSecClassGenericPassword,
@@ -55,7 +54,7 @@ enum Keychain {
         guard status == errSecSuccess else { throw Errors.keychainError }
     }
     
-    /// Stores a keychain item.
+    // MARK: - Stores a keychain item.
     static func set(value: Data, key: String) throws {
         if try exists(key: key) {
             try update(value: value, key: key)
@@ -64,7 +63,7 @@ enum Keychain {
         }
     }
     
-    // If not present, returns nil. Only throws on error.
+    // MARK: - If not present, returns nil. Only throws on error.
     static func get(key: String) throws -> Data? {
         var result: AnyObject?
         let status = SecItemCopyMatching([
@@ -82,7 +81,7 @@ enum Keychain {
         }
     }
     
-    /// Delete a single item.
+    // MARK: - Delete a single item.
     static func delete(key: String) throws {
         let status = SecItemDelete([
             kSecClass: kSecClassGenericPassword,
@@ -92,7 +91,7 @@ enum Keychain {
         guard status == errSecSuccess else { throw Errors.keychainError }
     }
     
-    /// Delete all items for my app. Useful on eg logout.
+    // MARK: - Delete all items for my app. Useful on eg logout.
     static func deleteAll() throws {
         let status = SecItemDelete([
             kSecClass: kSecClassGenericPassword,
