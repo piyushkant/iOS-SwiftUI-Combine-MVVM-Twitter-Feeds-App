@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeConfig {
-    static let TweetsLimit = 3
+    static let TweetsLimit = 1
     static let sampleTexttweet = "1373575870506364928"
     static let sampleLinkTweetId = "1373060163687567366"
     static let sampleSingleImageTweetId = "1370325033663426560" //1370325033663426560 //1370329824422551554
@@ -39,13 +39,12 @@ struct HomeView: View {
             }
             .navigationBarBackButtonHidden(true)
             .listStyle(PlainListStyle())
-            //            .navigationBarTitle(Text(NSLocalizedString("homeTimeline", comment: "")))
-            .navigationBarItems(trailing:
-                                    Button("Settings") {}
-            )
+            .navigationBarTitle(Text("TwitterX"), displayMode: .inline)
+            .navigationBarItems(trailing: LogoutView(homeViewModel: homeViewModel))
         }
     }
 }
+
 
 
 
