@@ -8,11 +8,11 @@
 import Combine
 import SwiftUI
 
-struct Api {
-    private let oauth: OAuth
+struct APIService {
+    private let oauth: OAuthService
     private let decoder = JSONDecoder()
     
-    init(oauth: OAuth) {
+    init(oauth: OAuthService) {
         self.oauth = oauth
     }
     

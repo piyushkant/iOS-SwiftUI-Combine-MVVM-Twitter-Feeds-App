@@ -49,7 +49,7 @@ enum OAuthCredentialResult {
     case failure ([String: String])
 }
 
-struct OAuth {
+struct OAuthService {
     var version: String {
         get {
             return "1.0"

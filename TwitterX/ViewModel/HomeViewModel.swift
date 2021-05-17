@@ -16,7 +16,7 @@ enum LinkPreviewResult {
 }
 
 class HomeViewModel: ObservableObject {
-    private let api: Api
+    private let api: APIService
     private var subscriptions = Set<AnyCancellable>()
     
     @Published var tweets = [Tweet]()
@@ -27,7 +27,7 @@ class HomeViewModel: ObservableObject {
     @Published var error: ApiError? = nil
     
     init() {
-        self.api = Api(oauth: OAuth())
+        self.api = APIService(oauth: OAuthService())
     }
     
     func fetchHomeTimeline(count: Int) {
