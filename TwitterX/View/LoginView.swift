@@ -25,7 +25,6 @@ struct LoginView: View {
                 LoginImage()
 
                 NavigationLink(destination: HomeView(), isActive: $loginViewModel.isLoggedIn) { EmptyView() }
-
                 
                 Button(action: {
                     loginViewModel.login()
@@ -33,6 +32,7 @@ struct LoginView: View {
                     LoginButtonContent()
                 }
             }
+            .navigationBarHidden(true)
         }
     }
 }

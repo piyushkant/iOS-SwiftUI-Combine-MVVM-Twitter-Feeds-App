@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ContentView: View {
     
     var body: some View {
-        HomeView()
-//        LoginView()
+
+        if isLoggedIn() {
+            HomeView()
+        } else {
+            LoginView()
+        }
     }
 }
 
@@ -19,4 +24,8 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
+}
+
+func isLoggedIn() -> Bool {
+    return Auth.auth().currentUser != nil
 }
