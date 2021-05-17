@@ -29,7 +29,7 @@ struct HomeCellView: View {
             
             if let userTweetData = homeViewModel.fetchUserTweetData(tweet: self.tweet) {
                 let mediaType = userTweetData.mediaType
-
+                
                 if (mediaType == .Gif) {
                     if let firstData = userTweetData, let videoUrl = firstData.attachedVideoUrl, let url = URL(string: videoUrl) {
                         GifPlayerView(url: url, tweet: self.tweet)
