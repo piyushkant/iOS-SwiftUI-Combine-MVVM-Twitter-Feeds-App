@@ -16,14 +16,14 @@ struct HomeCellView: View {
     @State var togglePreview = false
     
     var body: some View {
-//                Mark: Disabled for now due to api usage limit
-//                let tweets: [Tweet] = self.homeViewModel.tweets
+        //                Mark: Disabled for now due to api usage limit
+        let tweets: [Tweet] = self.homeViewModel.tweets
         
         VStack(alignment: .leading, spacing: 10) {
             if let userInfoData = homeViewModel.fetchUserProfileImageData(tweet: self.tweet), let data = userInfoData.data {
                 UserInfoView(homeViewModel: homeViewModel, tweet: self.tweet, data: data)
             }
-
+            
             HyperlinkTextView(tweet.text)
                 .fixedSize(horizontal: false, vertical: true)
             
@@ -41,7 +41,7 @@ struct HomeCellView: View {
                 } else if (mediaType == .Images) {
                     if let attachedImages = userTweetData.attachedImages {
                         let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
-
+                        
                         LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
                             ForEach(attachedImages, id:\.self) { image in
                                 ImageGridView(homeViewModel: homeViewModel, image: image, images: attachedImages)
@@ -60,8 +60,8 @@ struct HomeCellView: View {
             if self.isLast {
                 Text("").onAppear {
                     
-//                                        Mark: Disabled for now due to api usage limit
-//                                        self.homeViewModel.fetchHomeTimeline(count: tweets.count + HomeConfig.TweetsLimit)
+                    //                                        Mark: Disabled for now due to api usage limit
+                    self.homeViewModel.fetchHomeTimeline(count: tweets.count + HomeConfig.TweetsLimit)
                 }
             }
             
