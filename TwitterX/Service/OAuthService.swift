@@ -51,62 +51,50 @@ enum OAuthCredentialResult {
 
 struct OAuthService {
     var version: String {
-        get {
-            return "1.0"
-        }
+        return "1.0"
     }
     
     var signatureMethod: String {
-        get {
-            return "HMAC-SHA1"
-        }
+        return "HMAC-SHA1"
     }
     
     var consumerKey: String {
-        get {
-            return ProprtyUtils.getValue(fileName: "OAuth-Info", key: OAuthConst.ConsumerKey.string)
-        }
+        return ProprtyUtils.getValue(fileName: "OAuth-Info", key: OAuthConst.ConsumerKey.string)
     }
     
     var consumerSecret: String {
-        get {
-            return ProprtyUtils.getValue(fileName: "OAuth-Info", key: OAuthConst.ConsumerSecret.string)
-        }
+        return ProprtyUtils.getValue(fileName: "OAuth-Info", key: OAuthConst.ConsumerSecret.string)
     }
     
     var token: String? {
-        get {
-            do {
-                let tokenData = try Keychain.get(key: KeychainConst.Token.string)
-                
-                guard let data = tokenData else {return nil}
-                
-                return String(decoding: data, as: UTF8.self)
-            } catch let error {
-                print(error)
-                return nil
-            }
+        do {
+            let tokenData = try Keychain.get(key: KeychainConst.Token.string)
+            
+            guard let data = tokenData else {return nil}
+            
+            return String(decoding: data, as: UTF8.self)
+        } catch let error {
+            print(error)
+            return nil
         }
     }
     
     var tokenSecret: String? {
-        get {
-            do {
-                let tokenSecretData = try Keychain.get(key: KeychainConst.TokenSecret.string)
-                
-                guard let data = tokenSecretData else {return nil}
-                
-                return String(decoding: data, as: UTF8.self)
-            } catch let error {
-                print(error)
-                return nil
-            }
+        do {
+            let tokenSecretData = try Keychain.get(key: KeychainConst.TokenSecret.string)
+            
+            guard let data = tokenSecretData else {return nil}
+            
+            return String(decoding: data, as: UTF8.self)
+        } catch let error {
+            print(error)
+            return nil
         }
     }
     
     func authorizationHeader(for method: HTTPMethodType, url: URL, parameters: [String: Any], isMediaUpload: Bool) -> String {
         guard let token = token, let tokenSecret = tokenSecret else {return ""}
-        
+                
         var authorizationParameters = [String: Any]()
         authorizationParameters[OAuthConst.Version.string] = version
         authorizationParameters[OAuthConst.SignatureMethod.string] =  signatureMethod

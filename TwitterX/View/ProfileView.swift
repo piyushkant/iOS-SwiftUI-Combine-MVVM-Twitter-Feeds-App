@@ -12,17 +12,15 @@ struct ProfileView: View {
     let tweet: Tweet
     
     var screenName: String? {
-        get {
-            do {
-                let screenNamedata = try Keychain.get(key: KeychainConst.ScreenName.string)
-                
-                guard let data = screenNamedata else {return nil}
-                
-                return String(decoding: data, as: UTF8.self)
-            } catch let error {
-                print(error)
-                return nil
-            }
+        do {
+            let screenNamedata = try Keychain.get(key: KeychainConst.ScreenName.string)
+            
+            guard let data = screenNamedata else {return nil}
+            
+            return String(decoding: data, as: UTF8.self)
+        } catch let error {
+            print(error)
+            return nil
         }
     }
     
