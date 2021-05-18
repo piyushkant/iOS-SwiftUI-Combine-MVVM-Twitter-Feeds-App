@@ -34,7 +34,7 @@ struct HomeView: View {
             }
             .buttonStyle(PlainButtonStyle())
             .onAppear {
-                homeViewModel.fetchHomeTimeline(count: HomeConfig.TweetsLimit)
+//                homeViewModel.fetchHomeTimeline(count: HomeConfig.TweetsLimit)
             }
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(true)
